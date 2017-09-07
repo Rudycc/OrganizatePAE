@@ -29,6 +29,7 @@
     </Tab>
     <Tab text="Schedule">
       <content>
+      	<fx:include source="Schedule.fxml" />
       </content>
     </Tab>
   </tabs>
