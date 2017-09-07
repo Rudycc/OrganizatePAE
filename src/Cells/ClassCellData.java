@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
-public class CellData {
+public class ClassCellData {
 	@FXML
 	private GridPane classGridPane;
 	@FXML
@@ -21,7 +21,7 @@ public class CellData {
 	private Label lblDay;
 	
 	
-	public CellData(){
+	public ClassCellData(){
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../application/ClassCell.fxml"));
 		fxmlLoader.setController(this);
 		try{
