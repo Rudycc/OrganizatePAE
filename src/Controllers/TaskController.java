@@ -1,5 +1,6 @@
 package Controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,13 +10,22 @@ import CellItems.TaskCellItems;
 import Cells.TaskListViewCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
-
-
 
 public class TaskController implements Initializable {
 	@FXML
@@ -26,6 +36,8 @@ public class TaskController implements Initializable {
 	public List<TaskCellItems> futureCellItems = new ArrayList<>(40);
 	ObservableList<TaskCellItems> pastObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> futureObservableList = FXCollections.observableArrayList();
+	
+	@FXML Button btnNewTask;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -61,5 +73,26 @@ public class TaskController implements Initializable {
 		});
 		
 	}
+	
+	
+	public void createNewTask(){
+		
+		try {
+			Stage dialogStage = new Stage();
+			dialogStage.initOwner(btnNewTask.getScene().getWindow());
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setTitle("Create New Task");
+			
+			GridPane newTaskPane =  FXMLLoader.load(getClass().getResource("NewTaskDialog.fxml"));
+			
+			dialogStage.setScene(new Scene(newTaskPane));	
+			dialogStage.show();
+			
+		} catch (IOException e) {			
+			System.out.println("Error in createNewTask. StackTrace:\n");
+			e.printStackTrace();
+		}		
+	}
+	
 
 }

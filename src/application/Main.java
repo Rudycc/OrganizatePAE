@@ -12,6 +12,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			TabPane pane =  FXMLLoader.load(getClass().getResource("Main.fxml"));
+			primaryStage.setTitle("Organize...Yourself!");
 			primaryStage.setScene(new Scene(pane));
 			primaryStage.show();
 		} catch(Exception e) {
