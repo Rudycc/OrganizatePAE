@@ -10,8 +10,8 @@
 <GridPane fx:id="classGridPane" hgap="15.0" vgap="20.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="577.0" minWidth="10.0" prefWidth="532.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="577.0" minWidth="10.0" prefWidth="58.0" />
+    <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints hgrow="SOMETIMES" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -20,7 +20,7 @@
    <children>
       <Label fx:id="lblTask" text="Label" GridPane.columnIndex="1" GridPane.valignment="TOP" />
       <Label fx:id="lblDueDate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: blue;" GridPane.rowSpan="2" />
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: AliceBlue;" GridPane.rowSpan="2" />
    </children>
    <padding>
       <Insets bottom="9.0" right="9.0" top="9.0" />
