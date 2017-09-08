@@ -14,6 +14,7 @@
   <tabs>
     <Tab text="Dashboard">
       <content>
+        <fx:include source="Dashboard.fxml" />
       </content>
     </Tab>
     <Tab text="Tasks" >
@@ -28,6 +29,7 @@
     </Tab>
     <Tab text="Schedule">
       <content>
+      	<fx:include source="Schedule.fxml" />
       </content>
     </Tab>
   </tabs>
