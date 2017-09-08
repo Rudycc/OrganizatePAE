@@ -24,8 +24,8 @@
    <children>
       <Label text="Past" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
       <Label text="Future" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
-      <ListView fx:id="pastList" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
-      <ListView fx:id="futureList" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <ListView fx:id="pastList" GridPane.rowIndex="1" />
+      <ListView fx:id="futureList" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Button fx:id="btnNewTask" mnemonicParsing="false" onAction="#createNewTask" text="New Task" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
    </children>
 </GridPane>
