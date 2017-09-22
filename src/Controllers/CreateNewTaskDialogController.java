@@ -15,17 +15,10 @@ public class CreateNewTaskDialogController implements Initializable{
 	
 	@FXML Button btnCancel;
 	@FXML Button btnAccept;
-	@FXML RadioButton rBtnExam;
-	@FXML RadioButton rBtnLab;
-	@FXML RadioButton rBtnTask;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		final ToggleGroup group = new ToggleGroup();
-		rBtnExam.setToggleGroup(group);
-		rBtnLab.setToggleGroup(group);
-		rBtnTask.setToggleGroup(group);
 	}
 	
 	public void btnCancelAction(){
