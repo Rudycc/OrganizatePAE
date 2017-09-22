@@ -2,16 +2,16 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="rootGridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="174.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CreateNewTaskDialogController">
+<GridPane fx:id="rootGridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="274.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CreateNewTaskDialogController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="237.0" minWidth="10.0" prefWidth="79.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="413.0" minWidth="10.0" prefWidth="406.0" />
@@ -20,6 +20,8 @@
     <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
@@ -54,26 +56,19 @@
             <Insets />
          </GridPane.margin>
       </ChoiceBox>
-      <CheckBox fx:id="checkboxPractice" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
-         <GridPane.margin>
-            <Insets />
-         </GridPane.margin>
-      </CheckBox>
-      <Label fx:id="lblPractice" text="Practice" GridPane.halignment="LEFT" GridPane.rowIndex="3">
-         <padding>
-            <Insets left="15.0" right="15.0" />
-         </padding>
-      </Label>
       <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Button fx:id="btnAccept" mnemonicParsing="false" text="Accept" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+      <Button fx:id="btnAccept" mnemonicParsing="false" text="Accept" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets right="10.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#btnCancelAction" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+      <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#btnCancelAction" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets right="80.0" />
          </GridPane.margin>
       </Button>
+      <RadioButton mnemonicParsing="false" text="Exam" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+      <RadioButton mnemonicParsing="false" text="Laboratory" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+      <RadioButton mnemonicParsing="false" text="Task" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
    </children>
 </GridPane>
