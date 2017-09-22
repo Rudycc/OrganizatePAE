@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <tabs>
+    <Tab text="Dashboard">
+      <content>
+        <fx:include source="Dashboard.fxml" />
+      </content>
+    </Tab>
+    <Tab text="Tasks" >
+    	<content>
+  			<fx:include source="TaskTab.fxml" />
+  		</content>
+  	</Tab>
+    <Tab text="Exams">
+      <content>
+        <fx:include source="ExamTab.fxml" />
+      </content>
+    </Tab>
+    <Tab text="Schedule">
+      <content>
+      	<fx:include source="Schedule.fxml" />
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

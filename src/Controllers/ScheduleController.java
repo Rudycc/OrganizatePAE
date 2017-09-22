@@ -1,31 +1,32 @@
 package Controllers;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import java.util.ResourceBundle;
 
-import CellItems.ClassCellItems;
-import Cells.ClassListViewCell;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.util.Callback;
+import javafx.scene.control.Button;
+import jfxtras.scene.control.agenda.Agenda;
 
 public class ScheduleController implements Initializable {
 	@FXML
-	public ListView<ClassCellItems> classesList;
-	public List<ClassCellItems> classCellItems = new ArrayList<>(40);
-	ObservableList<ClassCellItems> classObservableList = FXCollections.observableArrayList();
+	private Agenda agenda;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		agenda.appointments().addAll(
+	        new Agenda.AppointmentImplLocal()
+	            .withStartLocalDateTime(LocalDate.now().atTime(4, 00))
+	            .withEndLocalDateTime(LocalDate.now().atTime(15, 30))
+	            .withDescription("It's time")
+	            .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1")) // you should use a map of AppointmentGroups
+	    );
 		
-		for(int i = 0; i < 40; i++){
+		// TODO Auto-generated method stub
+		/*for(int i = 0; i < 40; i++){
 			String s1 = "Future " + i;
 			ClassCellItems item = new ClassCellItems("Class" + i, "Professor " + i, "Day " + i);
 			classCellItems.add(item);
@@ -40,7 +41,15 @@ public class ScheduleController implements Initializable {
 				return new ClassListViewCell();
 			}
 			
-		});
+		});*/
+	}
+	
+	public void moveToNextWeek(){
+		agenda.setDisplayedLocalDateTime(agenda.getDisplayedLocalDateTime().plusWeeks(1));
+	}
+	
+	public void moveToPrevWeek(){
+		agenda.setDisplayedLocalDateTime(agenda.getDisplayedLocalDateTime().minusWeeks(1));
 	}
 
 }
