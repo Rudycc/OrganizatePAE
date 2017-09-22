@@ -32,5 +32,4 @@ public class CreateNewTaskDialogController implements Initializable{
 		Stage dialogStage = (Stage) btnCancel.getScene().getWindow();		
 		dialogStage.close();
 	}
-	
 }
