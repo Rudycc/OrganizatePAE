@@ -20,13 +20,12 @@ public class ScheduleController implements Initializable {
 	public ListView<ClassCellItems> classesList;
 	public List<ClassCellItems> classCellItems = new ArrayList<>(40);
 	ObservableList<ClassCellItems> classObservableList = FXCollections.observableArrayList();
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		
+
 		for(int i = 0; i < 40; i++){
-			String s1 = "Future " + i;
 			ClassCellItems item = new ClassCellItems("Class" + i, "Professor " + i, "Day " + i);
 			classCellItems.add(item);
 		}
@@ -39,7 +38,7 @@ public class ScheduleController implements Initializable {
 				// TODO Auto-generated method stub
 				return new ClassListViewCell();
 			}
-			
+
 		});
 	}
 
