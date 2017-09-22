@@ -67,8 +67,8 @@
             <Insets right="80.0" />
          </GridPane.margin>
       </Button>
-      <RadioButton mnemonicParsing="false" text="Exam" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
-      <RadioButton mnemonicParsing="false" text="Laboratory" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
-      <RadioButton mnemonicParsing="false" text="Task" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+      <RadioButton fx:id="rBtnExam" mnemonicParsing="false" text="Exam"  GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+      <RadioButton fx:id="rBtnLab" mnemonicParsing="false" text="Laboratory" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+      <RadioButton fx:id="rBtnTask" mnemonicParsing="false" text="Task"  GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
    </children>
 </GridPane>
