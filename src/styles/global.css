@@ -9,3 +9,7 @@
 	-fx-background-color: -fx-color-primary;
 	-fx-text-fill: -fx-gray-light;
 }
+
+.button:hover {
+	-fx-background-color: derive(-fx-color-primary, -5%);
+}
