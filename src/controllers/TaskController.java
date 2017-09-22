@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import CellItems.TaskCellItems;
-import Cells.TaskListViewCell;
+import cellItems.TaskCellItems;
+import cells.TaskListViewCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

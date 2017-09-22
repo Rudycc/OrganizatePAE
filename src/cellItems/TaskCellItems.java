@@ -1,4 +1,4 @@
-package CellItems;
+package cellItems;
 
 public class TaskCellItems {
 	private String taskName;
