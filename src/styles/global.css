@@ -1,15 +1,48 @@
 @import url("./variables.css");
 
 /* Default rules */
+
 .root {
-	-fx-background-color: -fx-color-bg;
+    -fx-background-color: derive(-fx-color-bg, 35%);
+    -fx-focus-color: derive(-fx-color-default, 50%);
+	-fx-accent: derive(-fx-color-primary, 50%);
 }
 
 .button {
-	-fx-background-color: -fx-color-primary;
-	-fx-text-fill: -fx-gray-light;
+    -fx-background-color: -fx-color-primary;
+    -fx-text-fill: -fx-gray-darker;
 }
 
 .button:hover {
-	-fx-background-color: derive(-fx-color-primary, -5%);
+    -fx-background-color: derive(-fx-color-primary, -10%);
+}
+
+.label {
+    -fx-text-fill: -fx-gray-darker;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: derive(-fx-color-bg, 45%);
+}
+
+.tab-pane {
+    -fx-tab-min-width: 90px;
+}
+
+.tab {
+    -fx-background-insets: 0 1 0 1, 0, 0;
+}
+
+.tab-pane .tab {
+    -fx-background-color: derive(-fx-color-info, 20%);
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: derive(-fx-color-info, 5%);
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
 }
