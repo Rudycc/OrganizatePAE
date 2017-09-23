@@ -3,18 +3,22 @@
 /* Default rules */
 
 .root {
-    -fx-background-color: derive(-fx-color-bg, 35%);
+    -fx-background-color: derive(-fx-color-bg, 35%);/*radial-gradient(center 50% 50%, radius 50%, rgba(255,255,255,1) 0%, derive(-fx-color-bg, 35%) 100%);*/
     -fx-focus-color: derive(-fx-color-default, 50%);
 	-fx-accent: derive(-fx-color-primary, 50%);
 }
 
 .button {
-    -fx-background-color: -fx-color-primary;
     -fx-text-fill: -fx-gray-darker;
+    -fx-background-color:
+        -fx-color-primary,       
+        radial-gradient(center 50% 0%, radius 100%, rgba(255, 255, 255, 0.5), -fx-color-primary);
 }
 
 .button:hover {
-    -fx-background-color: derive(-fx-color-primary, -10%);
+    -fx-background-color:
+    	derive(-fx-color-primary, -10%),
+    	radial-gradient(center 50% 0%, radius 100%, rgba(255, 255, 255, 0.5), derive(-fx-color-primary, -10%));
 }
 
 .label {
@@ -22,7 +26,7 @@
 }
 
 .tab-pane .tab-header-area .tab-header-background {
-    -fx-background-color: derive(-fx-color-bg, 45%);
+    -fx-background-color: derive(-fx-color-bg, 50%);
 }
 
 .tab-pane {
@@ -34,11 +38,20 @@
 }
 
 .tab-pane .tab {
-    -fx-background-color: derive(-fx-color-info, 20%);
+    -fx-background-color: derive(-fx-color-info, 5%),
+    radial-gradient(center 50% 0%, radius 100%, derive(-fx-color-info, 5%), rgba(255, 255, 255, 0.1));
 }
 
 .tab-pane .tab:selected {
-    -fx-background-color: derive(-fx-color-info, 5%);
+    -fx-background-color:
+    derive(-fx-color-info, 20%),
+    radial-gradient(center 50% 0%, radius 100%, derive(-fx-color-info, 20%), rgba(255, 255, 255, 0.3));
+}
+
+.tab-pane .tab:hover {
+    -fx-background-color:
+    derive(-fx-color-info, 15%),
+    radial-gradient(center 50% 0%, radius 100%, derive(-fx-color-info, 15%), rgba(255, 255, 255, 0.3));
 }
 
 .tab .tab-label {
@@ -75,8 +88,6 @@
 .scroll-bar:horizontal, .scroll-bar:vertical {
     -fx-background-color: transparent;
     -fx-pref-width: 3px;
-    -fx-min-width: 3px;
-    -fx-max-width: 3px;
 }
 
 .increment-button, .decrement-button {
