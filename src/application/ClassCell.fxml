@@ -22,9 +22,9 @@
       <Insets bottom="9.0" right="0.0" top="9.0" />
    </padding>
    <children>
-      <Label styleClass="class-label" fx:id="lblClass" text="Label" GridPane.columnIndex="1" />
-      <Label styleClass="prof-label" fx:id="lblProfessor" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Label styleClass="day-label" fx:id="lblDay" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label styleClass="upper-label,text-bold" fx:id="lblClass" text="Label" GridPane.columnIndex="1" />
+      <Label styleClass="lower-label" fx:id="lblProfessor" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label fx:id="lblDay" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: AliceBlue;" GridPane.rowSpan="3" />
    </children>
 </GridPane>

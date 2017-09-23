@@ -51,20 +51,17 @@
 	-fx-font-size: 21px;
 }
 
-.class-label {
+.upper-label {
 	-fx-font-size: 14px;
-	-fx-font-weight: bold;
-	-fx-max-height: 5px;
 }
 
-.prof-label {
+.text-bold {
+	-fx-font-weight: bold;
+}
+
+.lower-label {
 	-fx-font-size: 12px;
 	-fx-font-style: italic;
-	-fx-max-height: 5px;
-}
-
-.day-label {
-	-fx-max-height: 5px;
 }
 
 .list-cell:odd {
