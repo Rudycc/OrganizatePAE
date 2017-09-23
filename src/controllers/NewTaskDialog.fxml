@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="rootGridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="174.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CreateNewTaskDialogController">
+<GridPane fx:id="rootGridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="174.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CreateNewTaskDialogController" stylesheets="@../styles/global.css">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="237.0" minWidth="10.0" prefWidth="79.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="413.0" minWidth="10.0" prefWidth="406.0" />

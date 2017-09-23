@@ -1,4 +1,4 @@
-package CellItems;
+package cellItems;
 
 public class ClassCellItems {
 	private String className;

@@ -1,0 +1,116 @@
+@import url("./variables.css");
+
+/* Default rules */
+
+.root {
+    -fx-background-color: derive(-fx-color-bg, 35%);/*radial-gradient(center 50% 50%, radius 50%, rgba(255,255,255,1) 0%, derive(-fx-color-bg, 35%) 100%);*/
+    -fx-focus-color: derive(-fx-color-default, 50%);
+	-fx-accent: derive(-fx-color-primary, 50%);
+}
+
+.button {
+    -fx-text-fill: -fx-gray-darker;
+    -fx-background-color:
+        -fx-color-primary,       
+        radial-gradient(center 50% 0%, radius 100%, rgba(255, 255, 255, 0.5), -fx-color-primary);
+}
+
+.button:hover {
+    -fx-background-color:
+    	derive(-fx-color-primary, -10%),
+    	radial-gradient(center 50% 0%, radius 100%, rgba(255, 255, 255, 0.5), derive(-fx-color-primary, -10%));
+}
+
+.label {
+    -fx-text-fill: -fx-gray-darker;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: derive(-fx-color-bg, 50%);
+}
+
+.tab-pane {
+    -fx-tab-min-width: 75px;
+}
+
+.tab {
+    -fx-background-insets: 0 1 0 1, 0, 0;
+}
+
+.tab-pane .tab {
+    -fx-background-color: derive(-fx-color-info, 5%),
+    radial-gradient(center 50% 0%, radius 100%, derive(-fx-color-info, 5%), rgba(255, 255, 255, 0.1));
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color:
+    derive(-fx-color-info, 20%),
+    radial-gradient(center 50% 0%, radius 100%, derive(-fx-color-info, 20%), rgba(255, 255, 255, 0.3));
+}
+
+.tab-pane .tab:hover {
+    -fx-background-color:
+    derive(-fx-color-info, 15%),
+    radial-gradient(center 50% 0%, radius 100%, derive(-fx-color-info, 15%), rgba(255, 255, 255, 0.3));
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.top-label {
+	-fx-font-size: 21px;
+}
+
+.upper-label {
+	-fx-font-size: 14px;
+}
+
+.text-bold {
+	-fx-font-weight: bold;
+}
+
+.lower-label {
+	-fx-font-size: 12px;
+	-fx-font-style: italic;
+}
+
+.list-cell:odd {
+    -fx-background-color: derive(-fx-color-primary, 75%);
+}
+
+.list-cell:odd:selected {
+	-fx-background-color: derive(-fx-color-primary, 50%);
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 3px;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color:transparent;
+    -fx-pref-height: 0;
+}
+
+.increment-arrow, .decrement-arrow {
+	-fx-opacity: 0;
+}
+
+.scroll-bar:horizontal .track, .scroll-bar:vertical .track {
+     -fx-background-color: transparent;
+	 -fx-border-color: -fx-gray-lighter;
+	 -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+    -fx-background-color: -fx-gray-dark;
+	-fx-background-insets: 0, 0, 0;
+	-fx-background-radius: 0em;
+}
+
+.scroll-bar:vertical .thumb:hover, .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: -fx-gray-darker;
+}

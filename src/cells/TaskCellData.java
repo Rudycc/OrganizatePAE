@@ -1,8 +1,8 @@
-package Cells;
+package cells;
 
 import java.io.IOException;
 
-import CellItems.TaskCellItems;
+import cellItems.TaskCellItems;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
