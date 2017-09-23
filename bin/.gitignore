@@ -1,8 +1,5 @@
-/application/
-/Controllers/
-/CellItems/
-/Cells/
-/styles/
-/controllers/
-/cells/
 /cellItems/
+/cells/
+/styles/
+/application/
+/controllers/

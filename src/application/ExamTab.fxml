@@ -23,8 +23,8 @@
       <Insets bottom="9.0" left="9.0" right="9.0" top="9.0" />
    </padding>
    <children>
-      <Label text="Past" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
-      <Label text="Future" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+      <Label styleClass="top-label" text="Past" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+      <Label styleClass="top-label" text="Future" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
       <ListView fx:id="pastList" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
       <ListView fx:id="futureList" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </children>

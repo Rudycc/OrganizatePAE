@@ -26,7 +26,7 @@
 }
 
 .tab-pane {
-    -fx-tab-min-width: 90px;
+    -fx-tab-min-width: 75px;
 }
 
 .tab {
@@ -46,3 +46,32 @@
     -fx-font-size: 12px;
     -fx-font-weight: bold;
 }
+
+.top-label {
+	-fx-font-size: 21px;
+}
+
+.class-label {
+	-fx-font-size: 14px;
+	-fx-font-weight: bold;
+	-fx-max-height: 5px;
+}
+
+.prof-label {
+	-fx-font-size: 12px;
+	-fx-font-style: italic;
+	-fx-max-height: 5px;
+}
+
+.day-label {
+	-fx-max-height: 5px;
+}
+
+.list-cell:odd {
+    -fx-background-color: derive(-fx-color-primary, 75%);
+}
+
+.list-cell:odd:selected {
+	-fx-background-color: derive(-fx-color-primary, 50%);
+}
+
