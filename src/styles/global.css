@@ -90,7 +90,7 @@
 
 .scroll-bar:horizontal .track, .scroll-bar:vertical .track {
      -fx-background-color: transparent;
-	 -fx-border-color: derive(gray,80%);
+	 -fx-border-color: -fx-gray-lighter;
 	 -fx-background-radius: 0em;
 }
 
