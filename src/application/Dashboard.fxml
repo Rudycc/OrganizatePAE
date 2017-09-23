@@ -21,9 +21,9 @@
      <Insets bottom="9.0" left="9.0" right="9.0" top="9.0" />
   </padding>
   <children>
-      <Label text="Today" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <Label text="Tasks &amp; Labs" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <Label text="Exams" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <Label styleClass="top-label" text="Today" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <Label styleClass="top-label" text="Tasks &amp; Labs" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <Label styleClass="top-label" text="Exams" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
       <ListView fx:id="todayList" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
       <ListView fx:id="taskList" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <ListView fx:id="examList" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
