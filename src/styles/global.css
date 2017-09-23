@@ -72,3 +72,34 @@
 	-fx-background-color: derive(-fx-color-primary, 50%);
 }
 
+.scroll-bar:horizontal, .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 3px;
+    -fx-min-width: 3px;
+    -fx-max-width: 3px;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color:transparent;
+    -fx-pref-height: 0;
+}
+
+.increment-arrow, .decrement-arrow {
+	-fx-opacity: 0;
+}
+
+.scroll-bar:horizontal .track, .scroll-bar:vertical .track {
+     -fx-background-color: transparent;
+	 -fx-border-color: derive(gray,80%);
+	 -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+    -fx-background-color: -fx-gray-dark;
+	-fx-background-insets: 0, 0, 0;
+	-fx-background-radius: 0em;
+}
+
+.scroll-bar:vertical .thumb:hover, .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: -fx-gray-darker;
+}
