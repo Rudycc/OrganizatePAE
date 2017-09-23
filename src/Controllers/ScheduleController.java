@@ -1,46 +1,68 @@
 package Controllers;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import java.util.ResourceBundle;
 
-import CellItems.ClassCellItems;
-import Cells.ClassListViewCell;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Button;
 import javafx.util.Callback;
+import jfxtras.scene.control.agenda.Agenda;
+import jfxtras.scene.control.agenda.Agenda.Appointment;
 
 public class ScheduleController implements Initializable {
 	@FXML
-	public ListView<ClassCellItems> classesList;
-	public List<ClassCellItems> classCellItems = new ArrayList<>(40);
-	ObservableList<ClassCellItems> classObservableList = FXCollections.observableArrayList();
+	private Agenda agenda;
+	private int actual = 1;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
-		for(int i = 0; i < 40; i++){
-			String s1 = "Future " + i;
-			ClassCellItems item = new ClassCellItems("Class" + i, "Professor " + i, "Day " + i);
-			classCellItems.add(item);
-		}
-		classObservableList.setAll(classCellItems);
-		classesList.setItems(classObservableList);
-		classesList.setCellFactory(new Callback<ListView<ClassCellItems>, ListCell<ClassCellItems>>() {
-
-			@Override
-			public ListCell<ClassCellItems> call(ListView<ClassCellItems> pastList) {
-				// TODO Auto-generated method stub
-				return new ClassListViewCell();
-			}
+		agenda.setAllowDragging(false);
+		agenda.setAllowResize(false);
+		agenda.appointments().addAll(
+	        new Agenda.AppointmentImplLocal()
+	            .withStartLocalDateTime(LocalDate.now().atTime(4, 00))
+	            .withEndLocalDateTime(LocalDate.now().atTime(15, 30))
+	            .withDescription("It's time")
+	            .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1")),
+            new Agenda.AppointmentImplLocal()
+	            .withStartLocalDateTime(LocalDate.now().atTime(2, 00))
+	            .withEndLocalDateTime(LocalDate.now().atTime(12, 30))
+	            .withDescription("It's time")
+	            .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1")).withSummary("Test")
+	            
+	    );
+		agenda.editAppointmentCallbackProperty().set(new Callback<Agenda.Appointment, Void>() {
 			
+			@Override
+			public Void call(Appointment param) {
+				actual++;
+				//param.setStartLocalDateTime(LocalDate.now().atStartOfDay());
+				//param.setWholeDay(!param.isWholeDay());
+				param.setAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group" + actual));
+				agenda.refresh();
+				return null;
+			}
 		});
+	}
+	
+	public void moveToNextWeek(){
+		agenda.setDisplayedLocalDateTime(agenda.getDisplayedLocalDateTime().plusWeeks(1));
+	}
+	
+	public void moveToPrevWeek(){
+		agenda.setDisplayedLocalDateTime(agenda.getDisplayedLocalDateTime().minusWeeks(1));
+	}
+	
+	public void manageTerm(){
+		System.out.println("This is manage term");
+	}
+	
+	public void manageSubject(){
+		System.out.println("This is manage subject");
 	}
 
 }
