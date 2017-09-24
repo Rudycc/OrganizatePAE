@@ -1,6 +1,6 @@
-package Cells;
+package cells;
 
-import CellItems.ClassCellItems;
+import cellItems.ClassCellItems;
 import javafx.scene.control.ListCell;
 
 public class ClassListViewCell extends ListCell<ClassCellItems>{

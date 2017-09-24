@@ -14,12 +14,12 @@
       <ColumnConstraints hgrow="SOMETIMES" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="6.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="6.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label fx:id="lblTask" text="Label" GridPane.columnIndex="1" GridPane.valignment="TOP" />
-      <Label fx:id="lblDueDate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+      <Label styleClass="upper-label" fx:id="lblTask" text="Label" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
+      <Label styleClass="lower-label" fx:id="lblDueDate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: AliceBlue;" GridPane.rowSpan="2" />
    </children>
    <padding>

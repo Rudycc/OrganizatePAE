@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -6,28 +6,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import CellItems.TaskCellItems;
-import Cells.TaskListViewCell;
+import cellItems.TaskCellItems;
+import cells.TaskListViewCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.util.Callback;
 
-public class TaskController implements Initializable {
+public class ExamController implements Initializable {
 	@FXML
 	public ListView<TaskCellItems> pastList;
 	@FXML
@@ -36,16 +31,15 @@ public class TaskController implements Initializable {
 	public List<TaskCellItems> futureCellItems = new ArrayList<>(40);
 	ObservableList<TaskCellItems> pastObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> futureObservableList = FXCollections.observableArrayList();
-	
-	@FXML Button btnNewTask;
+	@FXML Button btnNewExam;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 		for(int i = 0; i < 40; i++){
-			TaskCellItems pastItem = new TaskCellItems("Task " + i, "Day " + i);
+			TaskCellItems pastItem = new TaskCellItems("Exam " + i, "Day " + i);
 			pastCellItems.add(pastItem);
-			TaskCellItems futureItem = new TaskCellItems("Task " + i, "Day " + i);
+			TaskCellItems futureItem = new TaskCellItems("Exam " + i, "Day " + i);
 			futureCellItems.add(futureItem);
 		}
 		pastObservableList.setAll(pastCellItems);
@@ -71,17 +65,15 @@ public class TaskController implements Initializable {
 			}
 			
 		});
-		
 	}
 	
-	
-	public void createNewTask(){
+	public void createNewExam(){
 		
 		try {
 			Stage dialogStage = new Stage();
-			dialogStage.initOwner(btnNewTask.getScene().getWindow());
+			dialogStage.initOwner(btnNewExam.getScene().getWindow());
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
-			dialogStage.setTitle("Create New Task");
+			dialogStage.setTitle("Create New Exam");
 			
 			GridPane newTaskPane =  FXMLLoader.load(getClass().getResource("NewTaskDialog.fxml"));
 			
