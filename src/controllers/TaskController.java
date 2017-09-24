@@ -5,23 +5,20 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import cellItems.TaskCellItems;
 import cells.TaskListViewCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import javafx.scene.control.ListCell;
 import javafx.util.Callback;
 
@@ -39,7 +36,6 @@ public class TaskController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
 		for(int i = 0; i < 40; i++){
 			TaskCellItems pastItem = new TaskCellItems("Task " + i, "Day " + i);
 			pastCellItems.add(pastItem);
@@ -82,8 +78,12 @@ public class TaskController implements Initializable {
 			dialogStage.setTitle("Create New Task");
 
 			GridPane newTaskPane =  FXMLLoader.load(getClass().getResource("NewTaskDialog.fxml"));
-
-			dialogStage.setScene(new Scene(newTaskPane));
+			dialogStage.setScene(new Scene(newTaskPane));					
+			
+			//Sets the task type choiceBox default value
+			ChoiceBox<String> paneChoiceBox = (ChoiceBox<String>) newTaskPane.getChildren().get(8);
+			paneChoiceBox.setValue("Task");
+			
 			dialogStage.show();
 
 		} catch (IOException e) {
