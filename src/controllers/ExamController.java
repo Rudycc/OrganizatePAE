@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
@@ -35,7 +36,6 @@ public class ExamController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
 		for(int i = 0; i < 40; i++){
 			TaskCellItems pastItem = new TaskCellItems("Exam " + i, "Day " + i);
 			pastCellItems.add(pastItem);
@@ -75,9 +75,13 @@ public class ExamController implements Initializable {
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle("Create New Exam");
 			
-			GridPane newTaskPane =  FXMLLoader.load(getClass().getResource("NewTaskDialog.fxml"));
+			GridPane newTaskPane =  FXMLLoader.load(getClass().getResource("NewTaskDialog.fxml"));			
+			dialogStage.setScene(new Scene(newTaskPane));
 			
-			dialogStage.setScene(new Scene(newTaskPane));	
+			//Sets the task type choiceBox default value			
+			ChoiceBox<String> paneChoiceBox = (ChoiceBox<String>) newTaskPane.getChildren().get(8);
+			paneChoiceBox.setValue("Exam");
+			
 			dialogStage.show();
 			
 		} catch (IOException e) {			
