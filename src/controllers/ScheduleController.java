@@ -2,13 +2,11 @@ package controllers;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.Appointment;
