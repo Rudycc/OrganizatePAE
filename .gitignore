@@ -24,3 +24,5 @@ hs_err_pid*
 
 bin/
 target/
+
+src/database/settings.properties
