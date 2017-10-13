@@ -1,14 +1,14 @@
-package Controllers;
+package controllers;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import CellItems.ClassCellItems;
-import CellItems.TaskCellItems;
-import Cells.ClassListViewCell;
-import Cells.TaskListViewCell;
+import cellItems.ClassCellItems;
+import cellItems.TaskCellItems;
+import cells.ClassListViewCell;
+import cells.TaskListViewCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

@@ -1,6 +1,6 @@
-package Cells;
+package cells;
 
-import CellItems.TaskCellItems;
+import cellItems.TaskCellItems;
 import javafx.scene.control.ListCell;
 
 public class TaskListViewCell extends ListCell<TaskCellItems> {

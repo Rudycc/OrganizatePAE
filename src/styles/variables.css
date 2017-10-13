@@ -1,0 +1,15 @@
+/* Variables */
+* {
+	/* Theme Variables */
+	-fx-color-primary: #A9B7C0;
+	-fx-color-info: #CCCBC6;
+	-fx-color-default: #EFD9C1;
+	-fx-color-bg: #C7D8C6;
+
+	/* Grays */
+	-fx-gray-base: #999;
+	-fx-gray-dark: #555;
+	-fx-gray-darker: #111;
+	-fx-gray-light: #BBB;
+	-fx-gray-lighter: #DDD;
+}
