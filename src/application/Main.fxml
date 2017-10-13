@@ -32,5 +32,10 @@
       	<fx:include source="Schedule.fxml" />
       </content>
     </Tab>
+    <Tab text="Settings">
+      <content>
+      	<fx:include source="SettingsTab.fxml" />
+      </content>
+    </Tab>
   </tabs>
 </TabPane>
