@@ -1,5 +1,8 @@
 package application;
 	
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -11,7 +14,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			TabPane pane =  FXMLLoader.load(getClass().getResource("Main.fxml"));
+			ResourceBundle rb = ResourceBundle.getBundle("resources.UIResources", new Locale("ES"));
+			TabPane pane =  FXMLLoader.load(getClass().getResource("Main.fxml"), rb);
 			primaryStage.setTitle("Organize...Yourself!");
 			primaryStage.setScene(new Scene(pane));
 			primaryStage.show();
