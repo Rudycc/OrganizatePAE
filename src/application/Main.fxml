@@ -12,24 +12,29 @@
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"  stylesheets="@../styles/global.css">
   <tabs>
-    <Tab text="Dashboard">
+    <Tab text="%dashboard">
       <content>
         <fx:include source="Dashboard.fxml" />
       </content>
     </Tab>
-    <Tab text="Tasks" >
+    <Tab text="%tasks" >
     	<content>
   			<fx:include source="TaskTab.fxml" />
   		</content>
   	</Tab>
-    <Tab text="Exams">
+    <Tab text="%exams">
       <content>
         <fx:include source="ExamTab.fxml" />
       </content>
     </Tab>
-    <Tab text="Schedule">
+    <Tab text="%schedule">
       <content>
       	<fx:include source="Schedule.fxml" />
+      </content>
+    </Tab>
+    <Tab text="Settings">
+      <content>
+      	<fx:include source="SettingsTab.fxml" />
       </content>
     </Tab>
   </tabs>
