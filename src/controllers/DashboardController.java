@@ -33,9 +33,9 @@ public class DashboardController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		classObservableList.setAll(DatabaseController.getClasses());
-		taskObservableList.setAll(DatabaseController.getTasks());
-		examObservableList.setAll(DatabaseController.getExams());
+		classObservableList.setAll(DatabaseController.getTodayClasses());
+		taskObservableList.setAll(DatabaseController.getAllTasks());
+		examObservableList.setAll(DatabaseController.getAllExams());
 		
 		todayList.setItems(classObservableList);
 		taskList.setItems(taskObservableList);
