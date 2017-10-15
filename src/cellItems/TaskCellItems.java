@@ -1,8 +1,17 @@
 package cellItems;
 
 public class TaskCellItems {
+	private int taskId;
 	private String taskName;
+	private String description;
 	private String dueDate;
+	private boolean isDone;
+	private int idSubject;
+	private String color;
+	
+	public TaskCellItems(){
+		
+	}
 	
 	public TaskCellItems(String taskName, String dueDate){
 		this.taskName = taskName;
@@ -20,6 +29,46 @@ public class TaskCellItems {
 	}
 	public void setDueDate(String dueDate) {
 		this.dueDate = dueDate;
+	}
+
+	public int getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public boolean isDone() {
+		return isDone;
+	}
+
+	public void setDone(boolean isDone) {
+		this.isDone = isDone;
+	}
+
+	public int getIdSubject() {
+		return idSubject;
+	}
+
+	public void setIdSubject(int idSubject) {
+		this.idSubject = idSubject;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 	
 	

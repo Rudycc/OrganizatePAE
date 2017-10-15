@@ -42,7 +42,7 @@ public class DashboardController implements Initializable {
 			examCellItems.add(examItem);
 		}
 		classObservableList.setAll(DatabaseController.getClasses());
-		taskObservableList.setAll(taskCellItems);
+		taskObservableList.setAll(DatabaseController.getTasks());
 		examObservableList.setAll(examCellItems);
 		
 		todayList.setItems(classObservableList);
