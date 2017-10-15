@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import cellItems.TaskCellItems;
 import cells.TaskListViewCell;
+import database.DatabaseController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -29,8 +30,6 @@ public class TaskController implements Initializable {
 	public ListView<TaskCellItems> pastList;
 	@FXML
 	public ListView<TaskCellItems> futureList;
-	public List<TaskCellItems> pastCellItems = new ArrayList<>();
-	public List<TaskCellItems> futureCellItems = new ArrayList<>();
 	ObservableList<TaskCellItems> pastObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> futureObservableList = FXCollections.observableArrayList();
 
@@ -61,14 +60,8 @@ public class TaskController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.rb = resources;
-		for(int i = 0; i < 40; i++){
-			TaskCellItems pastItem = new TaskCellItems("Task " + i, "Day " + i);
-			pastCellItems.add(pastItem);
-			TaskCellItems futureItem = new TaskCellItems("Task " + i, "Day " + i);
-			futureCellItems.add(futureItem);
-		}
-		pastObservableList.setAll(pastCellItems);
-		futureObservableList.setAll(futureCellItems);
+		pastObservableList.setAll(DatabaseController.getPreviousTasks());
+		futureObservableList.setAll(DatabaseController.getUpcomingTasks());
 		pastList.setItems(pastObservableList);
 		futureList.setItems(futureObservableList);
 		pastList.setOnMouseClicked(this.cellClick);
