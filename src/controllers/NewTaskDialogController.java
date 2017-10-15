@@ -106,8 +106,7 @@ public class NewTaskDialogController implements Initializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("No Id found");
-			return 0;
 		}
-		
+		return 0;
 	}
 }
