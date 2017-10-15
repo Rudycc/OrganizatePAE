@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
 public class TaskInfoController implements Initializable {
-
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		

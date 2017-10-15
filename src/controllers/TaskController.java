@@ -16,7 +16,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
@@ -48,6 +50,11 @@ public class TaskController implements Initializable {
 					dialogStage.setTitle(rb.getString("titleTaskInfo"));
 
 					GridPane newTaskPane =  FXMLLoader.load(getClass().getResource("TaskInfo.fxml"), rb);
+					
+					ListView<TaskCellItems> src = (ListView<TaskCellItems>) event.getSource();
+					String title = src.getSelectionModel().getSelectedItem().getTaskName();
+					((Label) newTaskPane.getChildren().get(1)).setText(title);
+
 					dialogStage.setScene(new Scene(newTaskPane));
 					dialogStage.show();
 
