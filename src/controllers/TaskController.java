@@ -27,15 +27,17 @@ public class TaskController implements Initializable {
 	public ListView<TaskCellItems> pastList;
 	@FXML
 	public ListView<TaskCellItems> futureList;
-	public List<TaskCellItems> pastCellItems = new ArrayList<>(40);
-	public List<TaskCellItems> futureCellItems = new ArrayList<>(40);
+	public List<TaskCellItems> pastCellItems = new ArrayList<>();
+	public List<TaskCellItems> futureCellItems = new ArrayList<>();
 	ObservableList<TaskCellItems> pastObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> futureObservableList = FXCollections.observableArrayList();
 
 	@FXML Button btnNewTask;
+	private ResourceBundle rb;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		this.rb = resources;
 		for(int i = 0; i < 40; i++){
 			TaskCellItems pastItem = new TaskCellItems("Task " + i, "Day " + i);
 			pastCellItems.add(pastItem);
@@ -75,19 +77,18 @@ public class TaskController implements Initializable {
 			Stage dialogStage = new Stage();
 			dialogStage.initOwner(btnNewTask.getScene().getWindow());
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
-			dialogStage.setTitle("Create New Task");
+			dialogStage.setTitle(this.rb.getString("titleNewTask"));
 
-			GridPane newTaskPane =  FXMLLoader.load(getClass().getResource("NewTaskDialog.fxml"));
+			GridPane newTaskPane =  FXMLLoader.load(getClass().getResource("NewTaskDialog.fxml"), this.rb);
 			dialogStage.setScene(new Scene(newTaskPane));					
 			
 			//Sets the task type choiceBox default value
 			ChoiceBox<String> paneChoiceBox = (ChoiceBox<String>) newTaskPane.getChildren().get(8);
-			paneChoiceBox.setValue("Task");
+			paneChoiceBox.setValue(this.rb.getString("task"));
 			
 			dialogStage.show();
 
 		} catch (IOException e) {
-			System.out.println("Error in createNewTask. StackTrace:\n");
 			e.printStackTrace();
 		}
 	}
