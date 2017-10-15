@@ -49,14 +49,12 @@ public class NewTaskDialogController implements Initializable{
 		choiceBoxTypeChooser.setItems(typeChoiceBoxData);
 		
 		try {
-			
 			this.conn = MyDBConnection.getConnection();
 			conn.setAutoCommit(false);
 			String query = "INSERT INTO Task(Title, Type, IsDone, IDSubject, DueDate) VALUES(?,?,?,?,?)";
 			insertTask = conn.prepareStatement(query);
 			query = "SELECT IDSubject FROM Subject WHERE Name = ?";
 			getSubjectId = conn.prepareStatement(query);
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -100,18 +98,16 @@ public class NewTaskDialogController implements Initializable{
 	public int getIDSubject(){
 		
 		try {
-			
 			getSubjectId.setString(1, choiceBoxClassChooser.getValue());
 			rs = getSubjectId.executeQuery();
 			//Return an id if it exist 
 			while(rs.next()){return rs.getInt("IDSubject");}
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("No Id found");
+			return 0;
 		}
 		
-		return 0;
 	}
 }
