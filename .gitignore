@@ -24,3 +24,6 @@ hs_err_pid*
 
 bin/
 target/
+
+src/database/settings.properties
+src/database/OrganizatePAE_TableModel.mwb.bak

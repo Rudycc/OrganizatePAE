@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 public class ClassCellData {
 	@FXML
@@ -17,6 +18,8 @@ public class ClassCellData {
 	private Label lblProfessor;
 	@FXML
 	private Label lblDay;
+	@FXML 
+	private Pane classColor;
 
 
 	public ClassCellData(){
@@ -33,6 +36,7 @@ public class ClassCellData {
 		lblClass.setText(cell.getClassName());
 		lblProfessor.setText(cell.getProfessorName());
 		lblDay.setText(cell.getDay());
+		classColor.setStyle("-fx-background-color: " + cell.getColor());
 	}
 
 	public GridPane getGridPane(){
