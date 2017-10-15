@@ -23,10 +23,10 @@
       <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label fx:id="langLbl" text="Language" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-      <Label fx:id="themeLbl" text="Theme" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-      <Button fx:id="aboutBtn" mnemonicParsing="false" onAction="#aboutAction" text="About" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-      <Button fx:id="acceptBtn" mnemonicParsing="false" onAction="#acceptAction" text="Accept" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+      <Label fx:id="langLbl" text="%language" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+      <Label fx:id="themeLbl" text="%theme" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+      <Button fx:id="aboutBtn" mnemonicParsing="false" onAction="#aboutAction" text="%about" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+      <Button fx:id="acceptBtn" mnemonicParsing="false" onAction="#acceptAction" text="%accept" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
       <ChoiceBox fx:id="themeChoice" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="27.0" prefWidth="179.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
       <ChoiceBox fx:id="langChoice" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="27.0" prefWidth="178.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
    </children>
