@@ -1,15 +1,15 @@
 package controllers;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import cellItems.ClassCellItems;
 import cellItems.TaskCellItems;
 import cells.ClassListViewCell;
 import cells.TaskListViewCell;
-import database.DatabaseController;
+import database.ClassDatabaseController;
+import database.ExamDatabaseController;
+import database.TaskDatabaseController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,8 +26,6 @@ public class DashboardController implements Initializable {
 	@FXML
 	public ListView<TaskCellItems> examList;
 	
-	public List<TaskCellItems> taskCellItems = new ArrayList<>(40);
-	public List<TaskCellItems> examCellItems = new ArrayList<>(40);
 	ObservableList<ClassCellItems> classObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> taskObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> examObservableList = FXCollections.observableArrayList();
@@ -35,15 +33,9 @@ public class DashboardController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < 40; i++) {
-			TaskCellItems taskItem = new TaskCellItems("Task " + i, "Day " + i);
-			taskCellItems.add(taskItem);
-			TaskCellItems examItem = new TaskCellItems("Exam " + i, "Day " + i);
-			examCellItems.add(examItem);
-		}
-		classObservableList.setAll(DatabaseController.getClasses());
-		taskObservableList.setAll(taskCellItems);
-		examObservableList.setAll(examCellItems);
+		classObservableList.setAll(ClassDatabaseController.getTodayClasses());
+		taskObservableList.setAll(TaskDatabaseController.getTodayTasks());
+		examObservableList.setAll(ExamDatabaseController.getTodayExams());
 		
 		todayList.setItems(classObservableList);
 		taskList.setItems(taskObservableList);

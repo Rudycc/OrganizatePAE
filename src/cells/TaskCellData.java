@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 public class TaskCellData {
 	@FXML
@@ -15,6 +16,8 @@ public class TaskCellData {
 	private Label lblTask;
 	@FXML
 	private Label lblDueDate;
+	@FXML
+	private Pane pane;
 	
 	
 	public TaskCellData(){
@@ -30,6 +33,7 @@ public class TaskCellData {
 	public void setInfo(TaskCellItems cell){
 		lblTask.setText(cell.getTaskName());
 		lblDueDate.setText("Due: " + cell.getDueDate());
+		pane.setStyle("-fx-background-color:"+ cell.getColor());
 	}
 	
 	public GridPane getGridPane(){
