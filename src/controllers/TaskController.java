@@ -2,12 +2,10 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import cellItems.TaskCellItems;
 import cells.TaskListViewCell;
-import database.DatabaseController;
+import database.TaskDatabaseController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -67,8 +65,8 @@ public class TaskController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.rb = resources;
-		pastObservableList.setAll(DatabaseController.getPreviousTasks());
-		futureObservableList.setAll(DatabaseController.getUpcomingTasks());
+		pastObservableList.setAll(TaskDatabaseController.getPreviousTasks());
+		futureObservableList.setAll(TaskDatabaseController.getUpcomingTasks());
 		pastList.setItems(pastObservableList);
 		futureList.setItems(futureObservableList);
 		pastList.setOnMouseClicked(this.cellClick);

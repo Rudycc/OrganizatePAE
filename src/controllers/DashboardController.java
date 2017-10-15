@@ -1,15 +1,15 @@
 package controllers;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import cellItems.ClassCellItems;
 import cellItems.TaskCellItems;
 import cells.ClassListViewCell;
 import cells.TaskListViewCell;
-import database.DatabaseController;
+import database.ClassDatabaseController;
+import database.ExamDatabaseController;
+import database.TaskDatabaseController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -33,9 +33,9 @@ public class DashboardController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		classObservableList.setAll(DatabaseController.getTodayClasses());
-		taskObservableList.setAll(DatabaseController.getTodayTasks());
-		examObservableList.setAll(DatabaseController.getTodayExams());
+		classObservableList.setAll(ClassDatabaseController.getTodayClasses());
+		taskObservableList.setAll(TaskDatabaseController.getTodayTasks());
+		examObservableList.setAll(ExamDatabaseController.getTodayExams());
 		
 		todayList.setItems(classObservableList);
 		taskList.setItems(taskObservableList);
