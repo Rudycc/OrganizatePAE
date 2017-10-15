@@ -192,7 +192,7 @@ public class TaskDatabaseController {
 			ps.setString(1,subject);
 			rs = ps.executeQuery();
 			//Return an id if it exist 
-			while(rs.next()){return rs.getInt("IDSubject");}
+			if(rs.next()){return rs.getInt("IDSubject");}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
