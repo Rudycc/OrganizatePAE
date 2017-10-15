@@ -51,11 +51,13 @@ public class TaskController implements Initializable {
 					GridPane newTaskPane =  FXMLLoader.load(getClass().getResource("TaskInfo.fxml"), rb);
 					
 					ListView<TaskCellItems> src = (ListView<TaskCellItems>) event.getSource();
-					String title = src.getSelectionModel().getSelectedItem().getTaskName();
-					((Label) newTaskPane.getChildren().get(1)).setText(title);
-
-					dialogStage.setScene(new Scene(newTaskPane));
-					dialogStage.show();
+					if (!src.getItems().isEmpty()) {
+						String title = src.getSelectionModel().getSelectedItem().getTaskName();
+						((Label) newTaskPane.getChildren().get(1)).setText(title);
+						
+						dialogStage.setScene(new Scene(newTaskPane));
+						dialogStage.show();
+					}
 
 				} catch (IOException e) {
 					e.printStackTrace();
