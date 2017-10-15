@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import cellItems.TaskCellItems;
 import cells.TaskListViewCell;
+import database.DatabaseController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,8 +29,6 @@ public class ExamController implements Initializable {
 	public ListView<TaskCellItems> pastList;
 	@FXML
 	public ListView<TaskCellItems> futureList;
-	public List<TaskCellItems> pastCellItems = new ArrayList<>();
-	public List<TaskCellItems> futureCellItems = new ArrayList<>();
 	ObservableList<TaskCellItems> pastObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> futureObservableList = FXCollections.observableArrayList();
 	@FXML Button btnNewExam;
@@ -38,15 +37,9 @@ public class ExamController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.rb = resources;
-		
-		for(int i = 0; i < 40; i++){
-			TaskCellItems pastItem = new TaskCellItems("Exam " + i, "Day " + i);
-			pastCellItems.add(pastItem);
-			TaskCellItems futureItem = new TaskCellItems("Exam " + i, "Day " + i);
-			futureCellItems.add(futureItem);
-		}
-		pastObservableList.setAll(pastCellItems);
-		futureObservableList.setAll(futureCellItems);
+
+		pastObservableList.setAll(DatabaseController.getPreviousExams());
+		futureObservableList.setAll(DatabaseController.getUpcomingExams());
 		pastList.setItems(pastObservableList);
 		futureList.setItems(futureObservableList);
 		pastList.setCellFactory(new Callback<ListView<TaskCellItems>, ListCell<TaskCellItems>>() {
