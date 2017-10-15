@@ -32,7 +32,7 @@
       	<fx:include source="Schedule.fxml" />
       </content>
     </Tab>
-    <Tab text="Settings">
+    <Tab text="%settings">
       <content>
       	<fx:include source="SettingsTab.fxml" />
       </content>
