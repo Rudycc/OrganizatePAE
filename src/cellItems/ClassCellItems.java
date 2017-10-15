@@ -51,6 +51,4 @@ public class ClassCellItems {
 	public void setColor(String color) {
 		this.color = color;
 	}
-	
-
 }
