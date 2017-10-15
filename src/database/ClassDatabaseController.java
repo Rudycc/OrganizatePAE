@@ -14,10 +14,12 @@ import cellItems.ClassCellItems;
 public class ClassDatabaseController {
 	public static List<ClassCellItems> getAllClasses(){
 		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
 		try{
 			conn = MyDBConnection.getConnection();
-			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("Select * from Subject");
+			st = conn.createStatement();
+			rs = st.executeQuery("Select * from Subject");
 			List<ClassCellItems> classes = new ArrayList<>();
 			while(rs.next()){
 				PreparedStatement ps = conn.prepareStatement("Select Subject_time.* from Subject_time Join Subject_times on Subject_time.IdSubject_time = Subject_times.IdSubject_time where Subject_times.IdSubject = ?");
@@ -32,12 +34,20 @@ public class ClassDatabaseController {
 				cell.setProfessorName(rs.getString(3));
 				cell.setColor(rs.getString(5));
 				classes.add(cell);
+				try{
+					ps.close();
+					times.close();
+				}catch(SQLException e){
+					e.printStackTrace();
+				}
 			}
 			return classes;
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
 			try{
+				st.close();
+				rs.close();
 				conn.close();
 			}catch(SQLException e){
 				e.printStackTrace();
@@ -48,11 +58,13 @@ public class ClassDatabaseController {
 	
 	public static List<ClassCellItems> getTodayClasses(){
 		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 		try{
 			conn = MyDBConnection.getConnection();
-			PreparedStatement ps = conn.prepareStatement("Select Subject.* from Subject Join Subject_times on Subject.IdSubject = Subject_times.IdSubject Join Subject_time on Subject_time.IdSubject_time = Subject_times.IdSubject_time where Subject_time.day = ?");
+			ps = conn.prepareStatement("Select Subject.* from Subject Join Subject_times on Subject.IdSubject = Subject_times.IdSubject Join Subject_time on Subject_time.IdSubject_time = Subject_times.IdSubject_time where Subject_time.day = ?");
 			ps.setString(1, LocalDate.now().getDayOfWeek().name());
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			List<ClassCellItems> classes = new ArrayList<>();
 			while(rs.next()){
 				ClassCellItems cell = new ClassCellItems();
@@ -67,6 +79,8 @@ public class ClassDatabaseController {
 			e.printStackTrace();
 		}finally{
 			try{
+				ps.close();
+				rs.close();
 				conn.close();
 			}catch(SQLException e){
 				e.printStackTrace();

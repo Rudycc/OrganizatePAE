@@ -15,10 +15,12 @@ import cellItems.TaskCellItems;
 public class TaskDatabaseController {
 	public static List<TaskCellItems> getAllTasks(){
 		Connection conn = null;
+		Statement st = null;
+		ResultSet rs =null;
 		try{
 			conn = MyDBConnection.getConnection();
-			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("Select Task.*, Subject.color from Task Join Subject on Subject.IdSubject = Task.IdSubject where Task.type = 'TASK'");
+			st = conn.createStatement();
+			rs = st.executeQuery("Select Task.*, Subject.color from Task Join Subject on Subject.IdSubject = Task.IdSubject where Task.type = 'TASK'");
 			List<TaskCellItems> tasks = new ArrayList<>();
 			while(rs.next()){
 				TaskCellItems cell = new TaskCellItems();
@@ -36,6 +38,8 @@ public class TaskDatabaseController {
 			e.printStackTrace();
 		}finally{
 			try{
+				rs.close();
+				st.close();
 				conn.close();
 			}catch(SQLException e){
 				e.printStackTrace();
@@ -46,11 +50,13 @@ public class TaskDatabaseController {
 	
 	public static List<TaskCellItems> getUpcomingTasks(){
 		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 		try{
 			conn = MyDBConnection.getConnection();
-			PreparedStatement ps = conn.prepareStatement("Select Task.*, Subject.color from Task Join Subject on Subject.IdSubject = Task.IdSubject where Task.type = 'TASK' and Task.DueDate >= ?");
+			ps = conn.prepareStatement("Select Task.*, Subject.color from Task Join Subject on Subject.IdSubject = Task.IdSubject where Task.type = 'TASK' and Task.DueDate >= ?");
 			ps.setDate(1, Date.valueOf(LocalDate.now()));
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			List<TaskCellItems> tasks = new ArrayList<>();
 			while(rs.next()){
 				TaskCellItems cell = new TaskCellItems();
@@ -68,6 +74,8 @@ public class TaskDatabaseController {
 			e.printStackTrace();
 		}finally{
 			try{
+				ps.close();
+				rs.close();
 				conn.close();
 			}catch(SQLException e){
 				e.printStackTrace();
@@ -78,11 +86,13 @@ public class TaskDatabaseController {
 	
 	public static List<TaskCellItems> getTodayTasks(){
 		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 		try{
 			conn = MyDBConnection.getConnection();
-			PreparedStatement ps = conn.prepareStatement("Select Task.*, Subject.color from Task Join Subject on Subject.IdSubject = Task.IdSubject where Task.type = 'TASK' and Task.DueDate = ?");
+			ps = conn.prepareStatement("Select Task.*, Subject.color from Task Join Subject on Subject.IdSubject = Task.IdSubject where Task.type = 'TASK' and Task.DueDate = ?");
 			ps.setDate(1, Date.valueOf(LocalDate.now()));
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			List<TaskCellItems> tasks = new ArrayList<>();
 			while(rs.next()){
 				TaskCellItems cell = new TaskCellItems();
@@ -100,6 +110,8 @@ public class TaskDatabaseController {
 			e.printStackTrace();
 		}finally{
 			try{
+				ps.close();
+				rs.close();
 				conn.close();
 			}catch(SQLException e){
 				e.printStackTrace();
@@ -110,11 +122,13 @@ public class TaskDatabaseController {
 	
 	public static List<TaskCellItems> getPreviousTasks(){
 		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 		try{
 			conn = MyDBConnection.getConnection();
-			PreparedStatement ps = conn.prepareStatement("Select Task.*, Subject.color from Task Join Subject on Subject.IdSubject = Task.IdSubject where Task.type = 'TASK' and Task.DueDate < ?");
+			ps = conn.prepareStatement("Select Task.*, Subject.color from Task Join Subject on Subject.IdSubject = Task.IdSubject where Task.type = 'TASK' and Task.DueDate < ?");
 			ps.setDate(1, Date.valueOf(LocalDate.now()));
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			List<TaskCellItems> tasks = new ArrayList<>();
 			while(rs.next()){
 				TaskCellItems cell = new TaskCellItems();
@@ -132,6 +146,8 @@ public class TaskDatabaseController {
 			e.printStackTrace();
 		}finally{
 			try{
+				ps.close();
+				rs.close();
 				conn.close();
 			}catch(SQLException e){
 				e.printStackTrace();
