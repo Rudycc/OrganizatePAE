@@ -16,7 +16,7 @@ public class Main extends Application {
 		try {
 			ResourceBundle rb = ResourceBundle.getBundle("resources.UIResources", new Locale("ES"));
 			TabPane pane =  FXMLLoader.load(getClass().getResource("Main.fxml"), rb);
-			primaryStage.setTitle("Organize...Yourself!");
+			primaryStage.setTitle(rb.getString("title"));
 			primaryStage.setScene(new Scene(pane));
 			primaryStage.show();
 		} catch(Exception e) {
