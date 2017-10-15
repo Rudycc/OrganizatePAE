@@ -171,7 +171,6 @@ public class TaskDatabaseController {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("Error: Insert Task");
 		} finally{
 			try {
 				ps.close();

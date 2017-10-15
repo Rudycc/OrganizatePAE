@@ -55,7 +55,6 @@ public class NewTaskDialogController implements Initializable{
 		if(choiceBoxClassChooser.getValue() == null || datePicker.getValue() == null || choiceBoxClassChooser.getValue() == null || txtName.getText() == ""){
 			//Show an Alert!
 			System.out.println("Empty Fields");
-			return;
 		}else{
 			TaskDatabaseController.insertNewTask(txtName.getText(), choiceBoxTypeChooser.getValue(), 0, datePicker.getValue()+"", choiceBoxClassChooser.getValue());
 		}			
