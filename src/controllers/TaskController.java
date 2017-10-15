@@ -27,8 +27,8 @@ public class TaskController implements Initializable {
 	public ListView<TaskCellItems> pastList;
 	@FXML
 	public ListView<TaskCellItems> futureList;
-	public List<TaskCellItems> pastCellItems = new ArrayList<>(40);
-	public List<TaskCellItems> futureCellItems = new ArrayList<>(40);
+	public List<TaskCellItems> pastCellItems = new ArrayList<>();
+	public List<TaskCellItems> futureCellItems = new ArrayList<>();
 	ObservableList<TaskCellItems> pastObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> futureObservableList = FXCollections.observableArrayList();
 
