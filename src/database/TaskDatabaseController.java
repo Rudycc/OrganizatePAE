@@ -155,4 +155,60 @@ public class TaskDatabaseController {
 		}
 		return null;
 	}
+	
+	public static void insertNewTask(String title, String type, int isDone, String dueDate, String subject){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			conn = MyDBConnection.getConnection();
+			ps = conn.prepareStatement("INSERT INTO Task(Title, Type, IsDone, IDSubject, DueDate) VALUES(?,?,?,?,?)");
+			ps.setString(1,title);
+			ps.setString(2,type);
+			ps.setInt(3, isDone);
+			ps.setInt(4, getIDSubject(subject));
+			ps.setString(5,dueDate);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Error: Insert Task");
+		} finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static int getIDSubject(String subject){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = MyDBConnection.getConnection();
+			ps = conn.prepareStatement("SELECT IDSubject FROM Subject WHERE Name = ?");
+			ps.setString(1,subject);
+			rs = ps.executeQuery();
+			//Return an id if it exist 
+			while(rs.next()){return rs.getInt("IDSubject");}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("No Id found");
+		} finally{
+			try {
+				ps.close();
+				rs.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return 0;
+	}
 }
