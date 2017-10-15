@@ -19,7 +19,6 @@ public class MyDBConnection {
 		if(ds == null){
 			ds = new MysqlDataSource();
 		}
-		System.out.println(rs.getString("user"));
 		ds.setUser(rs.getString("user"));
 		ds.setDatabaseName(rs.getString("databaseName"));
 		ds.setPassword(rs.getString("password"));

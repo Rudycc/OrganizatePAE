@@ -8,14 +8,14 @@
 	-fx-accent: derive(-fx-color-primary, 50%);
 }
 
-.button {
+.button, .choice-box {
     -fx-text-fill: -fx-gray-darker;
     -fx-background-color:
         -fx-color-primary,       
         radial-gradient(center 50% 0%, radius 100%, rgba(255, 255, 255, 0.5), -fx-color-primary);
 }
 
-.button:hover {
+.button:hover, .choice-box:hover {
     -fx-background-color:
     	derive(-fx-color-primary, -10%),
     	radial-gradient(center 50% 0%, radius 100%, rgba(255, 255, 255, 0.5), derive(-fx-color-primary, -10%));
@@ -114,3 +114,5 @@
 .scroll-bar:vertical .thumb:hover, .scroll-bar:vertical .thumb:pressed {
     -fx-background-color: -fx-gray-darker;
 }
+
+
