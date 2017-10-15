@@ -26,9 +26,7 @@ public class DatabaseController {
 				cell.setColor(rs.getString(5));
 				classes.add(cell);
 			}
-			
 			return classes;
-			
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
@@ -40,5 +38,4 @@ public class DatabaseController {
 		}
 		return null;
 	}
-
 }
