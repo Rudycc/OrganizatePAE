@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `Semester`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Semester` (
-  `IDSemester` int(11) NOT NULL,
+  `IDSemester` int(11) NOT NULL AUTO_INCREMENT,
   `Start_Date` date DEFAULT NULL,
   `End_Date` date DEFAULT NULL,
   `Description` varchar(50) DEFAULT NULL,
@@ -76,7 +76,7 @@ DROP TABLE IF EXISTS `Subject_Time`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Subject_Time` (
-  `IDSubject_Time` int(11) NOT NULL,
+  `IDSubject_Time` int(11) NOT NULL AUTO_INCREMENT,
   `Day` varchar(50) DEFAULT NULL,
   `Time` datetime DEFAULT NULL,
   PRIMARY KEY (`IDSubject_Time`)
@@ -217,4 +217,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-15 12:19:38
+-- Dump completed on 2017-10-15 16:48:15
