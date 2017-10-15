@@ -1,10 +1,12 @@
 package cellItems;
 
+import java.time.LocalDate;
+
 public class TaskCellItems {
 	private int taskId;
 	private String taskName;
 	private String description;
-	private String dueDate;
+	private LocalDate dueDate;
 	private boolean isDone;
 	private int idSubject;
 	private String color;
@@ -15,7 +17,6 @@ public class TaskCellItems {
 	
 	public TaskCellItems(String taskName, String dueDate){
 		this.taskName = taskName;
-		this.dueDate = dueDate;
 	}
 	
 	public String getTaskName() {
@@ -24,10 +25,10 @@ public class TaskCellItems {
 	public void setTaskName(String taskName) {
 		this.taskName = taskName;
 	}
-	public String getDueDate() {
+	public LocalDate getDueDate() {
 		return dueDate;
 	}
-	public void setDueDate(String dueDate) {
+	public void setDueDate(LocalDate dueDate) {
 		this.dueDate = dueDate;
 	}
 
