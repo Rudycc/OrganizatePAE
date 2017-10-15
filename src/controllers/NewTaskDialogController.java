@@ -2,6 +2,7 @@ package controllers;
 
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,9 +28,9 @@ public class NewTaskDialogController implements Initializable{
 	@FXML DatePicker datePicker;
 	
 	private Connection conn;
-	private Statement st;
 	private ResultSet rs;
-	private String query;
+	private PreparedStatement insertTask;
+	private PreparedStatement getSubjectId;
 	
 	//Pointer to the Stage that contains the Pane
 	Stage dialogStage;
@@ -48,8 +49,14 @@ public class NewTaskDialogController implements Initializable{
 		choiceBoxTypeChooser.setItems(typeChoiceBoxData);
 		
 		try {
+			
 			this.conn = MyDBConnection.getConnection();
-			this.st = conn.createStatement();
+			conn.setAutoCommit(false);
+			String query = "INSERT INTO Task(Title, Type, IsDone, IDSubject, DueDate) VALUES(?,?,?,?,?)";
+			insertTask = conn.prepareStatement(query);
+			query = "SELECT IDSubject FROM Subject WHERE Name = ?";
+			getSubjectId = conn.prepareStatement(query);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,16 +77,16 @@ public class NewTaskDialogController implements Initializable{
 			System.out.println("Empty Fields");
 			return;
 		}
-		//Create the SQLSatement 
-		query = "INSERT INTO Task(Title, Type, IsDone, IDSubject, DueDate) VALUES(";
-		query += "'" + txtName.getText() + "',";
-		query += "'" + choiceBoxTypeChooser.getValue() + "',";
-		query += "0,";
-		query += getIDSubject() + ",";
-		query += "'" + datePicker.getValue() +"')";
-		System.out.println(query);
 		try {
-			st.executeUpdate(query);
+			// Create a SQL statement
+			insertTask.setString(1, txtName.getText());
+			insertTask.setString(2,choiceBoxTypeChooser.getValue());
+			insertTask.setInt(3, 0);
+			insertTask.setInt(4, getIDSubject());
+			insertTask.setString(5,datePicker.getValue()+"");
+			insertTask.executeUpdate();
+			// Commit changes
+			conn.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -88,13 +95,17 @@ public class NewTaskDialogController implements Initializable{
 		dialogStage = (Stage) btnCancel.getScene().getWindow();
 		dialogStage.close();
 	}
+	
 	//Get the task's subject id 
 	public int getIDSubject(){
-		query = "SELECT IDSubject FROM Subject WHERE Name = '" + choiceBoxClassChooser.getValue() + "'";
+		
 		try {
-			rs = st.executeQuery(query);
+			
+			getSubjectId.setString(1, choiceBoxClassChooser.getValue());
+			rs = getSubjectId.executeQuery();
 			//Return an id if it exist 
 			while(rs.next()){return rs.getInt("IDSubject");}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -102,6 +113,5 @@ public class NewTaskDialogController implements Initializable{
 		}
 		
 		return 0;
-		
 	}
 }
