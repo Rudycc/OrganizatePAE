@@ -2,11 +2,16 @@ package controllers;
 
 import java.net.URL;
 import java.time.LocalDate;
-
+import java.util.Locale;
 import java.util.ResourceBundle;
-
+import application.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.Appointment;
@@ -60,7 +65,25 @@ public class ScheduleController implements Initializable {
 	}
 	
 	public void manageSubject(){
-		System.out.println("This is manage subject");
+		
+		ResourceBundle rb = ResourceBundle.getBundle("resources.UIResources", new Locale("ES"));
+		try {
+			
+			Stage dialogStage = new Stage();
+			dialogStage.initOwner(agenda.getScene().getWindow());
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setTitle(rb.getString("titleManageSubjects"));
+			
+			GridPane pane =  FXMLLoader.load(Main.class.getResource("ManageSubjectsDialog.fxml"), rb);
+			
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
 	}
 
 }

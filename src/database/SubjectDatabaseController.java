@@ -11,7 +11,7 @@ import java.util.List;
 
 import cellItems.ClassCellItems;
 
-public class ClassDatabaseController {
+public class SubjectDatabaseController {
 	public static List<ClassCellItems> getAllClasses(){
 		Connection conn = null;
 		Statement st = null;
@@ -22,7 +22,9 @@ public class ClassDatabaseController {
 			rs = st.executeQuery("Select * from Subject");
 			List<ClassCellItems> classes = new ArrayList<>();
 			while(rs.next()){
-				PreparedStatement ps = conn.prepareStatement("Select Subject_Time.* from Subject_Time Join Subject_Times on Subject_Time.IdSubject_time = Subject_Times.IdSubject_time where Subject_Times.IdSubject = ?");
+				PreparedStatement ps = conn.prepareStatement("Select Subject_Time.* from Subject_Time "
+						+ "Join Subject_Times on Subject_Time.IdSubject_time = Subject_Times.IdSubject_time "
+						+ "where Subject_Times.IdSubject = ?");
 				ps.setInt(1, rs.getInt(1));
 				ResultSet times = ps.executeQuery();
 				while(times.next()){
@@ -62,7 +64,10 @@ public class ClassDatabaseController {
 		ResultSet rs = null;
 		try{
 			conn = MyDBConnection.getConnection();
-			ps = conn.prepareStatement("Select Subject.* from Subject Join Subject_Times on Subject.IdSubject = Subject_Times.IdSubject Join Subject_Time on Subject_Time.IdSubject_time = Subject_Times.IdSubject_time where Subject_Time.day = ?");
+			ps = conn.prepareStatement("Select Subject.* from Subject "
+					+ "Join Subject_Times on Subject.IdSubject = Subject_Times.IdSubject "
+					+ "Join Subject_Time on Subject_Time.IdSubject_time = Subject_Times.IdSubject_time "
+					+ "where Subject_Time.day = ?");
 			ps.setString(1, LocalDate.now().getDayOfWeek().name());
 			rs = ps.executeQuery();
 			List<ClassCellItems> classes = new ArrayList<>();
