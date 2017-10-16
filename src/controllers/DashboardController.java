@@ -7,7 +7,7 @@ import cellItems.ClassCellItems;
 import cellItems.TaskCellItems;
 import cells.ClassListViewCell;
 import cells.TaskListViewCell;
-import database.ClassDatabaseController;
+import database.SubjectDatabaseController;
 import database.ExamDatabaseController;
 import database.TaskDatabaseController;
 import javafx.collections.FXCollections;
@@ -33,7 +33,7 @@ public class DashboardController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		classObservableList.setAll(ClassDatabaseController.getTodayClasses());
+		classObservableList.setAll(SubjectDatabaseController.getTodayClasses());
 		taskObservableList.setAll(TaskDatabaseController.getTodayTasks());
 		examObservableList.setAll(ExamDatabaseController.getTodayExams());
 		
