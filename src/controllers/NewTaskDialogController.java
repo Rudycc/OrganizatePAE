@@ -53,7 +53,6 @@ public class NewTaskDialogController implements Initializable{
 			System.out.println("Empty Fields");
 		}else{
 			type = (choiceBoxTypeChooser.getSelectionModel().getSelectedIndex()==2)? "EXAM":"TASK";
-			System.out.println(type);
 			TaskDatabaseController.insertNewTask(txtName.getText(), type, 0, datePicker.getValue()+"", choiceBoxClassChooser.getValue());
 		}			
 		//Close the window
