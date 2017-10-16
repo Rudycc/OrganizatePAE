@@ -24,6 +24,7 @@ public class NewTaskDialogController implements Initializable{
 	
 	//Pointer to the Stage that contains the Pane
 	Stage dialogStage;
+	private String type;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -47,11 +48,12 @@ public class NewTaskDialogController implements Initializable{
 	//Add a new Task / Exam / Practice in the DB
 	public void btnAcceptAction(){
 		//Validations
-		if(choiceBoxClassChooser.getValue() == null || datePicker.getValue() == null || choiceBoxClassChooser.getValue() == null || txtName.getText() == ""){
+		if(choiceBoxClassChooser.getValue() == null || datePicker.getValue() == null || choiceBoxTypeChooser.getValue() == null || txtName.getText() == ""){
 			//Show an Alert!
 			System.out.println("Empty Fields");
 		}else{
-			TaskDatabaseController.insertNewTask(txtName.getText(), choiceBoxTypeChooser.getValue(), 0, datePicker.getValue()+"", choiceBoxClassChooser.getValue());
+			type = (choiceBoxTypeChooser.getSelectionModel().getSelectedIndex()==2)? "EXAM":"TASK";
+			TaskDatabaseController.insertNewTask(txtName.getText(), type, 0, datePicker.getValue()+"", choiceBoxClassChooser.getValue());
 		}			
 		//Close the window
 		dialogStage = (Stage) btnCancel.getScene().getWindow();
