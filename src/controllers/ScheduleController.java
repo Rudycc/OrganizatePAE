@@ -20,9 +20,11 @@ public class ScheduleController implements Initializable {
 	@FXML
 	private Agenda agenda;
 	private int actual = 1;
+	private ResourceBundle rb;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		this.rb = resources;
 		agenda.setAllowDragging(false);
 		agenda.setAllowResize(false);
 		agenda.appointments().addAll(
@@ -65,8 +67,6 @@ public class ScheduleController implements Initializable {
 	}
 	
 	public void manageSubject(){
-		
-		ResourceBundle rb = ResourceBundle.getBundle("resources.UIResources", new Locale("ES"));
 		try {
 			
 			Stage dialogStage = new Stage();
@@ -74,7 +74,7 @@ public class ScheduleController implements Initializable {
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(rb.getString("titleManageSubjects"));
 			
-			GridPane pane =  FXMLLoader.load(Main.class.getResource("ManageSubjectsDialog.fxml"), rb);
+			GridPane pane =  FXMLLoader.load(Main.class.getResource("ManageSubjectsDialog.fxml"), this.rb);
 			
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.show();
