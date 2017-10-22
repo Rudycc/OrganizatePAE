@@ -1,9 +1,15 @@
 package cellItems;
 
 public class ClassCellItems {
+	private int subjectId;
 	private String className;
 	private String professorName;
 	private String day;
+	private String color;
+	
+	public ClassCellItems(){
+		
+	}
 	
 	public ClassCellItems(String className, String professorName, String day){
 		this.className = className;
@@ -29,6 +35,20 @@ public class ClassCellItems {
 	public void setDay(String day) {
 		this.day = day;
 	}
-	
 
+	public int getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(int subjectId) {
+		this.subjectId = subjectId;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
 }

@@ -2,12 +2,11 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import cellItems.TaskCellItems;
 import cells.TaskListViewCell;
+import database.ExamDatabaseController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,22 +27,17 @@ public class ExamController implements Initializable {
 	public ListView<TaskCellItems> pastList;
 	@FXML
 	public ListView<TaskCellItems> futureList;
-	public List<TaskCellItems> pastCellItems = new ArrayList<>(40);
-	public List<TaskCellItems> futureCellItems = new ArrayList<>(40);
 	ObservableList<TaskCellItems> pastObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> futureObservableList = FXCollections.observableArrayList();
 	@FXML Button btnNewExam;
+	private ResourceBundle rb;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		for(int i = 0; i < 40; i++){
-			TaskCellItems pastItem = new TaskCellItems("Exam " + i, "Day " + i);
-			pastCellItems.add(pastItem);
-			TaskCellItems futureItem = new TaskCellItems("Exam " + i, "Day " + i);
-			futureCellItems.add(futureItem);
-		}
-		pastObservableList.setAll(pastCellItems);
-		futureObservableList.setAll(futureCellItems);
+		this.rb = resources;
+
+		pastObservableList.setAll(ExamDatabaseController.getPreviousExams());
+		futureObservableList.setAll(ExamDatabaseController.getUpcomingExams());
 		pastList.setItems(pastObservableList);
 		futureList.setItems(futureObservableList);
 		pastList.setCellFactory(new Callback<ListView<TaskCellItems>, ListCell<TaskCellItems>>() {
@@ -73,19 +67,18 @@ public class ExamController implements Initializable {
 			Stage dialogStage = new Stage();
 			dialogStage.initOwner(btnNewExam.getScene().getWindow());
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
-			dialogStage.setTitle("Create New Exam");
+			dialogStage.setTitle(this.rb.getString("titleNewExam"));
 			
-			GridPane newTaskPane =  FXMLLoader.load(getClass().getResource("NewTaskDialog.fxml"));			
+			GridPane newTaskPane =  FXMLLoader.load(getClass().getResource("NewTaskDialog.fxml"), this.rb);			
 			dialogStage.setScene(new Scene(newTaskPane));
 			
 			//Sets the task type choiceBox default value			
 			ChoiceBox<String> paneChoiceBox = (ChoiceBox<String>) newTaskPane.getChildren().get(8);
-			paneChoiceBox.setValue("Exam");
+			paneChoiceBox.setValue(this.rb.getString("exam"));
 			
 			dialogStage.show();
 			
 		} catch (IOException e) {			
-			System.out.println("Error in createNewTask. StackTrace:\n");
 			e.printStackTrace();
 		}		
 	}

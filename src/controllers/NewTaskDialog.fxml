@@ -24,17 +24,17 @@ fx:controller="controllers.NewTaskDialogController" stylesheets="@../styles/glob
       <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label fx:id="lblName" text="Name" GridPane.halignment="LEFT">
+      <Label fx:id="lblName" text="%name" GridPane.halignment="LEFT">
          <padding>
             <Insets left="15.0" right="15.0" />
          </padding>
       </Label>
-      <Label fx:id="lblClass" text="Class" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+      <Label fx:id="lblClass" text="%class" GridPane.halignment="LEFT" GridPane.rowIndex="1">
          <padding>
             <Insets left="15.0" right="15.0" />
          </padding>
       </Label>
-      <Label fx:id="lblDue" text="Due" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+      <Label fx:id="lblDue" text="%due" GridPane.halignment="LEFT" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
@@ -56,12 +56,12 @@ fx:controller="controllers.NewTaskDialogController" stylesheets="@../styles/glob
          </GridPane.margin>
       </ChoiceBox>
       <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Button fx:id="btnAccept" mnemonicParsing="false" text="Accept" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+      <Button fx:id="btnAccept" mnemonicParsing="false" onAction='#btnAcceptAction' text="%accept" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets bottom="10.0" right="10.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#btnCancelAction" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+      <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#btnCancelAction" text="%cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets bottom="10.0" right="80.0" />
          </GridPane.margin>
@@ -71,7 +71,7 @@ fx:controller="controllers.NewTaskDialogController" stylesheets="@../styles/glob
             <Insets right="10.0" />
          </GridPane.margin>
       </ChoiceBox>
-      <Label text="Type" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <Label text="%type" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
    </children>
    <padding>
       <Insets bottom="9.0" left="9.0" right="9.0" top="9.0" />

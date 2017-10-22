@@ -16,6 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `Semester`
+--
+
+DROP TABLE IF EXISTS `Semester`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Semester` (
+  `IDSemester` int(11) NOT NULL AUTO_INCREMENT,
+  `Start_Date` date DEFAULT NULL,
+  `End_Date` date DEFAULT NULL,
+  `Description` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`IDSemester`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Semester`
+--
+
+LOCK TABLES `Semester` WRITE;
+/*!40000 ALTER TABLE `Semester` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Semester` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Subject`
 --
 
@@ -26,9 +51,11 @@ CREATE TABLE `Subject` (
   `IDSubject` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(45) DEFAULT NULL,
   `ProfessorName` varchar(45) DEFAULT NULL,
-  `IDSubjectTime` int(11) DEFAULT NULL,
+  `IDSemester` int(11) NOT NULL,
   `Color` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`IDSubject`)
+  PRIMARY KEY (`IDSubject`),
+  KEY `fk_Subject_Semester1_idx` (`IDSemester`),
+  CONSTRAINT `fk_Subject_Semester1` FOREIGN KEY (`IDSemester`) REFERENCES `Semester` (`IDSemester`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -42,29 +69,53 @@ LOCK TABLES `Subject` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Subject_Tasks`
+-- Table structure for table `Subject_Time`
 --
 
-DROP TABLE IF EXISTS `Subject_Tasks`;
+DROP TABLE IF EXISTS `Subject_Time`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Subject_Tasks` (
-  `IDSubject` int(11) NOT NULL,
-  `IDTask` int(11) NOT NULL,
-  KEY `fk_Subject_Tasks_Subject1_idx` (`IDSubject`),
-  KEY `fk_Subject_Tasks_Task1_idx` (`IDTask`),
-  CONSTRAINT `fk_Subject_Tasks_Subject1` FOREIGN KEY (`IDSubject`) REFERENCES `Subject` (`IDSubject`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Subject_Tasks_Task1` FOREIGN KEY (`IDTask`) REFERENCES `Task` (`IDTask`) ON DELETE NO ACTION ON UPDATE NO ACTION
+CREATE TABLE `Subject_Time` (
+  `IDSubject_Time` int(11) NOT NULL AUTO_INCREMENT,
+  `Day` varchar(50) DEFAULT NULL,
+  `Time` datetime DEFAULT NULL,
+  PRIMARY KEY (`IDSubject_Time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Subject_Tasks`
+-- Dumping data for table `Subject_Time`
 --
 
-LOCK TABLES `Subject_Tasks` WRITE;
-/*!40000 ALTER TABLE `Subject_Tasks` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Subject_Tasks` ENABLE KEYS */;
+LOCK TABLES `Subject_Time` WRITE;
+/*!40000 ALTER TABLE `Subject_Time` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Subject_Time` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Subject_Times`
+--
+
+DROP TABLE IF EXISTS `Subject_Times`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Subject_Times` (
+  `IDSubject` int(11) NOT NULL,
+  `IDSubject_Time` int(11) NOT NULL,
+  KEY `fk_Subject_Times_Subject1_idx` (`IDSubject`),
+  KEY `fk_Subject_Times_Subject_Time1_idx` (`IDSubject_Time`),
+  CONSTRAINT `fk_Subject_Times_Subject1` FOREIGN KEY (`IDSubject`) REFERENCES `Subject` (`IDSubject`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Subject_Times_Subject_Time1` FOREIGN KEY (`IDSubject_Time`) REFERENCES `Subject_Time` (`IDSubject_Time`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Subject_Times`
+--
+
+LOCK TABLES `Subject_Times` WRITE;
+/*!40000 ALTER TABLE `Subject_Times` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Subject_Times` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -78,9 +129,13 @@ CREATE TABLE `Task` (
   `IDTask` int(11) NOT NULL AUTO_INCREMENT,
   `Description` varchar(200) DEFAULT NULL,
   `Title` varchar(60) NOT NULL,
+  `Type` varchar(50) DEFAULT NULL,
   `IsDone` tinyint(4) DEFAULT NULL,
-  `TaskType` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`IDTask`)
+  `IDSubject` int(11) NOT NULL,
+  `DueDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`IDTask`),
+  KEY `fk_Task_Subject1_idx` (`IDSubject`),
+  CONSTRAINT `fk_Task_Subject1` FOREIGN KEY (`IDSubject`) REFERENCES `Subject` (`IDSubject`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -162,4 +217,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-09-22 13:35:18
+-- Dump completed on 2017-10-15 16:48:15
