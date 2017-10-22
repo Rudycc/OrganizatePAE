@@ -79,7 +79,10 @@ CREATE TABLE `Subject_Time` (
   `IDSubject_Time` int(11) NOT NULL AUTO_INCREMENT,
   `Day` varchar(50) DEFAULT NULL,
   `Time` datetime DEFAULT NULL,
-  PRIMARY KEY (`IDSubject_Time`)
+  `IDSubject` int(11) NOT NULL,
+  PRIMARY KEY (`IDSubject_Time`),
+  KEY `fk_Subject_Time_Subject1_idx` (`IDSubject`),
+  CONSTRAINT `fk_Subject_Time_Subject1` FOREIGN KEY (`IDSubject`) REFERENCES `Subject` (`IDSubject`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -90,32 +93,6 @@ CREATE TABLE `Subject_Time` (
 LOCK TABLES `Subject_Time` WRITE;
 /*!40000 ALTER TABLE `Subject_Time` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Subject_Time` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Subject_Times`
---
-
-DROP TABLE IF EXISTS `Subject_Times`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Subject_Times` (
-  `IDSubject` int(11) NOT NULL,
-  `IDSubject_Time` int(11) NOT NULL,
-  KEY `fk_Subject_Times_Subject1_idx` (`IDSubject`),
-  KEY `fk_Subject_Times_Subject_Time1_idx` (`IDSubject_Time`),
-  CONSTRAINT `fk_Subject_Times_Subject1` FOREIGN KEY (`IDSubject`) REFERENCES `Subject` (`IDSubject`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Subject_Times_Subject_Time1` FOREIGN KEY (`IDSubject_Time`) REFERENCES `Subject_Time` (`IDSubject_Time`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Subject_Times`
---
-
-LOCK TABLES `Subject_Times` WRITE;
-/*!40000 ALTER TABLE `Subject_Times` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Subject_Times` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -217,4 +194,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-15 16:48:15
+-- Dump completed on 2017-10-22 17:40:38
