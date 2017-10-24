@@ -123,7 +123,7 @@ public class SubjectDatabaseController {
 		return ids;
 	}
 	
-	public static boolean addSubject(String professor, String subject, int semester, String color, ArrayList<String> days, ArrayList<String> hours){
+	public static boolean addSubject(String professor, String subject, int semester, String color, List<String> days, List<String> hours){
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

@@ -2,6 +2,7 @@ package controllers;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -30,8 +31,8 @@ public class ManageSubjectsController implements Initializable {
 	@FXML Button btnAccept;
 	@FXML Button btnCancel;
 	@FXML Label hourMessage;
-	private ArrayList<String> days;
-	private ArrayList<String> hours;
+	private List<String> days;
+	private List<String> hours;
 	private String minutes;
 	private ResourceBundle resources;
 	private Stage dialogStage;
@@ -92,5 +93,4 @@ public class ManageSubjectsController implements Initializable {
 		dialogStage = (Stage) btnCancel.getScene().getWindow();
 		dialogStage.close();
 	}
-
 } 
