@@ -30,9 +30,7 @@ public class NewTaskDialogController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 
 		//Sets the classes choiceBox data
-		ObservableList<String> classesChoiceBoxData = FXCollections.observableArrayList(
-				"Software Design", "Operating Systems", "Networking Fundamentals", "Database Design Fundamentals");
-		choiceBoxClassChooser.setItems(classesChoiceBoxData);
+		choiceBoxClassChooser.setItems(TaskDatabaseController.getSubjects());
 		
 		//Sets the task type choiceBox data
 		ObservableList<String> typeChoiceBoxData = FXCollections.observableArrayList(
