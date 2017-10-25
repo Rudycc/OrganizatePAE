@@ -81,7 +81,7 @@ public class ManageSubjectsController implements Initializable {
 	
 	public void btnAcceptAction(){
 		if(SubjectDatabaseController.addSubject(txtProfessor.getText(), txtSubject.getText(), semesterChoiceBox.getValue(), 
-												colorPicker.getValue().toString(), days, hours)){
+												"#" + colorPicker.getValue().toString().substring(2, 8), days, hours)){
 			dialogStage = (Stage) btnCancel.getScene().getWindow();
 			dialogStage.close();
 		}else{

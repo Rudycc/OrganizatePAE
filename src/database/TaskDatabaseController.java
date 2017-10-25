@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cellItems.TaskCellItems;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class TaskDatabaseController {
 	public static List<TaskCellItems> getAllTasks(){
@@ -154,6 +156,35 @@ public class TaskDatabaseController {
 			}
 		}
 		return null;
+	}
+	
+	public static ObservableList<String> getSubjects(){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ObservableList<String> subjects = null;
+		try {
+			conn = MyDBConnection.getConnection();
+			ps = conn.prepareStatement("SELECT Name FROM Subject");
+			rs = ps.executeQuery();
+			subjects = FXCollections.observableArrayList();
+			
+			while (rs.next()) {
+				subjects.add(rs.getString(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+				rs.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return subjects;
 	}
 	
 	public static void insertNewTask(String title, String type, int isDone, String dueDate, String subject){
