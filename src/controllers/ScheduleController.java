@@ -63,7 +63,20 @@ public class ScheduleController implements Initializable {
 	}
 	
 	public void manageTerm(){
-		System.out.println("This is manage term");
+		try {
+			
+			Stage dialogStage = new Stage();
+			dialogStage.initOwner(agenda.getScene().getWindow());
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setTitle(rb.getString("titleManageTerm"));
+			
+			GridPane pane =  FXMLLoader.load(Main.class.getResource("ManageTermDialog.fxml"), this.rb);
+			
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 	
 	public void manageSubject(){
