@@ -15,10 +15,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
@@ -44,14 +46,19 @@ public class ExamController implements Initializable {
 					Stage dialogStage = new Stage();
 					dialogStage.initOwner(btnNewExam.getScene().getWindow());
 					dialogStage.initModality(Modality.APPLICATION_MODAL);
-					dialogStage.setTitle(rb.getString("titleTaskInfo"));
+					dialogStage.setTitle(rb.getString("titleExamInfo"));
 
 					GridPane newTaskPane = FXMLLoader.load(getClass().getResource("ExamInfo.fxml"), rb);
 
 					ListView<TaskCellItems> src = (ListView<TaskCellItems>) event.getSource();
 					if (!src.getItems().isEmpty()) {
 						String title = src.getSelectionModel().getSelectedItem().getTaskName();
+						String description = src.getSelectionModel().getSelectedItem().getDescription();
+						String date = src.getSelectionModel().getSelectedItem().getDueDate().toString();
 						((Label) newTaskPane.getChildren().get(1)).setText(title);
+						((Label) newTaskPane.getChildren().get(3)).setText(rb.getString("due") +": "+ date);
+						((TextArea) newTaskPane.getChildren().get(0)).setText(description);
+						((CheckBox) newTaskPane.getChildren().get(2)).setSelected(src.getSelectionModel().getSelectedItem().isDone());
 
 						dialogStage.setScene(new Scene(newTaskPane));
 						dialogStage.show();

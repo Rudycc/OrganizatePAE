@@ -187,17 +187,18 @@ public class TaskDatabaseController {
 		return subjects;
 	}
 	
-	public static void insertNewTask(String title, String type, int isDone, String dueDate, String subject){
+	public static void insertNewTask(String title, String description, String type, int isDone, String dueDate, String subject){
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
 			conn = MyDBConnection.getConnection();
-			ps = conn.prepareStatement("INSERT INTO Task(Title, Type, IsDone, IDSubject, DueDate) VALUES(?,?,?,?,?)");
-			ps.setString(1,title);
-			ps.setString(2,type);
-			ps.setInt(3, isDone);
-			ps.setInt(4, getIDSubject(subject));
-			ps.setString(5,dueDate);
+			ps = conn.prepareStatement("INSERT INTO Task(Description, Title, Type, IsDone, IDSubject, DueDate) VALUES(?,?,?,?,?,?)");
+			ps.setString(1,description);
+			ps.setString(2,title);
+			ps.setString(3,type);
+			ps.setInt(4, isDone);
+			ps.setInt(5, getIDSubject(subject));
+			ps.setString(6,dueDate);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
