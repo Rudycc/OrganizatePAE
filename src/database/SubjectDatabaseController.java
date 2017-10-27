@@ -5,11 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import cellItems.ClassCellItems;
+import cellItems.ScheduleItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -24,18 +27,27 @@ public class SubjectDatabaseController {
 			rs = st.executeQuery("Select * from Subject");
 			List<ClassCellItems> classes = new ArrayList<>();
 			while(rs.next()){
-				PreparedStatement ps = conn.prepareStatement("Select Subject_Time.* from Subject_Time "
+				PreparedStatement ps = conn.prepareStatement("Select Subject_Time.*, Semester.Start_Date, Semester.End_Date from Subject_Time "
+						+ "Join Subject on Subject_Time.IdSubject = Subject.IDSubject Join "
+						+ "Semester on Subject.IDSemester = Semester.IDSemester "
 						+ "where Subject_Time.IdSubject = ?");
 				ps.setInt(1, rs.getInt(1));
 				ResultSet times = ps.executeQuery();
+				List<ScheduleItem> days = new ArrayList<>();
 				while(times.next()){
-					System.out.println(times.getString(2));
+					ScheduleItem day = new ScheduleItem();
+					day.setDay(times.getString(2));
+					day.setTime(times.getTime(3).toLocalTime());
+					day.setStart(times.getDate(5).toLocalDate());
+					day.setEnd(times.getDate(6).toLocalDate());
+					days.add(day);
 				}
 				ClassCellItems cell = new ClassCellItems();
 				cell.setSubjectId(rs.getInt(1));
 				cell.setClassName(rs.getString(2));
 				cell.setProfessorName(rs.getString(3));
 				cell.setColor(rs.getString(5));
+				cell.setTimes(days);
 				classes.add(cell);
 				try{
 					ps.close();
