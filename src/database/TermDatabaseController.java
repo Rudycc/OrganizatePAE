@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -24,7 +22,14 @@ public class TermDatabaseController {
 			ps.executeUpdate();			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}	
+		} finally {
+			try {
+				conn.close();
+				ps.close();
+			} catch(Exception e){
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static ObservableList<String> getTerms(){
@@ -44,6 +49,14 @@ public class TermDatabaseController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				st.close();
+				rs.close();
+			} catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 		
 		return terms;

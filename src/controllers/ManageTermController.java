@@ -11,9 +11,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class ManageTermController implements Initializable {
-	@FXML DatePicker startDatePicker;
-	@FXML DatePicker endDatePicker;
-	@FXML TextField txtFldDescription;
+	@FXML
+	DatePicker startDatePicker;
+	@FXML
+	DatePicker endDatePicker;
+	@FXML
+	TextField txtFldDescription;
 	private ResourceBundle rb;
 	//Pointer to the Stage that contains the Pane
 	Stage dialogStage = null;
