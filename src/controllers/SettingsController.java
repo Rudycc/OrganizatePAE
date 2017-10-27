@@ -1,14 +1,8 @@
 package controllers;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
-import application.Main;
 import database.SettingsDatabaseController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
