@@ -54,6 +54,4 @@ public class ScheduleItem {
 	public void setEnd(LocalDate end) {
 		this.end = end;
 	}
-	
-
 }
