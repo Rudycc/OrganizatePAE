@@ -62,4 +62,15 @@ public class ClassCellItems {
 	public void setTimes(List<ScheduleItem> times) {
 		this.times = times;
 	}
+	
+	public String toString(){
+		StringBuilder str = new StringBuilder("Class Name: ");
+		
+		str.append(getClassName());
+		str.append("\nProfessor: ");
+		str.append(getProfessorName());
+		str.append("\nSemester: ");
+		
+		return str.toString();
+	}
 }

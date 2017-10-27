@@ -5,16 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import application.Main;
+import cellItems.ClassCellItems;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import database.SubjectDatabaseController;
 
@@ -92,5 +99,29 @@ public class ManageSubjectsController implements Initializable {
 	public void btnCancelAction(){
 		dialogStage = (Stage) btnCancel.getScene().getWindow();
 		dialogStage.close();
+	}
+	
+	
+	public void btnManageStored(){
+		try {
+			
+			Stage dialogStage = new Stage();
+			dialogStage.initOwner(txtSubject.getScene().getWindow());
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setTitle(resources.getString("titleManageStored"));
+			
+			GridPane pane =  FXMLLoader.load(Main.class.getResource("ClassInfoDialog.fxml"), this.resources);
+			
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.show();
+			
+			//Sets the textArea default value
+			TextArea paneTextArea = (TextArea) pane.getChildren().get(4);
+			List<ClassCellItems> classes = SubjectDatabaseController.getAllClasses();
+			paneTextArea.setText(classes.get(0).toString());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 } 
