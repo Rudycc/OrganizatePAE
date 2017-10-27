@@ -44,7 +44,6 @@ public class ScheduleController implements Initializable {
 					start = start.plusDays(1);
 				}
 				 while(start.isBefore(time.getEnd())){
-					 
 					 schedule.add(new Agenda.AppointmentImplLocal()
 							 .withStartLocalDateTime(start.atTime(time.getTime()))
 							 .withEndLocalDateTime(start.atTime(time.getTime().plusHours(2)))
@@ -52,7 +51,6 @@ public class ScheduleController implements Initializable {
 							 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group" + (subject.getSubjectId()%20) + 1))
 							 );
 					 start = start.plusDays(7);
-					 System.out.println(start);
 				 }
 			});
 		});
