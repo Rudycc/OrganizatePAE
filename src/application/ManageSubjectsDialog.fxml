@@ -5,10 +5,12 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <GridPane prefHeight="340.0" prefWidth="480.0" stylesheets="@../styles/global.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ManageSubjectsController">
    <rowConstraints>
@@ -33,7 +35,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
       </Label>
-      <TextField id="txtNewSubjectName" fx:id="txtSubjectName" prefWidth="417.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
+      <TextField fx:id="txtSubject" prefWidth="417.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
          <GridPane.margin>
             <Insets right="10.0" top="10.0" />
          </GridPane.margin>
@@ -46,7 +48,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
       </Label>
-      <TextField fx:id="txtProfName" prefWidth="417.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+      <TextField fx:id="txtProfessor" prefWidth="417.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets right="10.0" top="10.0" />
          </GridPane.margin>
@@ -75,32 +77,54 @@
          </GridPane.margin>
       </ColorPicker>
       <Label text="%newSubjectDay" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-      <Button fx:id="btnAddSubjectTime" mnemonicParsing="false" prefWidth="150.0" text="%newSubjectAddTime" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+      <Button fx:id="btnAddSubjectTime" mnemonicParsing="false" onAction="#btnAddSubjectTime" prefWidth="150.0" text="%newSubjectAddTime" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets bottom="10.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="btnAccept" mnemonicParsing="false" text="%accept" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
+      <Button fx:id="btnAccept" mnemonicParsing="false" onAction="#btnAcceptAction" text="%accept" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
          <GridPane.margin>
             <Insets bottom="10.0" right="10.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="btnManageExisting" mnemonicParsing="false" text="%cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
+      <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#btnCancelAction" text="%cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="80.0" />
          </GridPane.margin>
       </Button>
-      <ChoiceBox fx:id="semesterChoiceBox1" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <ChoiceBox fx:id="dayChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <Label text="%newSubjectTime" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-      <ChoiceBox fx:id="semesterChoiceBox11" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
+      <Label text="%newSubjectSchedule" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Spinner fx:id="minuteSpinner" amountToStepBy="10" initialValue="0" max="50" min="0" prefWidth="60.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets right="10.0" />
          </GridPane.margin>
-      </ChoiceBox>
-      <Label text="%newSubjectSchedule" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         <editable>true</editable>
+      </Spinner>
+      <Spinner fx:id="hourSpinner" amountToStepBy="1" initialValue="6" max="24" min="6" prefWidth="60.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets right="90.0" />
+         </GridPane.margin>
+         <editable>true</editable>
+      </Spinner>
+      <Label text=":" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets right="75.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="hourMessage" prefHeight="27.0" prefWidth="140.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+         <GridPane.margin>
+            <Insets bottom="10.0" right="10.0" />
+         </GridPane.margin>
+      </Label>
+      <Button mnemonicParsing="false" onAction="#btnManageStored" text="%newSubjectExisting" GridPane.columnSpan="2" GridPane.rowIndex="6">
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" />
+         </GridPane.margin>
+      </Button>
    </children>
    <padding>
       <Insets bottom="9.0" left="9.0" right="9.0" top="9.0" />

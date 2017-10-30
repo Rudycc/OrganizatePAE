@@ -10,15 +10,14 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="rootGridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-prefHeight="174.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" 
-fx:controller="controllers.NewTaskDialogController" stylesheets="@../styles/global.css">
+<GridPane fx:id="rootGridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="234.0" prefWidth="550.0" stylesheets="@../styles/global.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NewTaskDialogController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="237.0" minWidth="10.0" prefWidth="79.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="413.0" minWidth="10.0" prefWidth="406.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
@@ -29,12 +28,12 @@ fx:controller="controllers.NewTaskDialogController" stylesheets="@../styles/glob
             <Insets left="15.0" right="15.0" />
          </padding>
       </Label>
-      <Label fx:id="lblClass" text="%class" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+      <Label fx:id="lblClass" text="%class" GridPane.halignment="LEFT" GridPane.rowIndex="2">
          <padding>
             <Insets left="15.0" right="15.0" />
          </padding>
       </Label>
-      <Label fx:id="lblDue" text="%due" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+      <Label fx:id="lblDue" text="%due" GridPane.halignment="LEFT" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
@@ -50,28 +49,41 @@ fx:controller="controllers.NewTaskDialogController" stylesheets="@../styles/glob
             <Insets right="10.0" top="10.0" />
          </GridPane.margin>
       </TextField>
-      <ChoiceBox fx:id="choiceBoxClassChooser" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <ChoiceBox fx:id="choiceBoxClassChooser" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
       </ChoiceBox>
-      <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Button fx:id="btnAccept" mnemonicParsing="false" onAction='#btnAcceptAction' text="%accept" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+      <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Button fx:id="btnAccept" mnemonicParsing="false" onAction="#btnAcceptAction" text="%accept" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets bottom="10.0" right="10.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#btnCancelAction" text="%cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+      <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#btnCancelAction" text="%cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets bottom="10.0" right="80.0" />
          </GridPane.margin>
       </Button>
-      <ChoiceBox fx:id="choiceBoxTypeChooser" prefWidth="150.0" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+      <ChoiceBox fx:id="choiceBoxTypeChooser" prefWidth="150.0" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets right="10.0" />
          </GridPane.margin>
       </ChoiceBox>
-      <Label text="%type" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <Label text="%type" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+      <Label fx:id="lblName1" text="%description" GridPane.rowIndex="1">
+         <padding>
+            <Insets left="15.0" right="15.0" />
+         </padding>
+      </Label>
+      <TextField fx:id="txtDescription" prefWidth="417.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <padding>
+            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+         </padding>
+         <GridPane.margin>
+            <Insets right="10.0" />
+         </GridPane.margin>
+      </TextField>
    </children>
    <padding>
       <Insets bottom="9.0" left="9.0" right="9.0" top="9.0" />

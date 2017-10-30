@@ -20,6 +20,7 @@ public class NewTaskDialogController implements Initializable{
 	@FXML ChoiceBox<String> choiceBoxClassChooser;
 	@FXML ChoiceBox<String> choiceBoxTypeChooser;
 	@FXML TextField txtName;
+	@FXML TextField txtDescription;
 	@FXML DatePicker datePicker;
 	
 	//Pointer to the Stage that contains the Pane
@@ -30,9 +31,7 @@ public class NewTaskDialogController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 
 		//Sets the classes choiceBox data
-		ObservableList<String> classesChoiceBoxData = FXCollections.observableArrayList(
-				"Software Design", "Operating Systems", "Networking Fundamentals", "Database Design Fundamentals");
-		choiceBoxClassChooser.setItems(classesChoiceBoxData);
+		choiceBoxClassChooser.setItems(TaskDatabaseController.getSubjects());
 		
 		//Sets the task type choiceBox data
 		ObservableList<String> typeChoiceBoxData = FXCollections.observableArrayList(
@@ -53,7 +52,7 @@ public class NewTaskDialogController implements Initializable{
 			System.out.println("Empty Fields");
 		}else{
 			type = (choiceBoxTypeChooser.getSelectionModel().getSelectedIndex()==2)? "EXAM":"TASK";
-			TaskDatabaseController.insertNewTask(txtName.getText(), type, 0, datePicker.getValue()+"", choiceBoxClassChooser.getValue());
+			TaskDatabaseController.insertNewTask(txtName.getText(),txtDescription.getText(), type, 0, datePicker.getValue()+"", choiceBoxClassChooser.getValue());
 		}			
 		//Close the window
 		dialogStage = (Stage) btnCancel.getScene().getWindow();

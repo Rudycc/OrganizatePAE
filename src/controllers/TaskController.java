@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -51,7 +52,12 @@ public class TaskController implements Initializable {
 					ListView<TaskCellItems> src = (ListView<TaskCellItems>) event.getSource();
 					if (!src.getItems().isEmpty()) {
 						String title = src.getSelectionModel().getSelectedItem().getTaskName();
+						String description = src.getSelectionModel().getSelectedItem().getDescription();
+						String date = src.getSelectionModel().getSelectedItem().getDueDate().toString();
 						((Label) newTaskPane.getChildren().get(1)).setText(title);
+						((Label) newTaskPane.getChildren().get(3)).setText(rb.getString("due") +": "+ date);
+						((TextArea) newTaskPane.getChildren().get(0)).setText(description);
+						((CheckBox) newTaskPane.getChildren().get(2)).setSelected(src.getSelectionModel().getSelectedItem().isDone());
 						
 						dialogStage.setScene(new Scene(newTaskPane));
 						dialogStage.show();
