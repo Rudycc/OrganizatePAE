@@ -155,4 +155,28 @@ public class ExamDatabaseController {
 		}
 		return null;
 	}
+	
+	public static void updateExamInfo(int taskID, String description, int isDone){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			conn = MyDBConnection.getConnection();
+			ps = conn.prepareStatement("UPDATE Task SET Description = ? , IsDone = ? WHERE IDTask = ?");
+			ps.setString(1,description);
+			ps.setInt(2,isDone);
+			ps.setInt(3,taskID);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }
