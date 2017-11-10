@@ -20,7 +20,7 @@
    <children>
       <Label styleClass="upper-label" fx:id="lblTask" text="Label" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
       <Label styleClass="lower-label" fx:id="lblDueDate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: AliceBlue;" GridPane.rowSpan="2" />
+      <Pane fx:id="pane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: AliceBlue;" GridPane.rowSpan="2" />
    </children>
    <padding>
       <Insets bottom="9.0" right="9.0" top="9.0" />

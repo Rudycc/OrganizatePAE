@@ -2,47 +2,65 @@ package controllers;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalTime;
-
+import java.time.LocalDateTime;
+import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
-
+import application.*;
+import cellItems.ClassCellItems;
+import database.SubjectDatabaseController;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.Appointment;
+import jfxtras.scene.control.agenda.Agenda.AppointmentGroup;
+import jfxtras.scene.control.agenda.Agenda.AppointmentGroupImpl;
 
 public class ScheduleController implements Initializable {
 	@FXML
 	private Agenda agenda;
-	private int actual = 1;
+	private ResourceBundle rb;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		this.rb = resources;
 		agenda.setAllowDragging(false);
 		agenda.setAllowResize(false);
-		agenda.appointments().addAll(
-	        new Agenda.AppointmentImplLocal()
-	            .withStartLocalDateTime(LocalDate.now().atTime(4, 00))
-	            .withEndLocalDateTime(LocalDate.now().atTime(15, 30))
-	            .withDescription("It's time")
-	            .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1")),
-            new Agenda.AppointmentImplLocal()
-	            .withStartLocalDateTime(LocalDate.now().atTime(2, 00))
-	            .withEndLocalDateTime(LocalDate.now().atTime(12, 30))
-	            .withDescription("It's time")
-	            .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group1")).withSummary("Test")
-	            
-	    );
+		List<ClassCellItems> subjects = SubjectDatabaseController.getAllClasses();
+		List<Appointment> schedule = new ArrayList<>();
+		subjects.forEach((subject) -> {
+			subject.getTimes().forEach((time) -> {
+				LocalDate start = time.getStart();
+				while(!time.getDay().equals(start.getDayOfWeek().toString())){
+					start = start.plusDays(1);
+				}
+				 while(start.isBefore(time.getEnd())){
+					 schedule.add(new Agenda.AppointmentImplLocal()
+							 .withStartLocalDateTime(start.atTime(time.getTime()))
+							 .withEndLocalDateTime(start.atTime(time.getTime().plusHours(2)))
+							 .withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
+							 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group" + (subject.getSubjectId()%20) + 1))
+							 );
+					 start = start.plusDays(7);
+				 }
+			});
+		});
+
+		agenda.appointments().addAll(schedule);
+		
 		agenda.editAppointmentCallbackProperty().set(new Callback<Agenda.Appointment, Void>() {
 			
 			@Override
 			public Void call(Appointment param) {
-				actual++;
-				//param.setStartLocalDateTime(LocalDate.now().atStartOfDay());
-				//param.setWholeDay(!param.isWholeDay());
-				param.setAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group" + actual));
 				agenda.refresh();
 				return null;
 			}
@@ -58,11 +76,40 @@ public class ScheduleController implements Initializable {
 	}
 	
 	public void manageTerm(){
-		System.out.println("This is manage term");
+		try {
+			
+			Stage dialogStage = new Stage();
+			dialogStage.initOwner(agenda.getScene().getWindow());
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setTitle(rb.getString("titleManageTerm"));
+			
+			GridPane pane =  FXMLLoader.load(Main.class.getResource("ManageTermDialog.fxml"), this.rb);
+			
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 	
 	public void manageSubject(){
-		System.out.println("This is manage subject");
+		try {
+			
+			Stage dialogStage = new Stage();
+			dialogStage.initOwner(agenda.getScene().getWindow());
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setTitle(rb.getString("titleManageSubjects"));
+			
+			GridPane pane =  FXMLLoader.load(Main.class.getResource("ManageSubjectsDialog.fxml"), this.rb);
+			
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
 	}
 
 }

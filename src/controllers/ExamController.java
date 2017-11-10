@@ -1,18 +1,30 @@
 package controllers;
 
+import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import cellItems.TaskCellItems;
 import cells.TaskListViewCell;
+import database.ExamDatabaseController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class ExamController implements Initializable {
@@ -20,24 +32,56 @@ public class ExamController implements Initializable {
 	public ListView<TaskCellItems> pastList;
 	@FXML
 	public ListView<TaskCellItems> futureList;
-	public List<TaskCellItems> pastCellItems = new ArrayList<>(40);
-	public List<TaskCellItems> futureCellItems = new ArrayList<>(40);
 	ObservableList<TaskCellItems> pastObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> futureObservableList = FXCollections.observableArrayList();
-	
+	@FXML
+	Button btnNewExam;
+	private ResourceBundle rb;
+
+	private EventHandler<MouseEvent> cellClick = new EventHandler<MouseEvent>() {
+		@Override
+		public void handle(MouseEvent event) {
+			if (event.getClickCount() == 2) {
+				try {
+					Stage dialogStage = new Stage();
+					dialogStage.initOwner(btnNewExam.getScene().getWindow());
+					dialogStage.initModality(Modality.APPLICATION_MODAL);
+					dialogStage.setTitle(rb.getString("titleExamInfo"));
+
+					GridPane newTaskPane = FXMLLoader.load(getClass().getResource("ExamInfo.fxml"), rb);
+
+					ListView<TaskCellItems> src = (ListView<TaskCellItems>) event.getSource();
+					if (!src.getItems().isEmpty()) {
+						String title = src.getSelectionModel().getSelectedItem().getTaskName();
+						String description = src.getSelectionModel().getSelectedItem().getDescription();
+						String date = src.getSelectionModel().getSelectedItem().getDueDate().toString();
+						((Label) newTaskPane.getChildren().get(1)).setText(title);
+						((Label) newTaskPane.getChildren().get(3)).setText(rb.getString("due") +": "+ date);
+						((TextArea) newTaskPane.getChildren().get(0)).setText(description);
+						((CheckBox) newTaskPane.getChildren().get(2)).setSelected(src.getSelectionModel().getSelectedItem().isDone());
+
+						dialogStage.setScene(new Scene(newTaskPane));
+						dialogStage.show();
+					}
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	};
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		for(int i = 0; i < 40; i++){
-			TaskCellItems pastItem = new TaskCellItems("Exam " + i, "Day " + i);
-			pastCellItems.add(pastItem);
-			TaskCellItems futureItem = new TaskCellItems("Exam " + i, "Day " + i);
-			futureCellItems.add(futureItem);
-		}
-		pastObservableList.setAll(pastCellItems);
-		futureObservableList.setAll(futureCellItems);
+		this.rb = resources;
+
+		pastObservableList.setAll(ExamDatabaseController.getPreviousExams());
+		futureObservableList.setAll(ExamDatabaseController.getUpcomingExams());
 		pastList.setItems(pastObservableList);
 		futureList.setItems(futureObservableList);
+		pastList.setOnMouseClicked(this.cellClick);
+		futureList.setOnMouseClicked(this.cellClick);
+		
 		pastList.setCellFactory(new Callback<ListView<TaskCellItems>, ListCell<TaskCellItems>>() {
 
 			@Override
@@ -45,9 +89,9 @@ public class ExamController implements Initializable {
 				// TODO Auto-generated method stub
 				return new TaskListViewCell();
 			}
-			
+
 		});
-		
+
 		futureList.setCellFactory(new Callback<ListView<TaskCellItems>, ListCell<TaskCellItems>>() {
 
 			@Override
@@ -55,7 +99,29 @@ public class ExamController implements Initializable {
 				// TODO Auto-generated method stub
 				return new TaskListViewCell();
 			}
-			
+
 		});
+	}
+
+	public void createNewExam() {
+
+		try {
+			Stage dialogStage = new Stage();
+			dialogStage.initOwner(btnNewExam.getScene().getWindow());
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setTitle(this.rb.getString("titleNewExam"));
+
+			GridPane newTaskPane = FXMLLoader.load(getClass().getResource("NewTaskDialog.fxml"), this.rb);
+			dialogStage.setScene(new Scene(newTaskPane));
+
+			// Sets the task type choiceBox default value
+			ChoiceBox<String> paneChoiceBox = (ChoiceBox<String>) newTaskPane.getChildren().get(8);
+			paneChoiceBox.setValue(this.rb.getString("exam"));
+
+			dialogStage.show();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

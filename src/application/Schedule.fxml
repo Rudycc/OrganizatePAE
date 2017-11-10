@@ -21,10 +21,10 @@
   </rowConstraints>
    <children>
       <Agenda fx:id="agenda" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <Button mnemonicParsing="false" onAction="#moveToNextWeek" text="Next Week" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-      <Button mnemonicParsing="false" onAction="#manageTerm" text="Manage Semester" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
-      <Button mnemonicParsing="false" onAction="#manageSubject" text="Manage Subject" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-      <Button mnemonicParsing="false" onAction="#moveToPrevWeek" text="Previous Week" GridPane.columnIndex="0" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+      <Button mnemonicParsing="false" onAction="#moveToNextWeek" text="%nextWeek" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+      <Button mnemonicParsing="false" onAction="#manageTerm" text="%manageSemester" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+      <Button mnemonicParsing="false" onAction="#manageSubject" text="%manageSubject" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+      <Button mnemonicParsing="false" onAction="#moveToPrevWeek" text="%previousWeek" GridPane.columnIndex="0" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
    </children>
    <padding>
       <Insets bottom="9.0" left="9.0" right="9.0" top="9.0" />

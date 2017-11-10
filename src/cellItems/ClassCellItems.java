@@ -1,9 +1,18 @@
 package cellItems;
 
+import java.util.List;
+
 public class ClassCellItems {
+	private int subjectId;
 	private String className;
 	private String professorName;
 	private String day;
+	private String color;
+	private List<ScheduleItem> times;
+	
+	public ClassCellItems(){
+		
+	}
 	
 	public ClassCellItems(String className, String professorName, String day){
 		this.className = className;
@@ -29,6 +38,39 @@ public class ClassCellItems {
 	public void setDay(String day) {
 		this.day = day;
 	}
-	
 
+	public int getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(int subjectId) {
+		this.subjectId = subjectId;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public List<ScheduleItem> getTimes() {
+		return times;
+	}
+
+	public void setTimes(List<ScheduleItem> times) {
+		this.times = times;
+	}
+	
+	public String toString(){
+		StringBuilder str = new StringBuilder("Class Name: ");
+		
+		str.append(getClassName());
+		str.append("\nProfessor: ");
+		str.append(getProfessorName());
+		str.append("\nSemester: ");
+		
+		return str.toString();
+	}
 }
