@@ -114,7 +114,7 @@ public class TaskController implements Initializable, Refreshable {
 			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("NewTaskDialog.fxml"), this.rb);
 			GridPane newTaskPane =  loader.load();
-			((Refresher)loader.getController()).setParent(this);
+			((Refresher)loader.getController()).setParent(self);
 			dialogStage.setScene(new Scene(newTaskPane));			
 			//Sets the task type choiceBox default value
 			ChoiceBox<String> paneChoiceBox = (ChoiceBox<String>) newTaskPane.getChildren().get(8);
