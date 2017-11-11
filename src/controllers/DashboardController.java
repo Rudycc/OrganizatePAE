@@ -18,7 +18,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
 
-public class DashboardController implements Initializable {
+public class DashboardController implements Initializable, Refreshable {
 	@FXML
 	public ListView<ClassCellItems> todayList;
 	@FXML
@@ -73,6 +73,13 @@ public class DashboardController implements Initializable {
 		});
 		
 		
+	}
+
+	@Override
+	public void refreshData() {
+		classObservableList.setAll(SubjectDatabaseController.getTodayClasses());
+		taskObservableList.setAll(TaskDatabaseController.getTodayTasks());
+		examObservableList.setAll(ExamDatabaseController.getTodayExams());
 	}
 
 }

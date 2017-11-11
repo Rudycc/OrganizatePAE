@@ -25,7 +25,7 @@ import jfxtras.scene.control.agenda.Agenda.Appointment;
 import jfxtras.scene.control.agenda.Agenda.AppointmentGroup;
 import jfxtras.scene.control.agenda.Agenda.AppointmentGroupImpl;
 
-public class ScheduleController implements Initializable {
+public class ScheduleController implements Initializable, Refreshable {
 	@FXML
 	private Agenda agenda;
 	private ResourceBundle rb;
@@ -110,6 +110,32 @@ public class ScheduleController implements Initializable {
 		
 		
 		
+	}
+
+	@Override
+	public void refreshData() {
+		List<ClassCellItems> subjects = SubjectDatabaseController.getAllClasses();
+		List<Appointment> schedule = new ArrayList<>();
+		subjects.forEach((subject) -> {
+			subject.getTimes().forEach((time) -> {
+				LocalDate start = time.getStart();
+				while(!time.getDay().equals(start.getDayOfWeek().toString())){
+					start = start.plusDays(1);
+				}
+				 while(start.isBefore(time.getEnd())){
+					 schedule.add(new Agenda.AppointmentImplLocal()
+							 .withStartLocalDateTime(start.atTime(time.getTime()))
+							 .withEndLocalDateTime(start.atTime(time.getTime().plusHours(2)))
+							 .withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
+							 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group" + (subject.getSubjectId()%20) + 1))
+							 );
+					 start = start.plusDays(7);
+				 }
+			});
+		});
+
+		agenda.appointments().addAll(schedule);
+		agenda.refresh();
 	}
 
 }

@@ -27,7 +27,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class ExamController implements Initializable {
+public class ExamController implements Initializable, Refreshable {
 	@FXML
 	public ListView<TaskCellItems> pastList;
 	@FXML
@@ -125,5 +125,11 @@ public class ExamController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void refreshData() {
+		pastObservableList.setAll(ExamDatabaseController.getPreviousExams());
+		futureObservableList.setAll(ExamDatabaseController.getUpcomingExams());
 	}
 }

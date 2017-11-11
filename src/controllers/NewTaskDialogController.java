@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import database.TaskDatabaseController;
 
-public class NewTaskDialogController implements Initializable{
+public class NewTaskDialogController implements Initializable, Refresher{
 
 	@FXML Button btnCancel;
 	@FXML Button btnAccept;
@@ -26,7 +26,7 @@ public class NewTaskDialogController implements Initializable{
 	//Pointer to the Stage that contains the Pane
 	Stage dialogStage;
 	private String type;
-	private TaskController parentController;
+	private Refreshable parentController;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -62,7 +62,8 @@ public class NewTaskDialogController implements Initializable{
 		dialogStage.close();
 	}
 	
-	public void setParent(TaskController parentController){
+	@Override
+	public void setParent(Refreshable parentController){
 		this.parentController = parentController;
 	}
 	

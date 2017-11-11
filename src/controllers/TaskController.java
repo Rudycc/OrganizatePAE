@@ -23,13 +23,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.scene.control.ListCell;
 import javafx.util.Callback;
 
-public class TaskController implements Initializable {
-	
-	private NewTaskDialogController childController;
+public class TaskController implements Initializable, Refreshable {
 	
 	@FXML
 	public ListView<TaskCellItems> pastList;
@@ -41,6 +38,8 @@ public class TaskController implements Initializable {
 	@FXML Button btnNewTask;
 	private ResourceBundle rb;
 	
+	private Refreshable self = this;
+	
 	private EventHandler<MouseEvent> cellClick = new EventHandler<MouseEvent>() {
 		@Override
 		public void handle(MouseEvent event) {
@@ -50,8 +49,12 @@ public class TaskController implements Initializable {
 					dialogStage.initOwner(btnNewTask.getScene().getWindow());
 					dialogStage.initModality(Modality.APPLICATION_MODAL);
 					dialogStage.setTitle(rb.getString("titleTaskInfo"));
+					
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskInfo.fxml"), rb);
 
-					GridPane newTaskPane =  FXMLLoader.load(getClass().getResource("TaskInfo.fxml"), rb);
+					GridPane newTaskPane = loader.load();
+					
+					((Refresher)loader.getController()).setParent(self);
 					
 					ListView<TaskCellItems> src = (ListView<TaskCellItems>) event.getSource();
 					if (!src.getItems().isEmpty()) {
@@ -111,9 +114,8 @@ public class TaskController implements Initializable {
 			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("NewTaskDialog.fxml"), this.rb);
 			GridPane newTaskPane =  loader.load();
-			childController =(NewTaskDialogController)loader.getController();
-			childController.setParent(this);
-			dialogStage.setScene(new Scene(newTaskPane));					
+			((Refresher)loader.getController()).setParent(this);
+			dialogStage.setScene(new Scene(newTaskPane));			
 			//Sets the task type choiceBox default value
 			ChoiceBox<String> paneChoiceBox = (ChoiceBox<String>) newTaskPane.getChildren().get(8);
 			paneChoiceBox.setValue(this.rb.getString("task"));
@@ -125,6 +127,7 @@ public class TaskController implements Initializable {
 		}
 	}
 	
+	@Override
 	public void refreshData() {
 		pastObservableList.setAll(TaskDatabaseController.getPreviousTasks());
 		futureObservableList.setAll(TaskDatabaseController.getUpcomingTasks());
