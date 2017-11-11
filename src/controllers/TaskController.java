@@ -23,10 +23,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.scene.control.ListCell;
 import javafx.util.Callback;
 
 public class TaskController implements Initializable {
+	
+	private NewTaskDialogController childController;
+	
 	@FXML
 	public ListView<TaskCellItems> pastList;
 	@FXML
@@ -104,18 +108,25 @@ public class TaskController implements Initializable {
 			dialogStage.initOwner(btnNewTask.getScene().getWindow());
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(this.rb.getString("titleNewTask"));
-
-			GridPane newTaskPane =  FXMLLoader.load(getClass().getResource("NewTaskDialog.fxml"), this.rb);
-			dialogStage.setScene(new Scene(newTaskPane));					
 			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("NewTaskDialog.fxml"), this.rb);
+			GridPane newTaskPane =  loader.load();
+			childController =(NewTaskDialogController)loader.getController();
+			childController.setParent(this);
+			dialogStage.setScene(new Scene(newTaskPane));					
 			//Sets the task type choiceBox default value
 			ChoiceBox<String> paneChoiceBox = (ChoiceBox<String>) newTaskPane.getChildren().get(8);
 			paneChoiceBox.setValue(this.rb.getString("task"));
 			
 			dialogStage.show();
-
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void refreshData() {
+		pastObservableList.setAll(TaskDatabaseController.getPreviousTasks());
+		futureObservableList.setAll(TaskDatabaseController.getUpcomingTasks());
 	}
 }

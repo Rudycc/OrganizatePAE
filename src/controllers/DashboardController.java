@@ -40,6 +40,7 @@ public class DashboardController implements Initializable {
 		todayList.setItems(classObservableList);
 		taskList.setItems(taskObservableList);
 		examList.setItems(examObservableList);
+
 		
 		todayList.setCellFactory(new Callback<ListView<ClassCellItems>, ListCell<ClassCellItems>>() {
 

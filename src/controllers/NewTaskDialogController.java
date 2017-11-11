@@ -26,6 +26,7 @@ public class NewTaskDialogController implements Initializable{
 	//Pointer to the Stage that contains the Pane
 	Stage dialogStage;
 	private String type;
+	private TaskController parentController;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -53,10 +54,16 @@ public class NewTaskDialogController implements Initializable{
 		}else{
 			type = (choiceBoxTypeChooser.getSelectionModel().getSelectedIndex()==2)? "EXAM":"TASK";
 			TaskDatabaseController.insertNewTask(txtName.getText(),txtDescription.getText(), type, 0, datePicker.getValue()+"", choiceBoxClassChooser.getValue());
+			parentController.refreshData();
 		}			
 		//Close the window
 		dialogStage = (Stage) btnCancel.getScene().getWindow();
+
 		dialogStage.close();
+	}
+	
+	public void setParent(TaskController parentController){
+		this.parentController = parentController;
 	}
 	
 }
