@@ -34,6 +34,8 @@ public class ManageSubjectsController implements Initializable {
 	@FXML ChoiceBox<String> dayChoiceBox;
 	@FXML Spinner<Integer> hourSpinner;
 	@FXML Spinner<Integer> minuteSpinner;
+	@FXML Spinner<Integer> hourSpinnerDuration;
+	@FXML Spinner<Integer> minuteSpinnerDuration;
 	@FXML Button btnAddSubjectTime;
 	@FXML Button btnAccept;
 	@FXML Button btnCancel;
@@ -90,8 +92,10 @@ public class ManageSubjectsController implements Initializable {
 	}
 	
 	public void btnAcceptAction(){
+		float duration = hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 10);		
 		if(SubjectDatabaseController.addSubject(txtProfessor.getText(), txtSubject.getText(), semesterIDs.get(semesterChoiceBox.getSelectionModel().getSelectedIndex()), 
-												"#" + colorPicker.getValue().toString().substring(2, 8), days, hours)){
+												"#" + colorPicker.getValue().toString().substring(2, 8), days, hours, duration)){
+
 			dialogStage = (Stage) btnCancel.getScene().getWindow();
 			dialogStage.close();
 		}else{
@@ -103,8 +107,7 @@ public class ManageSubjectsController implements Initializable {
 		dialogStage = (Stage) btnCancel.getScene().getWindow();
 		dialogStage.close();
 	}
-	
-	
+		
 	public void btnManageStored(){
 		try {
 			
