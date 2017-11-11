@@ -8,6 +8,7 @@ public class ClassCellItems {
 	private String professorName;
 	private String day;
 	private String color;
+	private String semester; 
 	private List<ScheduleItem> times;
 	
 	public ClassCellItems(){
@@ -18,6 +19,7 @@ public class ClassCellItems {
 		this.className = className;
 		this.professorName = professorName;
 		this.day = day;
+		this.semester = "";
 	}
 	
 	public String getClassName() {
@@ -63,13 +65,21 @@ public class ClassCellItems {
 		this.times = times;
 	}
 	
+	public void setSemester(String semester){
+		this.semester = semester;
+	}
+	
+	public String getSemester(){
+		return this.semester;
+	}
+	
 	public String toString(){
 		StringBuilder str = new StringBuilder("Class Name: ");
 		
 		str.append(getClassName());
 		str.append("\nProfessor: ");
 		str.append(getProfessorName());
-		str.append("\nSemester: ");
+		str.append("\nSemester: " + getSemester());
 		
 		return str.toString();
 	}

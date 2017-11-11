@@ -48,6 +48,7 @@ public class SubjectDatabaseController {
 				cell.setProfessorName(rs.getString(3));
 				cell.setColor(rs.getString(5));
 				cell.setTimes(days);
+				cell.setSemester(getSemesterDescForSubject(rs.getInt(1)));
 				classes.add(cell);
 				try{
 					ps.close();
@@ -133,6 +134,97 @@ public class SubjectDatabaseController {
 		}
 		
 		return ids;
+	}
+	
+	public static ObservableList<String> getAllSemesterDescriptions(){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ObservableList<String> descriptions = null;
+		try{
+			conn = MyDBConnection.getConnection();
+			ps = conn.prepareStatement("SELECT Description FROM Semester");
+			rs = ps.executeQuery();
+			descriptions = FXCollections.observableArrayList();
+			
+			while(rs.next()){
+				descriptions.add(rs.getString(1));
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try{
+				ps.close();
+				rs.close();
+				conn.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+		
+		return descriptions;
+	}
+	
+	public static String getSemesterDescForSubject(int IDSubject){
+		String semesterDescription = "";
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = MyDBConnection.getConnection();
+			ps = conn.prepareStatement("SELECT s.Description, s.IDSemester FROM OrganizatePAE.Subject sub "
+					+ "JOIN Semester s ON s.IDSemester = sub.IDSemester WHERE IDSubject = ?");
+			ps.setInt(1, IDSubject);
+			rs = ps.executeQuery();
+			
+			if(rs.next())
+				semesterDescription = rs.getString(1);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				rs.close();
+				conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return semesterDescription;
+	}
+	
+	public static int getSemesterIDForSubject(String name){
+		int semID = 1;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = MyDBConnection.getConnection();
+			ps = conn.prepareStatement("SELECT s.Description, s.IDSemester FROM OrganizatePAE.Subject sub "
+					+ "JOIN Semester s ON s.IDSemester = sub.IDSemester WHERE Name = ?");
+			ps.setString(1, name);
+			rs = ps.executeQuery();
+			
+			if(rs.next())
+				semID = rs.getInt(1);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				rs.close();
+				conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return semID;
 	}
 	
 	public static boolean addSubject(String professor, String subject, int semester, String color, List<String> days, List<String> hours, float duration){
