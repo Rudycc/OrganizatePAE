@@ -7,18 +7,11 @@ import database.SettingsDatabaseController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import resources.I18N;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
 
 
 public class Main extends Application {
-	
-	@Override
-	public void init() {
-		I18N.setSupportedLocales(Locale.ENGLISH, new Locale("ES"));
-		I18N.setResourceBundlePath("resources.UIResources");
-	}
 	
 	@Override
 	public void start(Stage primaryStage) {

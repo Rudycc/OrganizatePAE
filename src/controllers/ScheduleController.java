@@ -25,10 +25,12 @@ import jfxtras.scene.control.agenda.Agenda.Appointment;
 import jfxtras.scene.control.agenda.Agenda.AppointmentGroup;
 import jfxtras.scene.control.agenda.Agenda.AppointmentGroupImpl;
 
-public class ScheduleController implements Initializable {
+public class ScheduleController implements Initializable, Refreshable, Refresher {
 	@FXML
 	private Agenda agenda;
 	private ResourceBundle rb;
+	private Refreshable self = this;
+	private Refreshable parent;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -83,7 +85,9 @@ public class ScheduleController implements Initializable {
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(rb.getString("titleManageTerm"));
 			
-			GridPane pane =  FXMLLoader.load(Main.class.getResource("ManageTermDialog.fxml"), this.rb);
+			FXMLLoader loader = new FXMLLoader(Main.class.getResource("ManageTermDialog.fxml"), this.rb);
+			GridPane pane =  loader.load();
+			((Refresher)loader.getController()).setParent(self);
 			
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.show();
@@ -100,16 +104,48 @@ public class ScheduleController implements Initializable {
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(rb.getString("titleManageSubjects"));
 			
-			GridPane pane =  FXMLLoader.load(Main.class.getResource("ManageSubjectsDialog.fxml"), this.rb);
+			FXMLLoader loader = new FXMLLoader(Main.class.getResource("ManageSubjectsDialog.fxml"), this.rb);
+			GridPane pane =  loader.load();
+			((Refresher)loader.getController()).setParent(self);
 			
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void refreshData() {
+		List<ClassCellItems> subjects = SubjectDatabaseController.getAllClasses();
+		List<Appointment> schedule = new ArrayList<>();
+		subjects.forEach((subject) -> {
+			subject.getTimes().forEach((time) -> {
+				LocalDate start = time.getStart();
+				while(!time.getDay().equals(start.getDayOfWeek().toString())){
+					start = start.plusDays(1);
+				}
+				 while(start.isBefore(time.getEnd())){
+					 schedule.add(new Agenda.AppointmentImplLocal()
+							 .withStartLocalDateTime(start.atTime(time.getTime()))
+							 .withEndLocalDateTime(start.atTime(time.getTime().plusHours(2)))
+							 .withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
+							 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group" + (subject.getSubjectId()%20) + 1))
+							 );
+					 start = start.plusDays(7);
+				 }
+			});
+		});
 		
-		
-		
+		agenda.appointments().clear();
+		agenda.appointments().addAll(schedule);
+		agenda.refresh();
+		parent.refreshData();
+	}
+
+	@Override
+	public void setParent(Refreshable parent) {
+		this.parent = parent;
 	}
 
 }
