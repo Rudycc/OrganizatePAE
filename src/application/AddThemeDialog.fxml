@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="rootGridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="570.0" stylesheets="@../styles/global.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddThemeController">
+<GridPane fx:id="rootGridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="570.0" stylesheets="@../styles/global.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddThemeController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="237.0" minWidth="10.0" prefWidth="84.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="237.0" minWidth="10.0" prefWidth="100.0" />
@@ -44,15 +44,15 @@
       <Label text="%gray-darker" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
       <Label text="%gray-light" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
       <Label text="%gray-lighter" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-      <ColorPicker GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-      <ColorPicker GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-      <ColorPicker GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-      <ColorPicker GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-      <ColorPicker GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-      <ColorPicker GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-      <ColorPicker GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-      <ColorPicker GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-      <ColorPicker GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+      <ColorPicker fx:id="colorPrimary" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+      <ColorPicker fx:id="colorInfo" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+      <ColorPicker fx:id="colorDefault" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+      <ColorPicker fx:id="colorBg" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+      <ColorPicker fx:id="grayBase" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+      <ColorPicker fx:id="grayDark" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+      <ColorPicker fx:id="grayDarker" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+      <ColorPicker fx:id="grayLight" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+      <ColorPicker fx:id="grayLighter" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
       <Button mnemonicParsing="false" text="%accept" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="12" />
       <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </children>
