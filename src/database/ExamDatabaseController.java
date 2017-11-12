@@ -90,8 +90,9 @@ public class ExamDatabaseController {
 		ResultSet rs = null;
 		try{
 			conn = MyDBConnection.getConnection();
-			ps = conn.prepareStatement("Select Task.*, Subject.color from Task Join Subject on Subject.IdSubject = Task.IdSubject where Task.type = 'EXAM' and Task.DueDate = ?");
+			ps = conn.prepareStatement("Select Task.*, Subject.color from Task Join Subject on Subject.IdSubject = Task.IdSubject where Task.type = 'EXAM' and Task.DueDate between ? and ?");
 			ps.setDate(1, Date.valueOf(LocalDate.now()));
+			ps.setDate(2, Date.valueOf(LocalDate.now().plusDays(7)));
 			rs = ps.executeQuery();
 			List<TaskCellItems> exams = new ArrayList<>();
 			while(rs.next()){
@@ -167,14 +168,12 @@ public class ExamDatabaseController {
 			ps.setInt(3,taskID);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
 			try {
 				ps.close();
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
