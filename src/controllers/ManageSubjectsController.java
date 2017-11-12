@@ -29,7 +29,7 @@ public class ManageSubjectsController implements Initializable {
 
 	@FXML TextField txtSubject;
 	@FXML TextField txtProfessor;
-	@FXML ChoiceBox<Integer> semesterChoiceBox;
+	@FXML ChoiceBox<String> semesterChoiceBox;
 	@FXML ColorPicker colorPicker;
 	@FXML ChoiceBox<String> dayChoiceBox;
 	@FXML Spinner<Integer> hourSpinner;
@@ -45,6 +45,7 @@ public class ManageSubjectsController implements Initializable {
 	private String minutes;
 	private ResourceBundle resources;
 	private Stage dialogStage;
+	private ObservableList<Integer> semesterIDs;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -54,10 +55,12 @@ public class ManageSubjectsController implements Initializable {
 				resources.getString("sunday")); 
 		dayChoiceBox.setItems(typeChoiceBoxData);
 		
-		semesterChoiceBox.setItems(SubjectDatabaseController.getAllSemesterIDs());
+		semesterChoiceBox.setItems(SubjectDatabaseController.getAllSemesterNames());
 		
 		days = new ArrayList<String>();
 		hours = new ArrayList<String>();
+		
+		semesterIDs = SubjectDatabaseController.getAllSemesterIDs();
 		
 		this.resources = resources;
 		
@@ -89,11 +92,10 @@ public class ManageSubjectsController implements Initializable {
 	}
 	
 	public void btnAcceptAction(){
-		
-		float duration = hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 10);
-		
-		if(SubjectDatabaseController.addSubject(txtProfessor.getText(), txtSubject.getText(), semesterChoiceBox.getValue(), 
+		float duration = hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 10);		
+		if(SubjectDatabaseController.addSubject(txtProfessor.getText(), txtSubject.getText(), semesterIDs.get(semesterChoiceBox.getSelectionModel().getSelectedIndex()), 
 												"#" + colorPicker.getValue().toString().substring(2, 8), days, hours, duration)){
+
 			dialogStage = (Stage) btnCancel.getScene().getWindow();
 			dialogStage.close();
 		}else{
