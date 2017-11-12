@@ -27,7 +27,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class ExamController implements Initializable {
+public class ExamController implements Initializable, Refreshable, Refresher {
 	@FXML
 	public ListView<TaskCellItems> pastList;
 	@FXML
@@ -37,6 +37,8 @@ public class ExamController implements Initializable {
 	@FXML
 	Button btnNewExam;
 	private ResourceBundle rb;
+	private Refreshable self = this;
+	private Refreshable parent;
 
 	private EventHandler<MouseEvent> cellClick = new EventHandler<MouseEvent>() {
 		@Override
@@ -48,7 +50,9 @@ public class ExamController implements Initializable {
 					dialogStage.initModality(Modality.APPLICATION_MODAL);
 					dialogStage.setTitle(rb.getString("titleExamInfo"));
 
-					GridPane newTaskPane = FXMLLoader.load(getClass().getResource("ExamInfo.fxml"), rb);
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("ExamInfo.fxml"), rb);
+					GridPane newTaskPane = loader.load();
+					((Refresher)loader.getController()).setParent(self);
 
 					ListView<TaskCellItems> src = (ListView<TaskCellItems>) event.getSource();
 					if (!src.getItems().isEmpty()) {
@@ -88,7 +92,6 @@ public class ExamController implements Initializable {
 
 			@Override
 			public ListCell<TaskCellItems> call(ListView<TaskCellItems> pastList) {
-				// TODO Auto-generated method stub
 				return new TaskListViewCell();
 			}
 
@@ -98,7 +101,6 @@ public class ExamController implements Initializable {
 
 			@Override
 			public ListCell<TaskCellItems> call(ListView<TaskCellItems> param) {
-				// TODO Auto-generated method stub
 				return new TaskListViewCell();
 			}
 
@@ -113,7 +115,10 @@ public class ExamController implements Initializable {
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(this.rb.getString("titleNewExam"));
 
-			GridPane newTaskPane = FXMLLoader.load(getClass().getResource("NewTaskDialog.fxml"), this.rb);
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("NewTaskDialog.fxml"), this.rb);
+			GridPane newTaskPane = loader.load();
+			((Refresher)loader.getController()).setParent(self);
+			
 			dialogStage.setScene(new Scene(newTaskPane));
 
 			// Sets the task type choiceBox default value
@@ -125,5 +130,17 @@ public class ExamController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void refreshData() {
+		pastObservableList.setAll(ExamDatabaseController.getPreviousExams());
+		futureObservableList.setAll(ExamDatabaseController.getUpcomingExams());
+		parent.refreshData();
+	}
+
+	@Override
+	public void setParent(Refreshable parent) {
+		this.parent = parent;
 	}
 }

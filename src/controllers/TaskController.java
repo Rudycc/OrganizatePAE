@@ -26,7 +26,8 @@ import javafx.stage.Stage;
 import javafx.scene.control.ListCell;
 import javafx.util.Callback;
 
-public class TaskController implements Initializable {
+public class TaskController implements Initializable, Refreshable, Refresher {
+	
 	@FXML
 	public ListView<TaskCellItems> pastList;
 	@FXML
@@ -37,6 +38,9 @@ public class TaskController implements Initializable {
 	@FXML Button btnNewTask;
 	private ResourceBundle rb;
 	
+	private Refreshable self = this;
+	private Refreshable parent;
+	
 	private EventHandler<MouseEvent> cellClick = new EventHandler<MouseEvent>() {
 		@Override
 		public void handle(MouseEvent event) {
@@ -46,8 +50,12 @@ public class TaskController implements Initializable {
 					dialogStage.initOwner(btnNewTask.getScene().getWindow());
 					dialogStage.initModality(Modality.APPLICATION_MODAL);
 					dialogStage.setTitle(rb.getString("titleTaskInfo"));
+					
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskInfo.fxml"), rb);
 
-					GridPane newTaskPane =  FXMLLoader.load(getClass().getResource("TaskInfo.fxml"), rb);
+					GridPane newTaskPane = loader.load();
+					
+					((Refresher)loader.getController()).setParent(self);
 					
 					ListView<TaskCellItems> src = (ListView<TaskCellItems>) event.getSource();
 					if (!src.getItems().isEmpty()) {
@@ -104,18 +112,30 @@ public class TaskController implements Initializable {
 			dialogStage.initOwner(btnNewTask.getScene().getWindow());
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(this.rb.getString("titleNewTask"));
-
-			GridPane newTaskPane =  FXMLLoader.load(getClass().getResource("NewTaskDialog.fxml"), this.rb);
-			dialogStage.setScene(new Scene(newTaskPane));					
 			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("NewTaskDialog.fxml"), this.rb);
+			GridPane newTaskPane =  loader.load();
+			((Refresher)loader.getController()).setParent(self);
+			dialogStage.setScene(new Scene(newTaskPane));			
 			//Sets the task type choiceBox default value
 			ChoiceBox<String> paneChoiceBox = (ChoiceBox<String>) newTaskPane.getChildren().get(8);
 			paneChoiceBox.setValue(this.rb.getString("task"));
 			
 			dialogStage.show();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void refreshData() {
+		pastObservableList.setAll(TaskDatabaseController.getPreviousTasks());
+		futureObservableList.setAll(TaskDatabaseController.getUpcomingTasks());
+		parent.refreshData();
+	}
+
+	@Override
+	public void setParent(Refreshable parent) {
+		this.parent = parent;
 	}
 }
