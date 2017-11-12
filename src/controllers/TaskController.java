@@ -122,7 +122,6 @@ public class TaskController implements Initializable, Refreshable, Refresher {
 			paneChoiceBox.setValue(this.rb.getString("task"));
 			
 			dialogStage.show();
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
