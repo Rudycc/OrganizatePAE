@@ -32,7 +32,6 @@ public class DashboardController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
 		classObservableList.setAll(SubjectDatabaseController.getTodayClasses());
 		taskObservableList.setAll(TaskDatabaseController.getTodayTasks());
 		examObservableList.setAll(ExamDatabaseController.getTodayExams());
@@ -45,7 +44,6 @@ public class DashboardController implements Initializable {
 
 			@Override
 			public ListCell<ClassCellItems> call(ListView<ClassCellItems> todayList) {
-				// TODO Auto-generated method stub
 				return new ClassListViewCell();
 			}
 			
@@ -55,7 +53,6 @@ public class DashboardController implements Initializable {
 
 			@Override
 			public ListCell<TaskCellItems> call(ListView<TaskCellItems> taskList) {
-				// TODO Auto-generated method stub
 				return new TaskListViewCell();
 			}
 			
@@ -65,13 +62,9 @@ public class DashboardController implements Initializable {
 
 			@Override
 			public ListCell<TaskCellItems> call(ListView<TaskCellItems> examList) {
-				// TODO Auto-generated method stub
 				return new TaskListViewCell();
 			}
 			
 		});
-		
-		
 	}
-
 }
