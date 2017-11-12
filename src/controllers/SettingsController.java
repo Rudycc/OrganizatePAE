@@ -70,9 +70,10 @@ public class SettingsController implements Initializable {
 	}
 
 	public void acceptAction() {
-		Boolean changed = SettingsDatabaseController
+		Boolean changedLang = SettingsDatabaseController
 				.setLanguage(langChoice.getSelectionModel().getSelectedItem().equals("English") ? "EN" : "ES");
-		if (changed) {
+		Boolean changedTheme = SettingsDatabaseController.setTheme(themeChoice.getSelectionModel().getSelectedItem());
+		if (changedLang && changedTheme) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setHeaderText(this.rb.getString("settDialogTitle"));
 			alert.setContentText(this.rb.getString("settDialogText"));
@@ -108,8 +109,8 @@ public class SettingsController implements Initializable {
 			dialogStage.setTitle(this.rb.getString("addTheme"));
 
 			GridPane newThemePane = FXMLLoader.load(Main.class.getResource("AddThemeDialog.fxml"), this.rb);
+			newThemePane.setStyle(Main.getThemeString());
 			dialogStage.setScene(new Scene(newThemePane));
-
 			dialogStage.show();
 
 		} catch (IOException e) {
@@ -125,6 +126,7 @@ public class SettingsController implements Initializable {
 			dialogStage.setTitle(this.rb.getString("editTheme"));
 
 			GridPane newThemePane = FXMLLoader.load(Main.class.getResource("EditThemeDialog.fxml"), this.rb);
+			newThemePane.setStyle(Main.getThemeString());
 			dialogStage.setScene(new Scene(newThemePane));
 
 			dialogStage.show();

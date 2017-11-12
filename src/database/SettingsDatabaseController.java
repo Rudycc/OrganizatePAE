@@ -176,6 +176,43 @@ public class SettingsDatabaseController {
 		}
 		return null;
 	}
+	
+	public static Map<String, String> getTheme(String name) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			conn = MyDBConnection.getConnection();
+			st = conn.prepareStatement("Select * From Theme Where Name = ?;");
+			st.setString(1, name);
+			rs = st.executeQuery();
+			Map<String, String> theme = new HashMap<>();
+			while (rs.next()) {
+				theme.put("Name", rs.getString(2));
+				theme.put("color-primary", rs.getString(3));
+				theme.put("color-info", rs.getString(4));
+				theme.put("color-default", rs.getString(5));
+				theme.put("color-bg", rs.getString(6));
+				theme.put("gray-base", rs.getString(7));
+				theme.put("gray-dark", rs.getString(8));
+				theme.put("gray-darker", rs.getString(9));
+				theme.put("gray-light", rs.getString(10));
+				theme.put("gray-lighter", rs.getString(11));
+			}
+			return theme;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 
 	public static Boolean updateTheme(Map<String, String> theme) {
 		Connection conn = null;
@@ -229,6 +266,31 @@ public class SettingsDatabaseController {
 			st.setString(9, theme.get("gray-lighter"));
 			st.setString(10, theme.get("Name"));
 			Integer modified = st.executeUpdate();
+			if (modified == 1) {
+				return new Boolean(true);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return new Boolean(false);
+	}
+	
+	public static Boolean setTheme(String newTheme) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		Integer modified = new Integer(0);
+		try {
+			conn = MyDBConnection.getConnection();
+			st = conn.prepareStatement("Update User set SelectedThemeID = (Select IDTheme From Theme Where Name = ?)");
+			st.setString(1, newTheme);
+			modified = st.executeUpdate();
 			if (modified == 1) {
 				return new Boolean(true);
 			}
