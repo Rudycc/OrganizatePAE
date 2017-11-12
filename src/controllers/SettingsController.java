@@ -1,8 +1,12 @@
 package controllers;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Main;
 import database.SettingsDatabaseController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,9 +37,14 @@ public class SettingsController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.rb = resources;
+		String lang = SettingsDatabaseController.getLanguage();
 		ObservableList<String> languages = FXCollections.observableArrayList("English", "Español");
 		langChoice.setItems(languages);
-		langChoice.getSelectionModel().selectFirst();
+		if (lang.equals("EN")) {			
+			langChoice.getSelectionModel().selectFirst();
+		} else {
+			langChoice.getSelectionModel().select(1);			
+		}
 		ObservableList<String> themes = FXCollections.observableArrayList("Tranquility");
 		themeChoice.setItems(themes);
 		themeChoice.getSelectionModel().selectFirst();
@@ -51,7 +60,8 @@ public class SettingsController implements Initializable {
 	}
 
 	public void acceptAction() {
-		Boolean changed = SettingsDatabaseController.setLanguage(langChoice.getSelectionModel().getSelectedItem().equals("English") ? "EN" : "ES");
+		Boolean changed = SettingsDatabaseController
+				.setLanguage(langChoice.getSelectionModel().getSelectedItem().equals("English") ? "EN" : "ES");
 		if (changed) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setHeaderText(this.rb.getString("settDialogTitle"));
@@ -59,6 +69,24 @@ public class SettingsController implements Initializable {
 			DialogPane dialogPane = alert.getDialogPane();
 			dialogPane.getStylesheets().add(getClass().getResource("../styles/global.css").toExternalForm());
 			alert.show();
+			restart();
 		}
+	}
+
+	private void restart() {
+		StringBuilder cmd = new StringBuilder();
+		cmd.append(System.getProperty("java.home") + File.separator + "bin" + File.separator + "java ");
+		for (String jvmArg : ManagementFactory.getRuntimeMXBean().getInputArguments()) {
+			cmd.append(jvmArg + " ");
+		}
+		cmd.append("-cp ").append(ManagementFactory.getRuntimeMXBean().getClassPath()).append(" ");
+		cmd.append(Main.class.getName()).append(" ");
+
+		try {
+			Runtime.getRuntime().exec(cmd.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.exit(0);
 	}
 }
