@@ -25,7 +25,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import database.SubjectDatabaseController;
 
-public class ManageSubjectsController implements Initializable {
+public class ManageSubjectsController implements Initializable, Refresher {
 
 	@FXML TextField txtSubject;
 	@FXML TextField txtProfessor;
@@ -43,6 +43,7 @@ public class ManageSubjectsController implements Initializable {
 	private String minutes;
 	private ResourceBundle resources;
 	private Stage dialogStage;
+	private Refreshable parent;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -89,6 +90,7 @@ public class ManageSubjectsController implements Initializable {
 	public void btnAcceptAction(){
 		if(SubjectDatabaseController.addSubject(txtProfessor.getText(), txtSubject.getText(), semesterChoiceBox.getValue(), 
 												"#" + colorPicker.getValue().toString().substring(2, 8), days, hours)){
+			parent.refreshData();
 			dialogStage = (Stage) btnCancel.getScene().getWindow();
 			dialogStage.close();
 		}else{
@@ -123,5 +125,11 @@ public class ManageSubjectsController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void setParent(Refreshable parent) {
+		// TODO Auto-generated method stub
+		this.parent = parent;
 	}
 } 

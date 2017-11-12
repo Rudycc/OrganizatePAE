@@ -37,6 +37,7 @@ public class ExamController implements Initializable, Refreshable {
 	@FXML
 	Button btnNewExam;
 	private ResourceBundle rb;
+	private Refreshable self = this;
 
 	private EventHandler<MouseEvent> cellClick = new EventHandler<MouseEvent>() {
 		@Override
@@ -48,7 +49,9 @@ public class ExamController implements Initializable, Refreshable {
 					dialogStage.initModality(Modality.APPLICATION_MODAL);
 					dialogStage.setTitle(rb.getString("titleExamInfo"));
 
-					GridPane newTaskPane = FXMLLoader.load(getClass().getResource("ExamInfo.fxml"), rb);
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("ExamInfo.fxml"), rb);
+					GridPane newTaskPane = loader.load();
+					((Refresher)loader.getController()).setParent(self);
 
 					ListView<TaskCellItems> src = (ListView<TaskCellItems>) event.getSource();
 					if (!src.getItems().isEmpty()) {
@@ -113,7 +116,10 @@ public class ExamController implements Initializable, Refreshable {
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(this.rb.getString("titleNewExam"));
 
-			GridPane newTaskPane = FXMLLoader.load(getClass().getResource("NewTaskDialog.fxml"), this.rb);
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("NewTaskDialog.fxml"), this.rb);
+			GridPane newTaskPane = loader.load();
+			((Refresher)loader.getController()).setParent(self);
+			
 			dialogStage.setScene(new Scene(newTaskPane));
 
 			// Sets the task type choiceBox default value

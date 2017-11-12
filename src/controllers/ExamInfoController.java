@@ -11,12 +11,13 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import database.ExamDatabaseController;
 
-public class ExamInfoController implements Initializable {
+public class ExamInfoController implements Initializable, Refresher {
 	@FXML TextArea txtAreaDescription;
 	@FXML Button btnAcccept;
 	@FXML Label examId;
 	@FXML CheckBox checkBoxDone;
 	private Stage dialogStage;
+	private Refreshable parent;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -26,7 +27,14 @@ public class ExamInfoController implements Initializable {
 	public void btnAcceptAction(){
 		int isDone = (checkBoxDone.isSelected())? 1 : 0;
 		ExamDatabaseController.updateExamInfo(Integer.parseInt(examId.getText()), txtAreaDescription.getText(), isDone);
+		parent.refreshData();
 		dialogStage = (Stage) btnAcccept.getScene().getWindow();
 		dialogStage.close();
+	}
+
+	@Override
+	public void setParent(Refreshable parent) {
+		// TODO Auto-generated method stub
+		this.parent = parent;
 	}
 }

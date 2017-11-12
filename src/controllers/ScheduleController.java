@@ -29,6 +29,7 @@ public class ScheduleController implements Initializable, Refreshable {
 	@FXML
 	private Agenda agenda;
 	private ResourceBundle rb;
+	private Refreshable self = this;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -83,7 +84,9 @@ public class ScheduleController implements Initializable, Refreshable {
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(rb.getString("titleManageTerm"));
 			
-			GridPane pane =  FXMLLoader.load(Main.class.getResource("ManageTermDialog.fxml"), this.rb);
+			FXMLLoader loader = new FXMLLoader(Main.class.getResource("ManageTermDialog.fxml"), this.rb);
+			GridPane pane =  loader.load();
+			((Refresher)loader.getController()).setParent(self);
 			
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.show();
@@ -100,7 +103,9 @@ public class ScheduleController implements Initializable, Refreshable {
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(rb.getString("titleManageSubjects"));
 			
-			GridPane pane =  FXMLLoader.load(Main.class.getResource("ManageSubjectsDialog.fxml"), this.rb);
+			FXMLLoader loader = new FXMLLoader(Main.class.getResource("ManageSubjectsDialog.fxml"), this.rb);
+			GridPane pane =  loader.load();
+			((Refresher)loader.getController()).setParent(self);
 			
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.show();
@@ -133,7 +138,8 @@ public class ScheduleController implements Initializable, Refreshable {
 				 }
 			});
 		});
-
+		
+		agenda.appointments().clear();
 		agenda.appointments().addAll(schedule);
 		agenda.refresh();
 	}
