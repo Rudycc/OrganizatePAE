@@ -1,15 +1,22 @@
 package controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Main;
 import database.SettingsDatabaseController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DialogPane;
@@ -28,6 +35,10 @@ public class SettingsController implements Initializable {
 	private Button aboutBtn;
 	@FXML
 	private Button acceptBtn;
+	@FXML
+	private Button addThemeBtn;
+	@FXML
+	private Button editThemeBtn;
 	private ResourceBundle rb;
 
 	@Override
@@ -61,4 +72,39 @@ public class SettingsController implements Initializable {
 			alert.show();
 		}
 	}
+	
+	public void addThemeAction(){
+		try {
+			Stage dialogStage = new Stage();
+			dialogStage.initOwner(addThemeBtn.getScene().getWindow());
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setTitle(this.rb.getString("addTheme"));
+
+			GridPane newThemePane =  FXMLLoader.load(Main.class.getResource("AddThemeDialog.fxml"), this.rb);
+			dialogStage.setScene(new Scene(newThemePane));					
+			
+			dialogStage.show();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void editThemeAction(){
+		try {
+			Stage dialogStage = new Stage();
+			dialogStage.initOwner(editThemeBtn.getScene().getWindow());
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setTitle(this.rb.getString("editTheme"));
+
+			GridPane newThemePane =  FXMLLoader.load(Main.class.getResource("EditThemeDialog.fxml"), this.rb);
+			dialogStage.setScene(new Scene(newThemePane));					
+			
+			dialogStage.show();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
