@@ -92,8 +92,9 @@ public class TaskDatabaseController {
 		ResultSet rs = null;
 		try{
 			conn = MyDBConnection.getConnection();
-			ps = conn.prepareStatement("Select Task.*, Subject.color from Task Join Subject on Subject.IdSubject = Task.IdSubject where Task.type = 'TASK' and Task.DueDate = ?");
+			ps = conn.prepareStatement("Select Task.*, Subject.color from Task Join Subject on Subject.IdSubject = Task.IdSubject where Task.type = 'TASK' and Task.DueDate between ? and ?");
 			ps.setDate(1, Date.valueOf(LocalDate.now()));
+			ps.setDate(2, Date.valueOf(LocalDate.now().plusDays(7)));
 			rs = ps.executeQuery();
 			List<TaskCellItems> tasks = new ArrayList<>();
 			while(rs.next()){
@@ -180,7 +181,6 @@ public class TaskDatabaseController {
 				rs.close();
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -201,14 +201,12 @@ public class TaskDatabaseController {
 			ps.setString(6,dueDate);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
 			try {
 				ps.close();
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -225,14 +223,12 @@ public class TaskDatabaseController {
 			ps.setInt(3,taskID);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
 			try {
 				ps.close();
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -250,7 +246,6 @@ public class TaskDatabaseController {
 			//Return an id if it exist 
 			if(rs.next()){return rs.getInt("IDSubject");}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("No Id found");
 		} finally{
@@ -259,7 +254,6 @@ public class TaskDatabaseController {
 				rs.close();
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
