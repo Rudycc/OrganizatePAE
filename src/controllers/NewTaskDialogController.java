@@ -58,7 +58,6 @@ public class NewTaskDialogController implements Initializable, Refresher{
 		}			
 		//Close the window
 		dialogStage = (Stage) btnCancel.getScene().getWindow();
-
 		dialogStage.close();
 	}
 	
