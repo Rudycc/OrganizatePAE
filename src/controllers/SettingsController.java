@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import application.Main;
 import database.SettingsDatabaseController;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -87,6 +88,6 @@ public class SettingsController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.exit(0);
+		Platform.exit();
 	}
 }
