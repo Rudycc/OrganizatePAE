@@ -53,7 +53,7 @@
       <ColorPicker fx:id="grayDarker" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
       <ColorPicker fx:id="grayLight" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
       <ColorPicker fx:id="grayLighter" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-      <Button mnemonicParsing="false" text="%accept" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="12" />
-      <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button mnemonicParsing="false" onAction="#accept" text="%accept" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="12" />
+      <TextField fx:id="textName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </children>
 </GridPane>

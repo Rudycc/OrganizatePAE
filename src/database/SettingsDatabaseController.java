@@ -210,4 +210,38 @@ public class SettingsDatabaseController {
 		}
 		return new Boolean(false);
 	}
+
+	public static Boolean addTheme(Map<String, String> theme) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		try {
+			conn = MyDBConnection.getConnection();
+			st = conn.prepareStatement(
+					"Insert Into Theme (`color-primary`, `color-info`, `color-default`, `color-bg`, `gray-base`, `gray-dark`, `gray-darker`, `gray-light`, `gray-lighter`, Name) Values(?,?,?,?,?,?,?,?,?,?);");
+			st.setString(1, theme.get("color-primary"));
+			st.setString(2, theme.get("color-info"));
+			st.setString(3, theme.get("color-default"));
+			st.setString(4, theme.get("color-bg"));
+			st.setString(5, theme.get("gray-base"));
+			st.setString(6, theme.get("gray-dark"));
+			st.setString(7, theme.get("gray-darker"));
+			st.setString(8, theme.get("gray-light"));
+			st.setString(9, theme.get("gray-lighter"));
+			st.setString(10, theme.get("Name"));
+			Integer modified = st.executeUpdate();
+			if (modified == 1) {
+				return new Boolean(true);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return new Boolean(false);
+	}
 }
