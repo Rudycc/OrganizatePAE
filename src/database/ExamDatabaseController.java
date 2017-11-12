@@ -6,8 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import cellItems.TaskCellItems;
@@ -91,8 +93,12 @@ public class ExamDatabaseController {
 		try{
 			conn = MyDBConnection.getConnection();
 			ps = conn.prepareStatement("Select Task.*, Subject.color from Task Join Subject on Subject.IdSubject = Task.IdSubject where Task.type = 'EXAM' and Task.DueDate between ? and ?");
-			ps.setDate(1, Date.valueOf(LocalDate.now()));
-			ps.setDate(2, Date.valueOf(LocalDate.now().plusDays(7)));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(java.util.Date.from(Instant.now()));
+			calendar.set(Calendar.DAY_OF_WEEK, 1);
+			ps.setDate(1, new Date(calendar.getTimeInMillis()));
+			calendar.set(Calendar.DAY_OF_WEEK, 7);
+			ps.setDate(2, new Date(calendar.getTimeInMillis()));
 			rs = ps.executeQuery();
 			List<TaskCellItems> exams = new ArrayList<>();
 			while(rs.next()){
