@@ -25,7 +25,7 @@ public class DashboardController implements Initializable {
 	public ListView<TaskCellItems> taskList;
 	@FXML
 	public ListView<TaskCellItems> examList;
-	
+
 	ObservableList<ClassCellItems> classObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> taskObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> examObservableList = FXCollections.observableArrayList();
@@ -35,36 +35,36 @@ public class DashboardController implements Initializable {
 		classObservableList.setAll(SubjectDatabaseController.getTodayClasses());
 		taskObservableList.setAll(TaskDatabaseController.getTodayTasks());
 		examObservableList.setAll(ExamDatabaseController.getTodayExams());
-		
+
 		todayList.setItems(classObservableList);
 		taskList.setItems(taskObservableList);
 		examList.setItems(examObservableList);
-		
+
 		todayList.setCellFactory(new Callback<ListView<ClassCellItems>, ListCell<ClassCellItems>>() {
 
 			@Override
 			public ListCell<ClassCellItems> call(ListView<ClassCellItems> todayList) {
 				return new ClassListViewCell();
 			}
-			
+
 		});
-		
+
 		taskList.setCellFactory(new Callback<ListView<TaskCellItems>, ListCell<TaskCellItems>>() {
 
 			@Override
 			public ListCell<TaskCellItems> call(ListView<TaskCellItems> taskList) {
 				return new TaskListViewCell();
 			}
-			
+
 		});
-		
+
 		examList.setCellFactory(new Callback<ListView<TaskCellItems>, ListCell<TaskCellItems>>() {
 
 			@Override
 			public ListCell<TaskCellItems> call(ListView<TaskCellItems> examList) {
 				return new TaskListViewCell();
 			}
-			
+
 		});
 	}
 }
