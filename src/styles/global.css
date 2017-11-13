@@ -115,4 +115,6 @@
     -fx-background-color: -fx-gray-darker;
 }
 
-
+.strikethrough .text {
+	-fx-strikethrough: true;
+}

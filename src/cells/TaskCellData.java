@@ -32,6 +32,9 @@ public class TaskCellData {
 	
 	public void setInfo(TaskCellItems cell){
 		lblTask.setText(cell.getTaskName());
+		if(cell.isDone()){
+			lblTask.getStyleClass().add("strikethrough");
+		}
 		lblDueDate.setText("Due: " + cell.getDueDate());
 		pane.setStyle("-fx-background-color:"+ cell.getColor());
 	}
