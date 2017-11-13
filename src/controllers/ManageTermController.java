@@ -2,6 +2,8 @@ package controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import database.TermDatabaseController;
 import javafx.fxml.FXML;
@@ -10,7 +12,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ManageTermController implements Initializable, Refresher {
+public class ManageTermController implements Initializable, Refresher, Runnable{
 	@FXML
 	DatePicker startDatePicker;
 	@FXML
@@ -19,11 +21,13 @@ public class ManageTermController implements Initializable, Refresher {
 	TextField txtFldDescription;
 	private ResourceBundle rb;
 	private Refreshable parent;
+	private ExecutorService executorService;
 	//Pointer to the Stage that contains the Pane
 	Stage dialogStage = null;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		executorService = Executors.newSingleThreadExecutor();
 		this.rb = resources;
 	}
 	
@@ -35,8 +39,7 @@ public class ManageTermController implements Initializable, Refresher {
 	
 	public void btnAcceptAction(){
 		try{
-			TermDatabaseController.insertNewTerm(startDatePicker.getValue().toString(), 
-					endDatePicker.getValue().toString(), txtFldDescription.getText());
+			executorService.execute(this);
 			parent.refreshData();
 			dialogStage = (Stage) startDatePicker.getScene().getWindow();
 			dialogStage.close();
@@ -49,6 +52,14 @@ public class ManageTermController implements Initializable, Refresher {
 	@Override
 	public void setParent(Refreshable parent) {
 		this.parent = parent;
+	}
+
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		TermDatabaseController.insertNewTerm(startDatePicker.getValue().toString(), 
+				endDatePicker.getValue().toString(), txtFldDescription.getText());
 	}
 
 }

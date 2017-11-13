@@ -3,6 +3,8 @@ package controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import cellItems.TaskCellItems;
 import cells.TaskListViewCell;
@@ -27,7 +29,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class ExamController implements Initializable, Refreshable, Refresher {
+public class ExamController implements Initializable, Refreshable, Refresher, Runnable{
 	@FXML
 	public ListView<TaskCellItems> pastList;
 	@FXML
@@ -35,7 +37,8 @@ public class ExamController implements Initializable, Refreshable, Refresher {
 	ObservableList<TaskCellItems> pastObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> futureObservableList = FXCollections.observableArrayList();
 	@FXML
-	Button btnNewExam;
+	private Button btnNewExam;
+	private ExecutorService executorService;
 	private ResourceBundle rb;
 	private Refreshable self = this;
 	private Refreshable parent;
@@ -80,9 +83,9 @@ public class ExamController implements Initializable, Refreshable, Refresher {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.rb = resources;
-
-		pastObservableList.setAll(ExamDatabaseController.getPreviousExams());
-		futureObservableList.setAll(ExamDatabaseController.getUpcomingExams());
+		executorService = Executors.newSingleThreadExecutor();
+		executorService.execute(this);
+		
 		pastList.setItems(pastObservableList);
 		futureList.setItems(futureObservableList);
 		pastList.setOnMouseClicked(this.cellClick);
@@ -142,5 +145,12 @@ public class ExamController implements Initializable, Refreshable, Refresher {
 	@Override
 	public void setParent(Refreshable parent) {
 		this.parent = parent;
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		pastObservableList.setAll(ExamDatabaseController.getPreviousExams());
+		futureObservableList.setAll(ExamDatabaseController.getUpcomingExams());
 	}
 }

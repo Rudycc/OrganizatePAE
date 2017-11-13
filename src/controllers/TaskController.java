@@ -3,6 +3,9 @@ package controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import cellItems.TaskCellItems;
 import cells.TaskListViewCell;
 import database.TaskDatabaseController;
@@ -26,7 +29,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.ListCell;
 import javafx.util.Callback;
 
-public class TaskController implements Initializable, Refreshable, Refresher {
+public class TaskController implements Initializable, Refreshable, Refresher, Runnable {
 	
 	@FXML
 	public ListView<TaskCellItems> pastList;
@@ -40,6 +43,7 @@ public class TaskController implements Initializable, Refreshable, Refresher {
 	
 	private Refreshable self = this;
 	private Refreshable parent;
+	private ExecutorService executorService;
 	
 	private EventHandler<MouseEvent> cellClick = new EventHandler<MouseEvent>() {
 		@Override
@@ -83,8 +87,8 @@ public class TaskController implements Initializable, Refreshable, Refresher {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.rb = resources;
-		pastObservableList.setAll(TaskDatabaseController.getPreviousTasks());
-		futureObservableList.setAll(TaskDatabaseController.getUpcomingTasks());
+		executorService = Executors.newSingleThreadExecutor();
+		executorService.execute(this);
 		pastList.setItems(pastObservableList);
 		futureList.setItems(futureObservableList);
 		pastList.setOnMouseClicked(this.cellClick);
@@ -137,5 +141,12 @@ public class TaskController implements Initializable, Refreshable, Refresher {
 	@Override
 	public void setParent(Refreshable parent) {
 		this.parent = parent;
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		pastObservableList.setAll(TaskDatabaseController.getPreviousTasks());
+		futureObservableList.setAll(TaskDatabaseController.getUpcomingTasks());
 	}
 }
