@@ -48,6 +48,7 @@ public class EditSubjectDaysController implements Initializable {
 	private static String originalSubject;
 	private int selectedIDSubjectTime;
 	private ResourceBundle resources;
+	private ClassCellItems currentClass;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

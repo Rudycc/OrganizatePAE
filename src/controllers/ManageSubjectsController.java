@@ -55,13 +55,15 @@ public class ManageSubjectsController implements Initializable, Refresher {
 	@FXML
 	Button btnEditDays;
 	@FXML
+	Button btnStored;
+	@FXML
 	Label hourMessage;
 
 	private List<String> days;
 	private List<String> hours;
 	private List<Float> durations;
 	private String minutes;
-	private static String originalSubject;
+	private ClassCellItems currentClass;
 	private ResourceBundle resources;
 	private Stage dialogStage;
 	private Refreshable parent;
@@ -124,7 +126,7 @@ public class ManageSubjectsController implements Initializable, Refresher {
 		// Update on DB only on edition of existing subject
 		if (btnEditDays.isVisible()) {
 			float duration = hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 10);
-			SubjectDatabaseController.insertSubjectTime(SubjectDatabaseController.getIDForSubject(originalSubject),
+			SubjectDatabaseController.insertSubjectTime(currentClass.getSubjectId(),
 					days.get(days.size() - 1), hours.get(hours.size() - 1), duration);
 		}
 	}
@@ -142,7 +144,7 @@ public class ManageSubjectsController implements Initializable, Refresher {
 				System.out.println("fatal error");
 			}
 		} else {
-			if (SubjectDatabaseController.updateSubject(SubjectDatabaseController.getIDForSubject(originalSubject),
+			if (SubjectDatabaseController.updateSubject(currentClass.getSubjectId(),
 					txtProfessor.getText(), txtSubject.getText(),
 					SubjectDatabaseController.getSemesterIDForSubject(semesterChoiceBox.getValue()),
 					"#" + colorPicker.getValue().toString().substring(2, 8))) {
@@ -186,13 +188,12 @@ public class ManageSubjectsController implements Initializable, Refresher {
 	@SuppressWarnings("unchecked")
 	public void setEditDialogData(GridPane pane) {
 		List<ClassCellItems> classes = SubjectDatabaseController.getAllClasses();
-		int subjectID = SubjectDatabaseController.getIDForSubject(originalSubject);
 		List<String> editDays = new ArrayList<>();
 		List<String> editHours = new ArrayList<>();
 		List<Integer> editSubjectTime_Ids = new ArrayList<>();
 		// Gets the days and hours of only the class to be edited
 		for (ClassCellItems c : classes) {
-			if (c.getSubjectId() == subjectID) {
+			if (c.getSubjectId() == currentClass.getSubjectId()) {
 				c.getTimes().forEach((t) -> {
 					editSubjectTime_Ids.add(t.getIDSubject_Time());
 					editDays.add(t.getDay());
@@ -228,7 +229,7 @@ public class ManageSubjectsController implements Initializable, Refresher {
 		}
 
 		existingDaysBox.setItems(typeChoiceBoxData);
-		EditSubjectDaysController.setOriginalSubject(originalSubject);
+		EditSubjectDaysController.setOriginalSubject(currentClass.getClassName());
 	}
 
 	public void btnEditDaysAction() {
@@ -250,13 +251,20 @@ public class ManageSubjectsController implements Initializable, Refresher {
 			e.printStackTrace();
 		}
 	}
-
-	public static void setOriginalSubject(String subject) {
-		originalSubject = subject;
-	}
-
+	
 	@Override
 	public void setParent(Refreshable parent) {
 		this.parent = parent;
+	}
+	
+	public void setEditInfo(ClassCellItems currentClass){
+		this.currentClass = currentClass;
+		btnEditDays.setVisible(true);
+		btnStored.setVisible(false);
+		
+		txtSubject.setText(currentClass.getClassName());
+		txtProfessor.setText(currentClass.getProfessorName());
+		
+		semesterChoiceBox.setValue(currentClass.getSemester());
 	}
 }
