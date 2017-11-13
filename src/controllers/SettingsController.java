@@ -1,6 +1,5 @@
 package controllers;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -51,14 +50,14 @@ public class SettingsController implements Initializable {
 		String lang = SettingsDatabaseController.getLanguage();
 		ObservableList<String> languages = FXCollections.observableArrayList("English", "Español");
 		langChoice.setItems(languages);
-		if (lang.equals("EN")) {			
+		if (lang.equals("EN")) {
 			langChoice.getSelectionModel().selectFirst();
 		} else {
-			langChoice.getSelectionModel().select(1);			
+			langChoice.getSelectionModel().select(1);
 		}
-		ObservableList<String> themes = FXCollections.observableArrayList("Tranquility");
+		ObservableList<String> themes = SettingsDatabaseController.getThemeNames();
 		themeChoice.setItems(themes);
-		themeChoice.getSelectionModel().selectFirst();
+		themeChoice.getSelectionModel().select(SettingsDatabaseController.getCurrentThemeName());
 	}
 
 	public void aboutAction() {
@@ -66,14 +65,16 @@ public class SettingsController implements Initializable {
 		alert.setHeaderText(this.rb.getString("aboutDialogTitle"));
 		alert.setContentText(this.rb.getString("aboutDialogText"));
 		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.setStyle(Main.getThemeString());
 		dialogPane.getStylesheets().add(getClass().getResource("../styles/global.css").toExternalForm());
 		alert.show();
 	}
 
 	public void acceptAction() {
-		Boolean changed = SettingsDatabaseController
+		Boolean changedLang = SettingsDatabaseController
 				.setLanguage(langChoice.getSelectionModel().getSelectedItem().equals("English") ? "EN" : "ES");
-		if (changed) {
+		Boolean changedTheme = SettingsDatabaseController.setTheme(themeChoice.getSelectionModel().getSelectedItem());
+		if (changedLang && changedTheme) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setHeaderText(this.rb.getString("settDialogTitle"));
 			alert.setContentText(this.rb.getString("settDialogText"));
@@ -100,39 +101,40 @@ public class SettingsController implements Initializable {
 		}
 		Platform.exit();
 	}
-	
-	public void addThemeAction(){
+
+	public void addThemeAction() {
 		try {
 			Stage dialogStage = new Stage();
 			dialogStage.initOwner(addThemeBtn.getScene().getWindow());
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(this.rb.getString("addTheme"));
 
-			GridPane newThemePane =  FXMLLoader.load(Main.class.getResource("AddThemeDialog.fxml"), this.rb);
-			dialogStage.setScene(new Scene(newThemePane));					
-			
+			GridPane newThemePane = FXMLLoader.load(Main.class.getResource("AddThemeDialog.fxml"), this.rb);
+			newThemePane.setStyle(Main.getThemeString());
+			dialogStage.setScene(new Scene(newThemePane));
 			dialogStage.show();
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void editThemeAction(){
+
+	public void editThemeAction() {
 		try {
 			Stage dialogStage = new Stage();
 			dialogStage.initOwner(editThemeBtn.getScene().getWindow());
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(this.rb.getString("editTheme"));
 
-			GridPane newThemePane =  FXMLLoader.load(Main.class.getResource("EditThemeDialog.fxml"), this.rb);
-			dialogStage.setScene(new Scene(newThemePane));					
-			
+			GridPane newThemePane = FXMLLoader.load(Main.class.getResource("EditThemeDialog.fxml"), this.rb);
+			newThemePane.setStyle(Main.getThemeString());
+			dialogStage.setScene(new Scene(newThemePane));
+
 			dialogStage.show();
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

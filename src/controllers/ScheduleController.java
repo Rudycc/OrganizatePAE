@@ -2,12 +2,8 @@ package controllers;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.Temporal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import application.*;
 import cellItems.ClassCellItems;
@@ -22,8 +18,6 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.Appointment;
-import jfxtras.scene.control.agenda.Agenda.AppointmentGroup;
-import jfxtras.scene.control.agenda.Agenda.AppointmentGroupImpl;
 
 public class ScheduleController implements Initializable, Refreshable, Refresher {
 	@FXML
@@ -31,7 +25,7 @@ public class ScheduleController implements Initializable, Refreshable, Refresher
 	private ResourceBundle rb;
 	private Refreshable self = this;
 	private Refreshable parent;
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.rb = resources;
@@ -42,25 +36,24 @@ public class ScheduleController implements Initializable, Refreshable, Refresher
 		subjects.forEach((subject) -> {
 			subject.getTimes().forEach((time) -> {
 				LocalDate start = time.getStart();
-				while(!time.getDay().equals(start.getDayOfWeek().toString())){
+				while (!time.getDay().equals(start.getDayOfWeek().toString())) {
 					start = start.plusDays(1);
 				}
-				 while(start.isBefore(time.getEnd())){
-					 schedule.add(new Agenda.AppointmentImplLocal()
-							 .withStartLocalDateTime(start.atTime(time.getTime()))
-							 .withEndLocalDateTime(start.atTime(time.getTime().plusHours(2)))
-							 .withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
-							 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group" + (subject.getSubjectId()%20) + 1))
-							 );
-					 start = start.plusDays(7);
-				 }
+				while (start.isBefore(time.getEnd())) {
+					schedule.add(new Agenda.AppointmentImplLocal().withStartLocalDateTime(start.atTime(time.getTime()))
+							.withEndLocalDateTime(start.atTime(time.getTime().plusHours((long)time.getDuration()).plusMinutes((long)((time.getDuration() - (int)time.getDuration())*60))))
+							.withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
+							.withAppointmentGroup(new Agenda.AppointmentGroupImpl()
+									.withStyleClass("group" + ((subject.getSubjectId() % 15) + 1))));
+					start = start.plusDays(7);
+				}
 			});
 		});
 
 		agenda.appointments().addAll(schedule);
-		
+
 		agenda.editAppointmentCallbackProperty().set(new Callback<Agenda.Appointment, Void>() {
-			
+
 			@Override
 			public Void call(Appointment param) {
 				agenda.refresh();
@@ -68,46 +61,48 @@ public class ScheduleController implements Initializable, Refreshable, Refresher
 			}
 		});
 	}
-	
-	public void moveToNextWeek(){
+
+	public void moveToNextWeek() {
 		agenda.setDisplayedLocalDateTime(agenda.getDisplayedLocalDateTime().plusWeeks(1));
 	}
-	
-	public void moveToPrevWeek(){
+
+	public void moveToPrevWeek() {
 		agenda.setDisplayedLocalDateTime(agenda.getDisplayedLocalDateTime().minusWeeks(1));
 	}
-	
-	public void manageTerm(){
+
+	public void manageTerm() {
 		try {
-			
+
 			Stage dialogStage = new Stage();
 			dialogStage.initOwner(agenda.getScene().getWindow());
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(rb.getString("titleManageTerm"));
-			
+
 			FXMLLoader loader = new FXMLLoader(Main.class.getResource("ManageTermDialog.fxml"), this.rb);
-			GridPane pane =  loader.load();
-			((Refresher)loader.getController()).setParent(self);
-			
+			GridPane pane = loader.load();
+			pane.setStyle(Main.getThemeString());
+			((Refresher) loader.getController()).setParent(self);
+
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}		
+		}
 	}
-	
-	public void manageSubject(){
+
+	public void manageSubject() {
 		try {
-			
+
 			Stage dialogStage = new Stage();
 			dialogStage.initOwner(agenda.getScene().getWindow());
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(rb.getString("titleManageSubjects"));
-			
+
 			FXMLLoader loader = new FXMLLoader(Main.class.getResource("ManageSubjectsDialog.fxml"), this.rb);
-			GridPane pane =  loader.load();
-			((Refresher)loader.getController()).setParent(self);
-			
+			GridPane pane = loader.load();
+			pane.setStyle(Main.getThemeString());
+			((Refresher) loader.getController()).setParent(self);
+
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.show();
 		} catch (Exception e) {
@@ -122,21 +117,20 @@ public class ScheduleController implements Initializable, Refreshable, Refresher
 		subjects.forEach((subject) -> {
 			subject.getTimes().forEach((time) -> {
 				LocalDate start = time.getStart();
-				while(!time.getDay().equals(start.getDayOfWeek().toString())){
+				while (!time.getDay().equals(start.getDayOfWeek().toString())) {
 					start = start.plusDays(1);
 				}
-				 while(start.isBefore(time.getEnd())){
-					 schedule.add(new Agenda.AppointmentImplLocal()
-							 .withStartLocalDateTime(start.atTime(time.getTime()))
-							 .withEndLocalDateTime(start.atTime(time.getTime().plusHours(2)))
-							 .withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
-							 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group" + (subject.getSubjectId()%20) + 1))
-							 );
-					 start = start.plusDays(7);
-				 }
+				while (start.isBefore(time.getEnd())) {
+					schedule.add(new Agenda.AppointmentImplLocal().withStartLocalDateTime(start.atTime(time.getTime()))
+							.withEndLocalDateTime(start.atTime(time.getTime().plusHours((long)time.getDuration()).plusMinutes((long)((time.getDuration() - (int)time.getDuration())*60))))
+							.withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
+							.withAppointmentGroup(new Agenda.AppointmentGroupImpl()
+									.withStyleClass("group" + ((subject.getSubjectId() % 15) + 1))));
+					start = start.plusDays(7);
+				}
 			});
 		});
-		
+
 		agenda.appointments().clear();
 		agenda.appointments().addAll(schedule);
 		agenda.refresh();
