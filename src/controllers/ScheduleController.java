@@ -5,6 +5,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import application.*;
 import cellItems.ClassCellItems;
 import database.SubjectDatabaseController;
@@ -19,39 +22,21 @@ import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.Appointment;
 
-public class ScheduleController implements Initializable, Refreshable, Refresher {
+public class ScheduleController implements Initializable, Refreshable, Refresher, Runnable{
 	@FXML
 	private Agenda agenda;
 	private ResourceBundle rb;
 	private Refreshable self = this;
 	private Refreshable parent;
+	private ExecutorService executorService;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.rb = resources;
 		agenda.setAllowDragging(false);
 		agenda.setAllowResize(false);
-		List<ClassCellItems> subjects = SubjectDatabaseController.getAllClasses();
-		List<Appointment> schedule = new ArrayList<>();
-		subjects.forEach((subject) -> {
-			subject.getTimes().forEach((time) -> {
-				LocalDate start = time.getStart();
-				while (!time.getDay().equals(start.getDayOfWeek().toString())) {
-					start = start.plusDays(1);
-				}
-				while (start.isBefore(time.getEnd())) {
-					schedule.add(new Agenda.AppointmentImplLocal().withStartLocalDateTime(start.atTime(time.getTime()))
-							.withEndLocalDateTime(start.atTime(time.getTime().plusHours((long)time.getDuration()).plusMinutes((long)((time.getDuration() - (int)time.getDuration())*60))))
-							.withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
-							.withAppointmentGroup(new Agenda.AppointmentGroupImpl()
-									.withStyleClass("group" + ((subject.getSubjectId() % 23) + 1))));
-					start = start.plusDays(7);
-				}
-			});
-		});
-
-		agenda.appointments().addAll(schedule);
-
+		executorService = Executors.newSingleThreadExecutor();
+		executorService.execute(this);
 		agenda.editAppointmentCallbackProperty().set(new Callback<Agenda.Appointment, Void>() {
 
 			@Override
@@ -140,6 +125,30 @@ public class ScheduleController implements Initializable, Refreshable, Refresher
 	@Override
 	public void setParent(Refreshable parent) {
 		this.parent = parent;
+	}
+
+	@Override
+	public void run() {
+		List<ClassCellItems> subjects = SubjectDatabaseController.getAllClasses();
+		List<Appointment> schedule = new ArrayList<>();
+		subjects.forEach((subject) -> {
+			subject.getTimes().forEach((time) -> {
+				LocalDate start = time.getStart();
+				while (!time.getDay().equals(start.getDayOfWeek().toString())) {
+					start = start.plusDays(1);
+				}
+				while (start.isBefore(time.getEnd())) {
+					schedule.add(new Agenda.AppointmentImplLocal().withStartLocalDateTime(start.atTime(time.getTime()))
+							.withEndLocalDateTime(start.atTime(time.getTime().plusHours((long)time.getDuration()).plusMinutes((long)((time.getDuration() - (int)time.getDuration())*60))))
+							.withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
+							.withAppointmentGroup(new Agenda.AppointmentGroupImpl()
+									.withStyleClass("group" + ((subject.getSubjectId() % 23) + 1))));
+					start = start.plusDays(7);
+				}
+			});
+		});
+
+		agenda.appointments().addAll(schedule);
 	}
 
 }

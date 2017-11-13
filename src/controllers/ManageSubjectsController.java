@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import application.Main;
 import cellItems.ClassCellItems;
@@ -25,7 +27,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import database.SubjectDatabaseController;
 
-public class ManageSubjectsController implements Initializable, Refresher {
+public class ManageSubjectsController implements Initializable, Refresher, Runnable{
 
 	@FXML
 	TextField txtSubject;
@@ -61,24 +63,22 @@ public class ManageSubjectsController implements Initializable, Refresher {
 	private Stage dialogStage;
 	private Refreshable parent;
 	private ObservableList<Integer> semesterIDs;
+	private ExecutorService executorService;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		executorService = Executors.newSingleThreadExecutor();
+		executorService.execute(this);
 		ObservableList<String> typeChoiceBoxData = FXCollections.observableArrayList(resources.getString("monday"),
 				resources.getString("tuesday"), resources.getString("wednesday"), resources.getString("thursday"),
 				resources.getString("friday"), resources.getString("saturday"), resources.getString("sunday"));
 		dayChoiceBox.setItems(typeChoiceBoxData);
 
-		semesterChoiceBox.setItems(SubjectDatabaseController.getAllSemesterNames());
-
 		days = new ArrayList<String>();
 		hours = new ArrayList<String>();
 		durations = new ArrayList<>();
 
-		semesterIDs = SubjectDatabaseController.getAllSemesterIDs();
-
 		this.resources = resources;
-
 	}
 
 	public void btnAddSubjectTime() {
@@ -158,5 +158,11 @@ public class ManageSubjectsController implements Initializable, Refresher {
 	@Override
 	public void setParent(Refreshable parent) {
 		this.parent = parent;
+	}
+
+	@Override
+	public void run() {
+		semesterChoiceBox.setItems(SubjectDatabaseController.getAllSemesterNames());
+		semesterIDs = SubjectDatabaseController.getAllSemesterIDs();
 	}
 }

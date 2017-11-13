@@ -2,6 +2,9 @@ package controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,7 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import database.TaskDatabaseController;
 
-public class NewTaskDialogController implements Initializable, Refresher{
+public class NewTaskDialogController implements Initializable, Refresher, Runnable{
 
 	@FXML Button btnCancel;
 	@FXML Button btnAccept;
@@ -27,10 +30,12 @@ public class NewTaskDialogController implements Initializable, Refresher{
 	Stage dialogStage;
 	private String type;
 	private Refreshable parentController;
+	private ExecutorService executorService;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		executorService = Executors.newSingleThreadExecutor();
+		
 		//Sets the classes choiceBox data
 		choiceBoxClassChooser.setItems(TaskDatabaseController.getSubjects());
 		
@@ -52,8 +57,7 @@ public class NewTaskDialogController implements Initializable, Refresher{
 			//Show an Alert!
 			System.out.println("Empty Fields");
 		}else{
-			type = (choiceBoxTypeChooser.getSelectionModel().getSelectedIndex()==2)? "EXAM":"TASK";
-			TaskDatabaseController.insertNewTask(txtName.getText(),txtDescription.getText(), type, 0, datePicker.getValue()+"", choiceBoxClassChooser.getValue());
+			executorService.execute(this);
 			parentController.refreshData();
 		}			
 		//Close the window
@@ -64,6 +68,12 @@ public class NewTaskDialogController implements Initializable, Refresher{
 	@Override
 	public void setParent(Refreshable parentController){
 		this.parentController = parentController;
+	}
+
+	@Override
+	public void run() {
+		type = (choiceBoxTypeChooser.getSelectionModel().getSelectedIndex()==2)? "EXAM":"TASK";
+		TaskDatabaseController.insertNewTask(txtName.getText(),txtDescription.getText(), type, 0, datePicker.getValue()+"", choiceBoxClassChooser.getValue());
 	}
 	
 }

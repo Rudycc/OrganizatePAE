@@ -1,7 +1,13 @@
 package controllers;
 
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import cellItems.ClassCellItems;
 import cellItems.TaskCellItems;
@@ -18,24 +24,23 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
 
-public class DashboardController implements Initializable, Refreshable {
+public class DashboardController implements Initializable, Refreshable, Runnable {
 	@FXML
 	public ListView<ClassCellItems> todayList;
 	@FXML
 	public ListView<TaskCellItems> taskList;
 	@FXML
 	public ListView<TaskCellItems> examList;
-
+	private ExecutorService executorService;
 	ObservableList<ClassCellItems> classObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> taskObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> examObservableList = FXCollections.observableArrayList();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		classObservableList.setAll(SubjectDatabaseController.getTodayClasses());
-		taskObservableList.setAll(TaskDatabaseController.getTodayTasks());
-		examObservableList.setAll(ExamDatabaseController.getTodayExams());
-
+		executorService = Executors.newSingleThreadExecutor();
+		executorService.execute(this);
+		
 		todayList.setItems(classObservableList);
 		taskList.setItems(taskObservableList);
 		examList.setItems(examObservableList);
@@ -70,6 +75,13 @@ public class DashboardController implements Initializable, Refreshable {
 
 	@Override
 	public void refreshData() {
+		classObservableList.setAll(SubjectDatabaseController.getTodayClasses());
+		taskObservableList.setAll(TaskDatabaseController.getTodayTasks());
+		examObservableList.setAll(ExamDatabaseController.getTodayExams());
+	}
+
+	@Override
+	public void run() {
 		classObservableList.setAll(SubjectDatabaseController.getTodayClasses());
 		taskObservableList.setAll(TaskDatabaseController.getTodayTasks());
 		examObservableList.setAll(ExamDatabaseController.getTodayExams());

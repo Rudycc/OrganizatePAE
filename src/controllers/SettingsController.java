@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import application.Main;
 import database.SettingsDatabaseController;
@@ -25,7 +27,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 
-public class SettingsController implements Initializable {
+public class SettingsController implements Initializable, Runnable {
 	@FXML
 	private Label langLbl;
 	@FXML
@@ -43,19 +45,14 @@ public class SettingsController implements Initializable {
 	@FXML
 	private Button editThemeBtn;
 	private ResourceBundle rb;
+	private ExecutorService executorService;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.rb = resources;
-		String lang = SettingsDatabaseController.getLanguage();
-		ObservableList<String> languages = FXCollections.observableArrayList("English", "Español");
-		langChoice.setItems(languages);
-		if (lang.equals("EN")) {
-			langChoice.getSelectionModel().selectFirst();
-		} else {
-			langChoice.getSelectionModel().select(1);
-		}
-		ObservableList<String> themes = SettingsDatabaseController.getThemeNames();
+		executorService = Executors.newSingleThreadExecutor();
+		executorService.execute(this);
+		ObservableList<String> themes = FXCollections.observableArrayList("Tranquility");
 		themeChoice.setItems(themes);
 		themeChoice.getSelectionModel().select(SettingsDatabaseController.getCurrentThemeName());
 	}
@@ -137,4 +134,16 @@ public class SettingsController implements Initializable {
 		}
 	}
 
+	@Override
+	public void run() {
+		String lang = SettingsDatabaseController.getLanguage();
+		ObservableList<String> languages = FXCollections.observableArrayList("English", "Español");
+		langChoice.setItems(languages);
+		if (lang.equals("EN")) {			
+			langChoice.getSelectionModel().selectFirst();
+		} else {
+			langChoice.getSelectionModel().select(1);			
+		}
+	}
+	
 }
