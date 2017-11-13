@@ -1,4 +1,4 @@
-@import url("./variables.css");
+/*  @import url("./variables.css"); */
 
 /* Default rules */
 
@@ -115,4 +115,6 @@
     -fx-background-color: -fx-gray-darker;
 }
 
-
+.strikethrough .text {
+	-fx-strikethrough: true;
+}

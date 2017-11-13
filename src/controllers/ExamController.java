@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import application.Main;
 import cellItems.TaskCellItems;
 import cells.TaskListViewCell;
 import database.ExamDatabaseController;
@@ -55,7 +56,8 @@ public class ExamController implements Initializable, Refreshable, Refresher, Ru
 
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("ExamInfo.fxml"), rb);
 					GridPane newTaskPane = loader.load();
-					((Refresher)loader.getController()).setParent(self);
+					newTaskPane.setStyle(Main.getThemeString());
+					((Refresher) loader.getController()).setParent(self);
 
 					ListView<TaskCellItems> src = (ListView<TaskCellItems>) event.getSource();
 					if (!src.getItems().isEmpty()) {
@@ -63,11 +65,12 @@ public class ExamController implements Initializable, Refreshable, Refresher, Ru
 						String description = src.getSelectionModel().getSelectedItem().getDescription();
 						String date = src.getSelectionModel().getSelectedItem().getDueDate().toString();
 						int taskId = src.getSelectionModel().getSelectedItem().getTaskId();
-						((Label) newTaskPane.getChildren().get(5)).setText(taskId+"");
+						((Label) newTaskPane.getChildren().get(5)).setText(taskId + "");
 						((Label) newTaskPane.getChildren().get(1)).setText(title);
-						((Label) newTaskPane.getChildren().get(3)).setText(rb.getString("due") +": "+ date);
+						((Label) newTaskPane.getChildren().get(3)).setText(rb.getString("due") + ": " + date);
 						((TextArea) newTaskPane.getChildren().get(0)).setText(description);
-						((CheckBox) newTaskPane.getChildren().get(2)).setSelected(src.getSelectionModel().getSelectedItem().isDone());
+						((CheckBox) newTaskPane.getChildren().get(2))
+								.setSelected(src.getSelectionModel().getSelectedItem().isDone());
 
 						dialogStage.setScene(new Scene(newTaskPane));
 						dialogStage.show();
@@ -90,7 +93,7 @@ public class ExamController implements Initializable, Refreshable, Refresher, Ru
 		futureList.setItems(futureObservableList);
 		pastList.setOnMouseClicked(this.cellClick);
 		futureList.setOnMouseClicked(this.cellClick);
-		
+
 		pastList.setCellFactory(new Callback<ListView<TaskCellItems>, ListCell<TaskCellItems>>() {
 
 			@Override
@@ -120,8 +123,9 @@ public class ExamController implements Initializable, Refreshable, Refresher, Ru
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("NewTaskDialog.fxml"), this.rb);
 			GridPane newTaskPane = loader.load();
-			((Refresher)loader.getController()).setParent(self);
-			
+			newTaskPane.setStyle(Main.getThemeString());
+			((Refresher) loader.getController()).setParent(self);
+
 			dialogStage.setScene(new Scene(newTaskPane));
 
 			// Sets the task type choiceBox default value
