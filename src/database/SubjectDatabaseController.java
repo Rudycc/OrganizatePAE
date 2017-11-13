@@ -36,8 +36,10 @@ public class SubjectDatabaseController {
 				List<ScheduleItem> days = new ArrayList<>();
 				while(times.next()){
 					ScheduleItem day = new ScheduleItem();
+					day.setIDSubject_Time(times.getInt(1));
 					day.setDay(times.getString(2));
 					day.setTime(times.getTime(3).toLocalTime());
+					day.setDuration(times.getFloat(5));
 					day.setStart(times.getDate(6).toLocalDate());
 					day.setEnd(times.getDate(7).toLocalDate());
 					days.add(day);
@@ -210,7 +212,7 @@ public class SubjectDatabaseController {
 			rs = ps.executeQuery();
 			
 			if(rs.next())
-				semID = rs.getInt(1);
+				semID = rs.getInt(2);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -225,6 +227,36 @@ public class SubjectDatabaseController {
 		}
 		
 		return semID;
+	}
+	
+	public static int getIDForSubject(String name){
+		int subID = 1;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = MyDBConnection.getConnection();
+			ps = conn.prepareStatement("SELECT sub.IDSubject FROM OrganizatePAE.Subject sub WHERE Name = ?");
+			ps.setString(1, name);
+			rs = ps.executeQuery();
+			
+			if(rs.next())
+				subID = rs.getInt(1);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				rs.close();
+				conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return subID;
 	}
 	
 	public static boolean addSubject(String professor, String subject, int semester, String color, List<String> days, List<String> hours, float duration){
@@ -271,6 +303,108 @@ public class SubjectDatabaseController {
 				return false;
 			}
 		}
+		return true;
+	}
+	
+	public static boolean updateSubject(int IDSubject, String professor, String subject, int semester, String color){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try{
+			conn = MyDBConnection.getConnection();
+			ps = conn.prepareStatement("UPDATE OrganizatePAE.Subject SET Name = ?, ProfessorName = ?, IDSemester = ?, Color = ? WHERE IDSubject = ?");
+			ps.setString(1, subject);
+			ps.setString(2, professor);
+			ps.setInt(3, semester);
+			ps.setString(4, color);
+			ps.setInt(5, IDSubject);
+			ps.executeUpdate();						
+		}catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}finally{
+			try{
+				ps.close();
+				conn.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+				return false;
+			}
+		}	
+		return true;
+	}
+	
+	public static boolean deleteSubjectTime(int id){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try{
+			conn = MyDBConnection.getConnection();
+			ps = conn.prepareStatement("DELETE FROM OrganizatePAE.Subject_Time WHERE IDSubject_Time = ?");
+			ps.setInt(1, id);
+			if(ps.executeUpdate() <= 0)
+				return false;				
+		}catch(SQLException e){
+			e.printStackTrace();
+			return false;			
+		}finally{
+			try{
+				ps.close();
+				conn.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}					
+		return true;
+	}
+	
+	public static boolean updateSubjectTime(int id, String day, String time, float duration){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try{
+			conn = MyDBConnection.getConnection();
+			ps = conn.prepareStatement("UPDATE OrganizatePAE.Subject_Time SET Day = ?, Time = ?, Duration = ? WHERE IDSubject_Time = ?");
+			ps.setString(1, day);
+			ps.setString(2, time);
+			ps.setFloat(3, duration);
+			ps.setInt(4, id);
+			if(ps.executeUpdate() <= 0)
+				return false;				
+		}catch(SQLException e){
+			e.printStackTrace();
+			return false;			
+		}finally{
+			try{
+				ps.close();
+				conn.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}	
+		return true;
+	}
+	
+	public static boolean insertSubjectTime(int IDSubject, String day, String time, float duration){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try{
+			conn = MyDBConnection.getConnection();
+			ps = conn.prepareStatement("INSERT INTO OrganizatePAE.Subject_Time(Day, Time, IDSubject, Duration) VALUES(?, ?, ?, ?)");
+			ps.setString(1, day);
+			ps.setString(2, time);
+			ps.setInt(3, IDSubject);
+			ps.setFloat(4, duration);
+			if(ps.executeUpdate() <= 0)
+				return false;				
+		}catch(SQLException e){
+			e.printStackTrace();
+			return false;			
+		}finally{
+			try{
+				ps.close();
+				conn.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}	
 		return true;
 	}
 }

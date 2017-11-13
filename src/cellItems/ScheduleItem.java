@@ -5,14 +5,23 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class ScheduleItem {
+	private int IDSubject_Time;
 	private String day;
 	private LocalTime time;
-	private LocalTime duration;
+	private float duration;
 	private LocalDate start;
 	private LocalDate end;
 	
 	public ScheduleItem(){
 		
+	}
+	
+	public void setIDSubject_Time(int IDSubject_Time){
+		this.IDSubject_Time = IDSubject_Time;
+	}
+	
+	public int getIDSubject_Time(){
+		return this.IDSubject_Time;
 	}
 
 	public String getDay() {
@@ -31,11 +40,11 @@ public class ScheduleItem {
 		this.time = time;
 	}
 
-	public LocalTime getDuration() {
+	public float getDuration() {
 		return duration;
 	}
 
-	public void setDuration(LocalTime duration) {
+	public void setDuration(float duration) {
 		this.duration = duration;
 	}
 

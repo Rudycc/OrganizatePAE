@@ -1,6 +1,10 @@
 package cellItems;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import database.SettingsDatabaseController;
 
 public class ClassCellItems {
 	private int subjectId;
@@ -10,6 +14,7 @@ public class ClassCellItems {
 	private String color;
 	private String semester; 
 	private List<ScheduleItem> times;
+	private ResourceBundle rb;
 	
 	public ClassCellItems(){
 		
@@ -74,12 +79,20 @@ public class ClassCellItems {
 	}
 	
 	public String toString(){
-		StringBuilder str = new StringBuilder("Class Name: ");
+		this.rb = ResourceBundle.getBundle("resources.UIResources", new Locale(SettingsDatabaseController.getLanguage()));
+		StringBuilder str = new StringBuilder();
 		
+		str.append(rb.getString("newSubjectName"));
+		str.append(": ");
 		str.append(getClassName());
-		str.append("\nProfessor: ");
+		str.append("\n");
+		str.append(rb.getString("newSubjectProfName"));
+		str.append(": ");
 		str.append(getProfessorName());
-		str.append("\nSemester: " + getSemester());
+		str.append("\n");
+		str.append(rb.getString("newSubjectSemester"));
+		str.append(": ");
+		str.append(getSemester());
 		
 		return str.toString();
 	}

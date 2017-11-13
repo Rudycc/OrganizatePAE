@@ -127,12 +127,12 @@
          </GridPane.margin>
       </Button>
       <Label text="%newSubjectDuration" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-      <Spinner fx:id="hourSpinnerDuration" amountToStepBy="1" initialValue="2" max="50" min="0" editable="true" prefWidth="60.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+      <Spinner fx:id="hourSpinnerDuration" amountToStepBy="1" editable="true" initialValue="2" max="50" min="0" prefWidth="60.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets right="90.0" />
          </GridPane.margin>
       </Spinner>
-      <Spinner fx:id="minuteSpinnerDuration" amountToStepBy="10" initialValue="0" max="50" min="0" editable="true" prefWidth="60.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+      <Spinner fx:id="minuteSpinnerDuration" amountToStepBy="10" editable="true" initialValue="0" max="50" min="0" prefWidth="60.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets right="10.0" />
          </GridPane.margin>
@@ -145,6 +145,7 @@
             <Insets right="75.0" />
          </GridPane.margin>
       </Label>
+      <Button fx:id="btnEditDays" mnemonicParsing="false" onAction="#btnEditDaysAction" text="%newSubjectEditDays" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
    </children>
    <padding>
       <Insets bottom="9.0" left="9.0" right="9.0" top="9.0" />
