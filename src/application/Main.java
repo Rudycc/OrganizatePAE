@@ -35,7 +35,7 @@ public class Main extends Application {
 	}
 	
 	public static String getThemeString() {
-		if (themeString.equals("")) {
+		if (themeString.isEmpty()) {
 			String name = SettingsDatabaseController.getCurrentThemeName();
 			Map<String, String> theme = SettingsDatabaseController.getTheme(name);
 			StringBuilder sb = new StringBuilder();
