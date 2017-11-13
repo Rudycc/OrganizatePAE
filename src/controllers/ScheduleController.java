@@ -129,24 +129,22 @@ public class ScheduleController implements Initializable, Refreshable, Refresher
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		List<ClassCellItems> subjects = SubjectDatabaseController.getAllClasses();
 		List<Appointment> schedule = new ArrayList<>();
 		subjects.forEach((subject) -> {
 			subject.getTimes().forEach((time) -> {
 				LocalDate start = time.getStart();
-				while(!time.getDay().equals(start.getDayOfWeek().toString())){
+				while (!time.getDay().equals(start.getDayOfWeek().toString())) {
 					start = start.plusDays(1);
 				}
-				 while(start.isBefore(time.getEnd())){
-					 schedule.add(new Agenda.AppointmentImplLocal()
-							 .withStartLocalDateTime(start.atTime(time.getTime()))
-							 .withEndLocalDateTime(start.atTime(time.getTime().plusHours(2)))
-							 .withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
-							 .withAppointmentGroup(new Agenda.AppointmentGroupImpl().withStyleClass("group" + (subject.getSubjectId()%20) + 1))
-							 );
-					 start = start.plusDays(7);
-				 }
+				while (start.isBefore(time.getEnd())) {
+					schedule.add(new Agenda.AppointmentImplLocal().withStartLocalDateTime(start.atTime(time.getTime()))
+							.withEndLocalDateTime(start.atTime(time.getTime().plusHours((long)time.getDuration()).plusMinutes((long)((time.getDuration() - (int)time.getDuration())*60))))
+							.withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
+							.withAppointmentGroup(new Agenda.AppointmentGroupImpl()
+									.withStyleClass("group" + ((subject.getSubjectId() % 23) + 1))));
+					start = start.plusDays(7);
+				}
 			});
 		});
 
