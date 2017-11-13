@@ -103,7 +103,9 @@ public class TaskDatabaseController {
 			calendar.set(Calendar.DAY_OF_WEEK, 1);
 			ps.setDate(1, new Date(calendar.getTimeInMillis()));
 			calendar.set(Calendar.DAY_OF_WEEK, 7);
+			System.out.println(calendar.toString());
 			ps.setDate(2, new Date(calendar.getTimeInMillis()));
+			System.out.println(ps.toString());
 			rs = ps.executeQuery();
 			List<TaskCellItems> tasks = new ArrayList<>();
 			while (rs.next()) {

@@ -18,11 +18,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
@@ -52,18 +49,14 @@ public class DashboardController implements Initializable, Refreshable {
 					dialogStage.initOwner(taskList.getScene().getWindow());
 					dialogStage.initModality(Modality.APPLICATION_MODAL);
 					dialogStage.setTitle(rb.getString("titleTaskInfo"));
-					
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskInfo.fxml"), rb);
-
 					GridPane newTaskPane = loader.load();
-					
 					((Refresher)loader.getController()).setParent(self);
 					
 					ListView<TaskCellItems> src = (ListView<TaskCellItems>) event.getSource();
 					if (!src.getItems().isEmpty()) {
 						TaskCellItems cell = src.getSelectionModel().getSelectedItem();
 						((TaskInfoController)loader.getController()).setInfo(cell);
-
 						dialogStage.setScene(new Scene(newTaskPane));
 						dialogStage.show();
 					}
