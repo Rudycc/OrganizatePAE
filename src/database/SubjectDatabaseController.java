@@ -38,6 +38,7 @@ public class SubjectDatabaseController {
 					day.setTime(times.getTime(3).toLocalTime());
 					day.setStart(times.getDate(6).toLocalDate());
 					day.setEnd(times.getDate(7).toLocalDate());
+					day.setDuration(times.getFloat(5));
 					days.add(day);
 				}
 				ClassCellItems cell = new ClassCellItems();
@@ -162,7 +163,7 @@ public class SubjectDatabaseController {
 		return ids;
 	}
 	
-	public static boolean addSubject(String professor, String subject, int semester, String color, List<String> days, List<String> hours, float duration){
+	public static boolean addSubject(String professor, String subject, int semester, String color, List<String> days, List<String> hours, List<Float> durations){
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -190,7 +191,7 @@ public class SubjectDatabaseController {
 				ps.setString(1, days.get(i));
 				ps.setString(2, hours.get(i));
 				ps.setInt(3, subjectID);
-				ps.setFloat(4, duration);
+				ps.setFloat(4, durations.get(i));
 				ps.executeUpdate();
 			}
 			

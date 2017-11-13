@@ -7,7 +7,7 @@ import java.time.LocalTime;
 public class ScheduleItem {
 	private String day;
 	private LocalTime time;
-	private LocalTime duration;
+	private float duration;
 	private LocalDate start;
 	private LocalDate end;
 	
@@ -31,11 +31,11 @@ public class ScheduleItem {
 		this.time = time;
 	}
 
-	public LocalTime getDuration() {
+	public float getDuration() {
 		return duration;
 	}
 
-	public void setDuration(LocalTime duration) {
+	public void setDuration(float duration) {
 		this.duration = duration;
 	}
 

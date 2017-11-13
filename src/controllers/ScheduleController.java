@@ -41,7 +41,7 @@ public class ScheduleController implements Initializable, Refreshable, Refresher
 				}
 				while (start.isBefore(time.getEnd())) {
 					schedule.add(new Agenda.AppointmentImplLocal().withStartLocalDateTime(start.atTime(time.getTime()))
-							.withEndLocalDateTime(start.atTime(time.getTime().plusHours(2)))
+							.withEndLocalDateTime(start.atTime(time.getTime().plusHours((long)time.getDuration()).plusMinutes((long)((time.getDuration() - (int)time.getDuration())*60))))
 							.withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
 							.withAppointmentGroup(new Agenda.AppointmentGroupImpl()
 									.withStyleClass("group" + ((subject.getSubjectId() % 15) + 1))));
@@ -122,7 +122,7 @@ public class ScheduleController implements Initializable, Refreshable, Refresher
 				}
 				while (start.isBefore(time.getEnd())) {
 					schedule.add(new Agenda.AppointmentImplLocal().withStartLocalDateTime(start.atTime(time.getTime()))
-							.withEndLocalDateTime(start.atTime(time.getTime().plusHours(2)))
+							.withEndLocalDateTime(start.atTime(time.getTime().plusHours((long)time.getDuration()).plusMinutes((long)((time.getDuration() - (int)time.getDuration())*60))))
 							.withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
 							.withAppointmentGroup(new Agenda.AppointmentGroupImpl()
 									.withStyleClass("group" + ((subject.getSubjectId() % 15) + 1))));

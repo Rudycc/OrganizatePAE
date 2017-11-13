@@ -55,6 +55,7 @@ public class ManageSubjectsController implements Initializable, Refresher {
 	Label hourMessage;
 	private List<String> days;
 	private List<String> hours;
+	private List<Float> durations;
 	private String minutes;
 	private ResourceBundle resources;
 	private Stage dialogStage;
@@ -72,6 +73,7 @@ public class ManageSubjectsController implements Initializable, Refresher {
 
 		days = new ArrayList<String>();
 		hours = new ArrayList<String>();
+		durations = new ArrayList<>();
 
 		semesterIDs = SubjectDatabaseController.getAllSemesterIDs();
 
@@ -109,14 +111,14 @@ public class ManageSubjectsController implements Initializable, Refresher {
 
 		minutes = (minuteSpinner.getValue() < 10) ? "0" + minuteSpinner.getValue() : "" + minuteSpinner.getValue();
 		hours.add("1000-01-01 " + hourSpinner.getValue() + ":" + minutes + ":00");
+		durations.add((float) (hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 60.0)));
 		hourMessage.setText(resources.getString("hourMessage") + "-> #" + hours.size());
 	}
 
 	public void btnAcceptAction() {
-		float duration = hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 10);
 		if (SubjectDatabaseController.addSubject(txtProfessor.getText(), txtSubject.getText(),
 				semesterIDs.get(semesterChoiceBox.getSelectionModel().getSelectedIndex()),
-				"#" + colorPicker.getValue().toString().substring(2, 8), days, hours, duration)) {
+				"#" + colorPicker.getValue().toString().substring(2, 8), days, hours, durations)) {
 			parent.refreshData();
 			dialogStage = (Stage) btnCancel.getScene().getWindow();
 			dialogStage.close();
