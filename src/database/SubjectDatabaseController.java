@@ -40,7 +40,6 @@ public class SubjectDatabaseController {
 					day.setDuration(times.getFloat(5));
 					day.setStart(times.getDate(6).toLocalDate());
 					day.setEnd(times.getDate(7).toLocalDate());
-					day.setDuration(times.getFloat(5));
 					days.add(day);
 				}
 				ClassCellItems cell = new ClassCellItems();

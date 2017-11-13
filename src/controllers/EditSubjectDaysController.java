@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import application.Main;
 import cellItems.ClassCellItems;
 import cellItems.ScheduleItem;
 import database.SubjectDatabaseController;
@@ -15,10 +16,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class EditSubjectDaysController implements Initializable {
-	
+	@FXML
+	GridPane rootGridPane;
 	@FXML
 	Button btnUpdateSubjectTime;
 	@FXML
@@ -48,6 +51,7 @@ public class EditSubjectDaysController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		rootGridPane.setStyle(Main.getThemeString());
 		ObservableList<String> typeChoiceBoxData = FXCollections.observableArrayList(
 				resources.getString("monday"), resources.getString("tuesday"), resources.getString("wednesday"),
 				resources.getString("thursday"), resources.getString("friday"),resources.getString("saturday"),

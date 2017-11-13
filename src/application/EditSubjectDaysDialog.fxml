@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="213.0" prefWidth="453.0" stylesheets="@../styles/global.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditSubjectDaysController">
+<GridPane fx:id="rootGridPane" prefHeight="213.0" prefWidth="453.0" stylesheets="@../styles/global.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditSubjectDaysController">
    <rowConstraints>
       <RowConstraints minHeight="10.0" prefHeight="30.0" />
       <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="46.0" />
