@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class ScheduleItem {
+public class ScheduleItem implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private int IDSubject_Time;
 	private String day;
 	private LocalTime time;
@@ -15,12 +16,12 @@ public class ScheduleItem {
 	public ScheduleItem() {
 
 	}
-	
-	public void setIDSubject_Time(int IDSubject_Time){
+
+	public void setIDSubject_Time(int IDSubject_Time) {
 		this.IDSubject_Time = IDSubject_Time;
 	}
-	
-	public int getIDSubject_Time(){
+
+	public int getIDSubject_Time() {
 		return this.IDSubject_Time;
 	}
 

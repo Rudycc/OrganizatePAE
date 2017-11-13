@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import application.Main;
 import cellItems.ClassCellItems;
-import cellItems.ScheduleItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -241,7 +240,7 @@ public class ManageSubjectsController implements Initializable, Refresher {
 
 			GridPane pane = FXMLLoader.load(Main.class.getResource("EditSubjectDaysDialog.fxml"), this.resources);
 			setEditDialogData(pane);
-
+			pane.setStyle(Main.getThemeString());
 			// Once the values are set, display the dialog
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.show();
