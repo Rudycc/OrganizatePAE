@@ -1,6 +1,7 @@
 package controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -43,9 +44,8 @@ public class EditSubjectDaysController implements Initializable {
 	@FXML
 	Label hourMessage;
 	
-	private static List<String> days;
-	private static List<String> hours;
-	private static String originalSubject;
+	private List<String> days;
+	private List<String> hours;
 	private int selectedIDSubjectTime;
 	private ResourceBundle resources;
 	private ClassCellItems currentClass;
@@ -75,21 +75,10 @@ public class EditSubjectDaysController implements Initializable {
 	}
 	
 	public void btnEditAction(){
-		selectedIDSubjectTime = Integer.parseInt(existingDaysChoiceBox.getSelectionModel().getSelectedItem().split("|")[0]);
-		List<ClassCellItems> classes = SubjectDatabaseController.getAllClasses();
-		List<ScheduleItem> times = null;
+		selectedIDSubjectTime = Integer.parseInt(existingDaysChoiceBox.getSelectionModel().getSelectedItem().split(" | ")[0]);
 		ScheduleItem scheduleItemToEdit = null;
-		int subjectID = SubjectDatabaseController.getIDForSubject(originalSubject);
 		
-		//Both for loops help get the scheduleItem to be edited
-		for (ClassCellItems c : classes) {
-			if(c.getSubjectId() == subjectID){
-				times = c.getTimes();
-				break;
-			}
-		}
-		
-		for (ScheduleItem t : times) {
+		for (ScheduleItem t : currentClass.getTimes()) {
 			if(t.getIDSubject_Time() == selectedIDSubjectTime){
 				scheduleItemToEdit = t;
 			}
@@ -162,18 +151,6 @@ public class EditSubjectDaysController implements Initializable {
 		minuteSpinnerDuration.setDisable(false);
 	}
 	
-	public static void setDays(List<String> daysParent){
-		days = daysParent;
-	}
-	
-	public static void setHours(List<String> hoursParent){
-		hours = hoursParent;
-	}
-	
-	public static void setOriginalSubject(String subject){
-		originalSubject = subject;
-	}
-	
 	public String getChoiceBoxDay(int choiceBoxIndex){
 		String day = "";
 		switch(choiceBoxIndex){
@@ -203,5 +180,34 @@ public class EditSubjectDaysController implements Initializable {
 			break;
 		}
 		return day;
+	}
+	
+	public void setInfo(ClassCellItems currentClass){
+		this.currentClass = currentClass;
+		this.days = new ArrayList<>();
+		this.hours = new ArrayList<>();
+		List<Integer> editSubjectTime_Ids = new ArrayList<>();
+		
+		currentClass.getTimes().forEach((t) -> {
+			editSubjectTime_Ids.add(t.getIDSubject_Time());
+			days.add(t.getDay());
+			String minutes = t.getTime().toString().split(":")[1];
+			hours.add("1000-01-01 " + t.getTime().toString().split(":")[0] + ":" + minutes + " - "
+					+ resources.getString("newSubjectDuration") + ": " + t.getDuration());
+		});
+		
+		dayChoiceBox.getSelectionModel().select(0);
+		ObservableList<String> typeChoiceBoxData = FXCollections.observableArrayList();
+		for (int i = 0; i < hours.size(); i++) {
+			StringBuilder s = new StringBuilder();
+			s.append(editSubjectTime_Ids.get(i).toString());
+			s.append(" | ");
+			s.append(resources.getString(days.get(i).toLowerCase()));
+			s.append(" - ");
+			s.append(hours.get(i).substring(11));
+
+			typeChoiceBoxData.add(s.toString());
+		}
+		existingDaysChoiceBox.setItems(typeChoiceBoxData);
 	}
 }
