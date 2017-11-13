@@ -25,11 +25,12 @@ import jfxtras.scene.control.agenda.Agenda.Appointment;
 import jfxtras.scene.control.agenda.Agenda.AppointmentGroup;
 import jfxtras.scene.control.agenda.Agenda.AppointmentGroupImpl;
 
-public class ScheduleController implements Initializable, Refreshable {
+public class ScheduleController implements Initializable, Refreshable, Refresher {
 	@FXML
 	private Agenda agenda;
 	private ResourceBundle rb;
 	private Refreshable self = this;
+	private Refreshable parent;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -112,9 +113,6 @@ public class ScheduleController implements Initializable, Refreshable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		
 	}
 
 	@Override
@@ -142,6 +140,12 @@ public class ScheduleController implements Initializable, Refreshable {
 		agenda.appointments().clear();
 		agenda.appointments().addAll(schedule);
 		agenda.refresh();
+		parent.refreshData();
+	}
+
+	@Override
+	public void setParent(Refreshable parent) {
+		this.parent = parent;
 	}
 
 }

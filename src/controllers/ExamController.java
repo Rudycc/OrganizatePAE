@@ -27,7 +27,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class ExamController implements Initializable, Refreshable {
+public class ExamController implements Initializable, Refreshable, Refresher {
 	@FXML
 	public ListView<TaskCellItems> pastList;
 	@FXML
@@ -38,6 +38,7 @@ public class ExamController implements Initializable, Refreshable {
 	Button btnNewExam;
 	private ResourceBundle rb;
 	private Refreshable self = this;
+	private Refreshable parent;
 
 	private EventHandler<MouseEvent> cellClick = new EventHandler<MouseEvent>() {
 		@Override
@@ -137,5 +138,12 @@ public class ExamController implements Initializable, Refreshable {
 	public void refreshData() {
 		pastObservableList.setAll(ExamDatabaseController.getPreviousExams());
 		futureObservableList.setAll(ExamDatabaseController.getUpcomingExams());
+		parent.refreshData();
+	}
+
+	@Override
+	public void setParent(Refreshable parent) {
+		// TODO Auto-generated method stub
+		this.parent = parent;
 	}
 }

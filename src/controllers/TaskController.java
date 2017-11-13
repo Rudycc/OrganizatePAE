@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.ListCell;
 import javafx.util.Callback;
 
-public class TaskController implements Initializable, Refreshable {
+public class TaskController implements Initializable, Refreshable, Refresher {
 	
 	@FXML
 	public ListView<TaskCellItems> pastList;
@@ -39,6 +39,7 @@ public class TaskController implements Initializable, Refreshable {
 	private ResourceBundle rb;
 	
 	private Refreshable self = this;
+	private Refreshable parent;
 	
 	private EventHandler<MouseEvent> cellClick = new EventHandler<MouseEvent>() {
 		@Override
@@ -131,5 +132,11 @@ public class TaskController implements Initializable, Refreshable {
 	public void refreshData() {
 		pastObservableList.setAll(TaskDatabaseController.getPreviousTasks());
 		futureObservableList.setAll(TaskDatabaseController.getUpcomingTasks());
+		parent.refreshData();
+	}
+
+	@Override
+	public void setParent(Refreshable parent) {
+		this.parent = parent;
 	}
 }
