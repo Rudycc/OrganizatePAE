@@ -229,36 +229,6 @@ public class SubjectDatabaseController {
 		
 		return semID;
 	}
-	
-	public static int getIDForSubject(String name){
-		int subID = 1;
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
-		try {
-			conn = MyDBConnection.getConnection();
-			ps = conn.prepareStatement("SELECT sub.IDSubject FROM OrganizatePAE.Subject sub WHERE Name = ?");
-			ps.setString(1, name);
-			rs = ps.executeQuery();
-			
-			if(rs.next())
-				subID = rs.getInt(1);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{
-			try {
-				ps.close();
-				rs.close();
-				conn.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return subID;
-	}
 
 	public static boolean addSubject(String professor, String subject, int semester, String color, List<String> days, List<String> hours, List<Float> durations){
 		Connection conn = null;

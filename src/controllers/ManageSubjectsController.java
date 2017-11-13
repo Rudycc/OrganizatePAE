@@ -54,13 +54,15 @@ public class ManageSubjectsController implements Initializable, Refresher {
 	@FXML
 	Button btnEditDays;
 	@FXML
+	Button btnStored;
+	@FXML
 	Label hourMessage;
 
 	private List<String> days;
 	private List<String> hours;
 	private List<Float> durations;
 	private String minutes;
-	private static String originalSubject;
+	private ClassCellItems currentClass;
 	private ResourceBundle resources;
 	private Stage dialogStage;
 	private Refreshable parent;
@@ -123,7 +125,7 @@ public class ManageSubjectsController implements Initializable, Refresher {
 		// Update on DB only on edition of existing subject
 		if (btnEditDays.isVisible()) {
 			float duration = hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 10);
-			SubjectDatabaseController.insertSubjectTime(SubjectDatabaseController.getIDForSubject(originalSubject),
+			SubjectDatabaseController.insertSubjectTime(currentClass.getSubjectId(),
 					days.get(days.size() - 1), hours.get(hours.size() - 1), duration);
 		}
 	}
@@ -141,7 +143,7 @@ public class ManageSubjectsController implements Initializable, Refresher {
 				System.out.println("fatal error");
 			}
 		} else {
-			if (SubjectDatabaseController.updateSubject(SubjectDatabaseController.getIDForSubject(originalSubject),
+			if (SubjectDatabaseController.updateSubject(currentClass.getSubjectId(),
 					txtProfessor.getText(), txtSubject.getText(),
 					SubjectDatabaseController.getSemesterIDForSubject(semesterChoiceBox.getValue()),
 					"#" + colorPicker.getValue().toString().substring(2, 8))) {
@@ -182,54 +184,6 @@ public class ManageSubjectsController implements Initializable, Refresher {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public void setEditDialogData(GridPane pane) {
-		List<ClassCellItems> classes = SubjectDatabaseController.getAllClasses();
-		int subjectID = SubjectDatabaseController.getIDForSubject(originalSubject);
-		List<String> editDays = new ArrayList<>();
-		List<String> editHours = new ArrayList<>();
-		List<Integer> editSubjectTime_Ids = new ArrayList<>();
-		// Gets the days and hours of only the class to be edited
-		for (ClassCellItems c : classes) {
-			if (c.getSubjectId() == subjectID) {
-				c.getTimes().forEach((t) -> {
-					editSubjectTime_Ids.add(t.getIDSubject_Time());
-					editDays.add(t.getDay());
-					minutes = t.getTime().toString().split(":")[1];
-					editHours.add("1000-01-01 " + t.getTime().toString().split(":")[0] + ":" + minutes + " - "
-							+ resources.getString("newSubjectDuration") + ": " + t.getDuration());
-				});
-				break;
-			}
-		}
-		// Sends the info for days and hours of the class to the new dialog
-		EditSubjectDaysController.setDays(editDays);
-		EditSubjectDaysController.setHours(editHours);
-
-		// Selects the first element of the choicebox
-		ChoiceBox<String> daysBox = (ChoiceBox<String>) pane.getChildren().get(4);
-		daysBox.getSelectionModel().select(0);
-
-		// Sets the data for the existing days choicebox
-		ChoiceBox<String> existingDaysBox = (ChoiceBox<String>) pane.getChildren().get(0);
-		ObservableList<String> typeChoiceBoxData = FXCollections.observableArrayList();
-
-		// The for loop below adds data to the observableList
-		for (int i = 0; i < editHours.size(); i++) {
-			StringBuilder s = new StringBuilder();
-			s.append(editSubjectTime_Ids.get(i).toString());
-			s.append(" | ");
-			s.append(resources.getString(editDays.get(i).toLowerCase()));
-			s.append(" - ");
-			s.append(editHours.get(i).substring(11));
-
-			typeChoiceBoxData.add(s.toString());
-		}
-
-		existingDaysBox.setItems(typeChoiceBoxData);
-		EditSubjectDaysController.setOriginalSubject(originalSubject);
-	}
-
 	public void btnEditDaysAction() {
 		try {
 
@@ -237,11 +191,11 @@ public class ManageSubjectsController implements Initializable, Refresher {
 			dialogStage.initOwner(txtSubject.getScene().getWindow());
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(resources.getString("titleEditSubjectDays"));
-
-			GridPane pane = FXMLLoader.load(Main.class.getResource("EditSubjectDaysDialog.fxml"), this.resources);
-			setEditDialogData(pane);
-			pane.setStyle(Main.getThemeString());
-			// Once the values are set, display the dialog
+			
+			FXMLLoader loader = new FXMLLoader(Main.class.getResource("EditSubjectDaysDialog.fxml"), this.resources);
+			GridPane pane = loader.load();
+			((EditSubjectDaysController)loader.getController()).setInfo(currentClass);
+			
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.show();
 
@@ -249,13 +203,20 @@ public class ManageSubjectsController implements Initializable, Refresher {
 			e.printStackTrace();
 		}
 	}
-
-	public static void setOriginalSubject(String subject) {
-		originalSubject = subject;
-	}
-
+	
 	@Override
 	public void setParent(Refreshable parent) {
 		this.parent = parent;
+	}
+	
+	public void setEditInfo(ClassCellItems currentClass){
+		this.currentClass = currentClass;
+		
+		btnEditDays.setVisible(true);
+		btnStored.setVisible(false);
+		txtSubject.setText(currentClass.getClassName());
+		txtProfessor.setText(currentClass.getProfessorName());
+		
+		semesterChoiceBox.setValue(currentClass.getSemester());
 	}
 }

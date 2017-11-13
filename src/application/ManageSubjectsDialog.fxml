@@ -121,7 +121,7 @@
             <Insets bottom="10.0" right="10.0" />
          </GridPane.margin>
       </Label>
-      <Button mnemonicParsing="false" onAction="#btnManageStored" text="%newSubjectExisting" GridPane.columnSpan="2" GridPane.rowIndex="7">
+      <Button fx:id="btnStored" mnemonicParsing="false" onAction="#btnManageStored" text="%newSubjectExisting" GridPane.columnSpan="2" GridPane.rowIndex="7">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" />
          </GridPane.margin>
