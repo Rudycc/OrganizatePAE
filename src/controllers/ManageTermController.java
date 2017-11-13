@@ -48,7 +48,6 @@ public class ManageTermController implements Initializable, Refresher {
 
 	@Override
 	public void setParent(Refreshable parent) {
-		// TODO Auto-generated method stub
 		this.parent = parent;
 	}
 

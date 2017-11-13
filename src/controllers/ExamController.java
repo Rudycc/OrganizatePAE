@@ -92,7 +92,6 @@ public class ExamController implements Initializable, Refreshable, Refresher {
 
 			@Override
 			public ListCell<TaskCellItems> call(ListView<TaskCellItems> pastList) {
-				// TODO Auto-generated method stub
 				return new TaskListViewCell();
 			}
 
@@ -102,7 +101,6 @@ public class ExamController implements Initializable, Refreshable, Refresher {
 
 			@Override
 			public ListCell<TaskCellItems> call(ListView<TaskCellItems> param) {
-				// TODO Auto-generated method stub
 				return new TaskListViewCell();
 			}
 
@@ -143,7 +141,6 @@ public class ExamController implements Initializable, Refreshable, Refresher {
 
 	@Override
 	public void setParent(Refreshable parent) {
-		// TODO Auto-generated method stub
 		this.parent = parent;
 	}
 }
