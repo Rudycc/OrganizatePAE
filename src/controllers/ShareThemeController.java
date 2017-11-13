@@ -8,7 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ShareSubjectController implements Initializable {
+public class ShareThemeController implements Initializable {
 	@FXML
 	TextField txtIp;
 	private Stage dialogStage;
