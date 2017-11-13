@@ -10,26 +10,26 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"  stylesheets="@../styles/global.css">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"  stylesheets="@../styles/global.css" fx:controller="controllers.TabController">
   <tabs>
     <Tab text="%dashboard">
       <content>
-        <fx:include source="Dashboard.fxml" />
+        <fx:include source="Dashboard.fxml" fx:id="dashboard" />
       </content>
     </Tab>
     <Tab text="%tasks" >
     	<content>
-  			<fx:include source="TaskTab.fxml" />
+  			<fx:include source="TaskTab.fxml" fx:id="task" />
   		</content>
   	</Tab>
     <Tab text="%exams">
       <content>
-        <fx:include source="ExamTab.fxml" />
+        <fx:include source="ExamTab.fxml" fx:id="exam" />
       </content>
     </Tab>
     <Tab text="%schedule">
       <content>
-      	<fx:include source="Schedule.fxml" />
+      	<fx:include source="Schedule.fxml" fx:id="schedule" />
       </content>
     </Tab>
     <Tab text="%settings">

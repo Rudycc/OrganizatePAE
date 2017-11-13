@@ -5,12 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import cellItems.ClassCellItems;
 import cellItems.ScheduleItem;
 import javafx.collections.FXCollections;
@@ -42,6 +39,7 @@ public class SubjectDatabaseController {
 					day.setDuration(times.getFloat(5));
 					day.setStart(times.getDate(6).toLocalDate());
 					day.setEnd(times.getDate(7).toLocalDate());
+					day.setDuration(times.getFloat(5));
 					days.add(day);
 				}
 				ClassCellItems cell = new ClassCellItems();
@@ -139,18 +137,22 @@ public class SubjectDatabaseController {
 	}
 	
 	public static ObservableList<String> getAllSemesterDescriptions(){
+		return getAllSemesterNames();
+  }
+  
+	public static ObservableList<String> getAllSemesterNames(){
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		ObservableList<String> descriptions = null;
+		ObservableList<String> ids = null;
 		try{
 			conn = MyDBConnection.getConnection();
-			ps = conn.prepareStatement("SELECT Description FROM Semester");
+			ps = conn.prepareStatement("Select Description from Semester");
 			rs = ps.executeQuery();
-			descriptions = FXCollections.observableArrayList();
+			ids = FXCollections.observableArrayList();
 			
 			while(rs.next()){
-				descriptions.add(rs.getString(1));
+				ids.add(rs.getString(1));
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -163,8 +165,7 @@ public class SubjectDatabaseController {
 				e.printStackTrace();
 			}
 		}
-		
-		return descriptions;
+    return ids;
 	}
 	
 	public static String getSemesterDescForSubject(int IDSubject){
@@ -258,8 +259,8 @@ public class SubjectDatabaseController {
 		
 		return subID;
 	}
-	
-	public static boolean addSubject(String professor, String subject, int semester, String color, List<String> days, List<String> hours, float duration){
+
+	public static boolean addSubject(String professor, String subject, int semester, String color, List<String> days, List<String> hours, List<Float> durations){
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -273,20 +274,21 @@ public class SubjectDatabaseController {
 			ps.setInt(3, semester);
 			ps.setString(4, color);
 			ps.executeUpdate();
+			ps.close();
 			
 			//Get the new subject's ID
 			ps = conn.prepareStatement("Select MAX(IDSubject) as ID From Subject");
 			rs = ps.executeQuery();
 			if(rs.next())
 				subjectID = rs.getInt("ID");
-			
+			ps.close();
 			//Inserts subject time
 			ps = conn.prepareStatement("Insert into Subject_Time(Day,Time,IDSubject,Duration) Values(?,?,?,?)");
 			for(int i=0; i< days.size();i++){
 				ps.setString(1, days.get(i));
 				ps.setString(2, hours.get(i));
 				ps.setInt(3, subjectID);
-				ps.setFloat(4, duration);
+				ps.setFloat(4, durations.get(i));
 				ps.executeUpdate();
 			}
 			
