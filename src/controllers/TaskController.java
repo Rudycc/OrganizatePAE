@@ -149,7 +149,6 @@ public class TaskController implements Initializable, Refreshable, Refresher, Ru
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		pastObservableList.setAll(TaskDatabaseController.getPreviousTasks());
 		futureObservableList.setAll(TaskDatabaseController.getUpcomingTasks());
 	}

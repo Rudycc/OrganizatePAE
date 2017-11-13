@@ -82,7 +82,6 @@ public class DashboardController implements Initializable, Refreshable, Runnable
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		classObservableList.setAll(SubjectDatabaseController.getTodayClasses());
 		taskObservableList.setAll(TaskDatabaseController.getTodayTasks());
 		examObservableList.setAll(ExamDatabaseController.getTodayExams());

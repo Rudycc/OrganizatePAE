@@ -72,7 +72,6 @@ public class NewTaskDialogController implements Initializable, Refresher, Runnab
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		type = (choiceBoxTypeChooser.getSelectionModel().getSelectedIndex()==2)? "EXAM":"TASK";
 		TaskDatabaseController.insertNewTask(txtName.getText(),txtDescription.getText(), type, 0, datePicker.getValue()+"", choiceBoxClassChooser.getValue());
 	}

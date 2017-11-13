@@ -153,7 +153,6 @@ public class ExamController implements Initializable, Refreshable, Refresher, Ru
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		pastObservableList.setAll(ExamDatabaseController.getPreviousExams());
 		futureObservableList.setAll(ExamDatabaseController.getUpcomingExams());
 	}

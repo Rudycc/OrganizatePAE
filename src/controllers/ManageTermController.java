@@ -57,7 +57,6 @@ public class ManageTermController implements Initializable, Refresher, Runnable{
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		TermDatabaseController.insertNewTerm(startDatePicker.getValue().toString(), 
 				endDatePicker.getValue().toString(), txtFldDescription.getText());
 	}

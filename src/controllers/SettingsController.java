@@ -136,7 +136,6 @@ public class SettingsController implements Initializable, Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		String lang = SettingsDatabaseController.getLanguage();
 		ObservableList<String> languages = FXCollections.observableArrayList("English", "Español");
 		langChoice.setItems(languages);

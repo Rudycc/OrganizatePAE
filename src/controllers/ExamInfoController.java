@@ -43,7 +43,6 @@ public class ExamInfoController implements Initializable, Refresher, Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		int isDone = (checkBoxDone.isSelected())? 1 : 0;
 		ExamDatabaseController.updateExamInfo(Integer.parseInt(examId.getText()), txtAreaDescription.getText(), isDone);
 	}

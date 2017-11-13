@@ -43,7 +43,6 @@ public class TaskInfoController implements Initializable, Refresher, Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		int isDone = (checkBoxDone.isSelected())? 1 : 0;
 		TaskDatabaseController.updateTaskInfo(Integer.parseInt(taskId.getText()), txtAreaDescription.getText(), isDone);
 	}

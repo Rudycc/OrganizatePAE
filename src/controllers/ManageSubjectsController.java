@@ -162,7 +162,6 @@ public class ManageSubjectsController implements Initializable, Refresher, Runna
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		semesterChoiceBox.setItems(SubjectDatabaseController.getAllSemesterNames());
 		semesterIDs = SubjectDatabaseController.getAllSemesterIDs();
 	}
