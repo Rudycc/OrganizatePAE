@@ -29,11 +29,13 @@ public class ManageSubjectsController implements Initializable, Refresher {
 
 	@FXML TextField txtSubject;
 	@FXML TextField txtProfessor;
-	@FXML ChoiceBox<Integer> semesterChoiceBox;
+	@FXML ChoiceBox<String> semesterChoiceBox;
 	@FXML ColorPicker colorPicker;
 	@FXML ChoiceBox<String> dayChoiceBox;
 	@FXML Spinner<Integer> hourSpinner;
 	@FXML Spinner<Integer> minuteSpinner;
+	@FXML Spinner<Integer> hourSpinnerDuration;
+	@FXML Spinner<Integer> minuteSpinnerDuration;
 	@FXML Button btnAddSubjectTime;
 	@FXML Button btnAccept;
 	@FXML Button btnCancel;
@@ -44,6 +46,8 @@ public class ManageSubjectsController implements Initializable, Refresher {
 	private ResourceBundle resources;
 	private Stage dialogStage;
 	private Refreshable parent;
+	private ObservableList<Integer> semesterIDs;
+
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -53,10 +57,12 @@ public class ManageSubjectsController implements Initializable, Refresher {
 				resources.getString("sunday")); 
 		dayChoiceBox.setItems(typeChoiceBoxData);
 		
-		semesterChoiceBox.setItems(SubjectDatabaseController.getAllSemesterIDs());
+		semesterChoiceBox.setItems(SubjectDatabaseController.getAllSemesterNames());
 		
 		days = new ArrayList<String>();
 		hours = new ArrayList<String>();
+		
+		semesterIDs = SubjectDatabaseController.getAllSemesterIDs();
 		
 		this.resources = resources;
 		
@@ -88,8 +94,9 @@ public class ManageSubjectsController implements Initializable, Refresher {
 	}
 	
 	public void btnAcceptAction(){
-		if(SubjectDatabaseController.addSubject(txtProfessor.getText(), txtSubject.getText(), semesterChoiceBox.getValue(), 
-												"#" + colorPicker.getValue().toString().substring(2, 8), days, hours)){
+		float duration = hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 10);		
+		if(SubjectDatabaseController.addSubject(txtProfessor.getText(), txtSubject.getText(), semesterIDs.get(semesterChoiceBox.getSelectionModel().getSelectedIndex()), 
+												"#" + colorPicker.getValue().toString().substring(2, 8), days, hours, duration)){
 			parent.refreshData();
 			dialogStage = (Stage) btnCancel.getScene().getWindow();
 			dialogStage.close();
@@ -102,8 +109,7 @@ public class ManageSubjectsController implements Initializable, Refresher {
 		dialogStage = (Stage) btnCancel.getScene().getWindow();
 		dialogStage.close();
 	}
-	
-	
+		
 	public void btnManageStored(){
 		try {
 			
@@ -129,7 +135,6 @@ public class ManageSubjectsController implements Initializable, Refresher {
 
 	@Override
 	public void setParent(Refreshable parent) {
-		// TODO Auto-generated method stub
 		this.parent = parent;
 	}
 } 

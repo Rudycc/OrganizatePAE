@@ -25,54 +25,47 @@ public class DashboardController implements Initializable, Refreshable {
 	public ListView<TaskCellItems> taskList;
 	@FXML
 	public ListView<TaskCellItems> examList;
-	
+
 	ObservableList<ClassCellItems> classObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> taskObservableList = FXCollections.observableArrayList();
 	ObservableList<TaskCellItems> examObservableList = FXCollections.observableArrayList();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
 		classObservableList.setAll(SubjectDatabaseController.getTodayClasses());
 		taskObservableList.setAll(TaskDatabaseController.getTodayTasks());
 		examObservableList.setAll(ExamDatabaseController.getTodayExams());
-		
+
 		todayList.setItems(classObservableList);
 		taskList.setItems(taskObservableList);
 		examList.setItems(examObservableList);
 
-		
 		todayList.setCellFactory(new Callback<ListView<ClassCellItems>, ListCell<ClassCellItems>>() {
 
 			@Override
 			public ListCell<ClassCellItems> call(ListView<ClassCellItems> todayList) {
-				// TODO Auto-generated method stub
 				return new ClassListViewCell();
 			}
-			
+
 		});
-		
+
 		taskList.setCellFactory(new Callback<ListView<TaskCellItems>, ListCell<TaskCellItems>>() {
 
 			@Override
 			public ListCell<TaskCellItems> call(ListView<TaskCellItems> taskList) {
-				// TODO Auto-generated method stub
 				return new TaskListViewCell();
 			}
-			
+
 		});
-		
+
 		examList.setCellFactory(new Callback<ListView<TaskCellItems>, ListCell<TaskCellItems>>() {
 
 			@Override
 			public ListCell<TaskCellItems> call(ListView<TaskCellItems> examList) {
-				// TODO Auto-generated method stub
 				return new TaskListViewCell();
 			}
-			
+
 		});
-		
-		
 	}
 
 	@Override
@@ -81,5 +74,4 @@ public class DashboardController implements Initializable, Refreshable {
 		taskObservableList.setAll(TaskDatabaseController.getTodayTasks());
 		examObservableList.setAll(ExamDatabaseController.getTodayExams());
 	}
-
 }

@@ -5,9 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +36,8 @@ public class SubjectDatabaseController {
 					ScheduleItem day = new ScheduleItem();
 					day.setDay(times.getString(2));
 					day.setTime(times.getTime(3).toLocalTime());
-					day.setStart(times.getDate(5).toLocalDate());
-					day.setEnd(times.getDate(6).toLocalDate());
+					day.setStart(times.getDate(6).toLocalDate());
+					day.setEnd(times.getDate(7).toLocalDate());
 					days.add(day);
 				}
 				ClassCellItems cell = new ClassCellItems();
@@ -135,7 +133,36 @@ public class SubjectDatabaseController {
 		return ids;
 	}
 	
-	public static boolean addSubject(String professor, String subject, int semester, String color, List<String> days, List<String> hours){
+	public static ObservableList<String> getAllSemesterNames(){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ObservableList<String> ids = null;
+		try{
+			conn = MyDBConnection.getConnection();
+			ps = conn.prepareStatement("Select Description from Semester");
+			rs = ps.executeQuery();
+			ids = FXCollections.observableArrayList();
+			
+			while(rs.next()){
+				ids.add(rs.getString(1));
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try{
+				ps.close();
+				rs.close();
+				conn.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+		
+		return ids;
+	}
+	
+	public static boolean addSubject(String professor, String subject, int semester, String color, List<String> days, List<String> hours, float duration){
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -149,19 +176,21 @@ public class SubjectDatabaseController {
 			ps.setInt(3, semester);
 			ps.setString(4, color);
 			ps.executeUpdate();
+			ps.close();
 			
 			//Get the new subject's ID
 			ps = conn.prepareStatement("Select MAX(IDSubject) as ID From Subject");
 			rs = ps.executeQuery();
 			if(rs.next())
 				subjectID = rs.getInt("ID");
-			
+			ps.close();
 			//Inserts subject time
-			ps = conn.prepareStatement("Insert into Subject_Time(Day,Time,IDSubject) Values(?,?,?)");
+			ps = conn.prepareStatement("Insert into Subject_Time(Day,Time,IDSubject,Duration) Values(?,?,?,?)");
 			for(int i=0; i< days.size();i++){
 				ps.setString(1, days.get(i));
 				ps.setString(2, hours.get(i));
 				ps.setInt(3, subjectID);
+				ps.setFloat(4, duration);
 				ps.executeUpdate();
 			}
 			
