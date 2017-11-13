@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="340.0" prefWidth="480.0" stylesheets="@../styles/global.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ManageSubjectsController">
+<GridPane fx:id="rootGridPane" prefHeight="340.0" prefWidth="480.0" stylesheets="@../styles/global.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ManageSubjectsController">
    <rowConstraints>
       <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" />
       <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" />
