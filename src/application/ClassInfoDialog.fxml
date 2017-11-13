@@ -32,17 +32,17 @@
             <Insets />
          </GridPane.margin>
       </Button>
-      <Button mnemonicParsing="false" text="-&gt;" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+      <Button fx:id="btnNext" mnemonicParsing="false" onAction="#btnNextAction" text="-&gt;" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets bottom="10.0" />
          </GridPane.margin>
       </Button>
-      <Button mnemonicParsing="false" text="&lt;-" GridPane.rowIndex="5">
+      <Button fx:id="btnPrevious" disable="true" mnemonicParsing="false" onAction="#btnPreviousAction" text="&lt;-" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets bottom="10.0" />
          </GridPane.margin>
       </Button>
-      <Button mnemonicParsing="false" text="%manageSubjectEdit" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" />
+      <Button mnemonicParsing="false" onAction="#btnEditAction" text="%manageSubjectEdit" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" />
       <TextArea fx:id="txtAreaClassInfo" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowSpan="5">
          <GridPane.margin>
             <Insets bottom="10.0" />
