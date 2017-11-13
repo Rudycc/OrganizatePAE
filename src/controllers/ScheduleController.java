@@ -44,7 +44,7 @@ public class ScheduleController implements Initializable, Refreshable, Refresher
 							.withEndLocalDateTime(start.atTime(time.getTime().plusHours(2)))
 							.withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
 							.withAppointmentGroup(new Agenda.AppointmentGroupImpl()
-									.withStyleClass("group" + ((subject.getSubjectId()%15) + 1)));
+									.withStyleClass("group" + ((subject.getSubjectId() % 15) + 1))));
 					start = start.plusDays(7);
 				}
 			});
@@ -125,7 +125,7 @@ public class ScheduleController implements Initializable, Refreshable, Refresher
 							.withEndLocalDateTime(start.atTime(time.getTime().plusHours(2)))
 							.withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
 							.withAppointmentGroup(new Agenda.AppointmentGroupImpl()
-									.withStyleClass("group" + ((subject.getSubjectId()%15) + 1)));
+									.withStyleClass("group" + ((subject.getSubjectId() % 15) + 1))));
 					start = start.plusDays(7);
 				}
 			});
