@@ -1,7 +1,7 @@
 package cellItems;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class ScheduleItem {
@@ -11,9 +11,9 @@ public class ScheduleItem {
 	private float duration;
 	private LocalDate start;
 	private LocalDate end;
-	
-	public ScheduleItem(){
-		
+
+	public ScheduleItem() {
+
 	}
 	
 	public void setIDSubject_Time(int IDSubject_Time){
