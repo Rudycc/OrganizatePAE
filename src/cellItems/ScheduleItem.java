@@ -1,11 +1,9 @@
 package cellItems;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class ScheduleItem implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class ScheduleItem {
 	private int IDSubject_Time;
 	private String day;
 	private LocalTime time;

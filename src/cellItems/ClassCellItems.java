@@ -1,14 +1,12 @@
 package cellItems;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import database.SettingsDatabaseController;
 
-public class ClassCellItems implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class ClassCellItems {
 	private int subjectId;
 	private String className;
 	private String professorName;
