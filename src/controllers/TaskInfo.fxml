@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane hgap="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" stylesheets="@../styles/global.css" vgap="15.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TaskInfoController">
+<GridPane hgap="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" stylesheets="@../styles/global.css" vgap="15.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TaskInfoController" fx:id="gridPane">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
@@ -21,9 +21,9 @@
   </rowConstraints>
    <children>
       <TextArea fx:id="txtAreaDescription" prefHeight="150.0" prefWidth="200.0" text="Task Description, here you will be able to put a thoughful description for your tasks, so you won't miss anything once you commit to do them." wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-      <Label text="Task Title" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <Label fx:id="taskTitle" text="Task Title" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
       <CheckBox fx:id="checkBoxDone" mnemonicParsing="false" text="%done" GridPane.rowIndex="2" />
-      <Label text="Date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label fx:id="taskDate" text="Date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Button fx:id="btnAcccept" onAction="#btnAcceptAction" mnemonicParsing="false" text="%accept" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
    	  <Label fx:id="taskId" text="id" />
    </children>

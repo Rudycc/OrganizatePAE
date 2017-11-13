@@ -16,11 +16,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
@@ -53,27 +50,15 @@ public class TaskController implements Initializable, Refreshable, Refresher {
 					dialogStage.initOwner(btnNewTask.getScene().getWindow());
 					dialogStage.initModality(Modality.APPLICATION_MODAL);
 					dialogStage.setTitle(rb.getString("titleTaskInfo"));
-
+					
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskInfo.fxml"), rb);
-
 					GridPane newTaskPane = loader.load();
-					newTaskPane.setStyle(Main.getThemeString());
-
-					((Refresher) loader.getController()).setParent(self);
-
+					((Refresher)loader.getController()).setParent(self);
+					
 					ListView<TaskCellItems> src = (ListView<TaskCellItems>) event.getSource();
 					if (!src.getItems().isEmpty()) {
-						String title = src.getSelectionModel().getSelectedItem().getTaskName();
-						String description = src.getSelectionModel().getSelectedItem().getDescription();
-						String date = src.getSelectionModel().getSelectedItem().getDueDate().toString();
-						int taskId = src.getSelectionModel().getSelectedItem().getTaskId();
-						((Label) newTaskPane.getChildren().get(5)).setText(taskId + "");
-						((Label) newTaskPane.getChildren().get(1)).setText(title);
-						((Label) newTaskPane.getChildren().get(3)).setText(rb.getString("due") + ": " + date);
-						((TextArea) newTaskPane.getChildren().get(0)).setText(description);
-						((CheckBox) newTaskPane.getChildren().get(2))
-								.setSelected(src.getSelectionModel().getSelectedItem().isDone());
-
+						TaskCellItems cell = src.getSelectionModel().getSelectedItem();
+						((TaskInfoController)loader.getController()).setInfo(cell);
 						dialogStage.setScene(new Scene(newTaskPane));
 						dialogStage.show();
 					}

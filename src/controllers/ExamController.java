@@ -49,26 +49,16 @@ public class ExamController implements Initializable, Refreshable, Refresher {
 					Stage dialogStage = new Stage();
 					dialogStage.initOwner(btnNewExam.getScene().getWindow());
 					dialogStage.initModality(Modality.APPLICATION_MODAL);
-					dialogStage.setTitle(rb.getString("titleExamInfo"));
-
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("ExamInfo.fxml"), rb);
+					dialogStage.setTitle(rb.getString("titleTaskInfo"));
+					
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskInfo.fxml"), rb);
 					GridPane newTaskPane = loader.load();
-					newTaskPane.setStyle(Main.getThemeString());
-					((Refresher) loader.getController()).setParent(self);
-
+					((Refresher)loader.getController()).setParent(self);
+					
 					ListView<TaskCellItems> src = (ListView<TaskCellItems>) event.getSource();
 					if (!src.getItems().isEmpty()) {
-						String title = src.getSelectionModel().getSelectedItem().getTaskName();
-						String description = src.getSelectionModel().getSelectedItem().getDescription();
-						String date = src.getSelectionModel().getSelectedItem().getDueDate().toString();
-						int taskId = src.getSelectionModel().getSelectedItem().getTaskId();
-						((Label) newTaskPane.getChildren().get(5)).setText(taskId + "");
-						((Label) newTaskPane.getChildren().get(1)).setText(title);
-						((Label) newTaskPane.getChildren().get(3)).setText(rb.getString("due") + ": " + date);
-						((TextArea) newTaskPane.getChildren().get(0)).setText(description);
-						((CheckBox) newTaskPane.getChildren().get(2))
-								.setSelected(src.getSelectionModel().getSelectedItem().isDone());
-
+						TaskCellItems cell = src.getSelectionModel().getSelectedItem();
+						((TaskInfoController)loader.getController()).setInfo(cell);
 						dialogStage.setScene(new Scene(newTaskPane));
 						dialogStage.show();
 					}

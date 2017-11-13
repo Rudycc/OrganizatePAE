@@ -61,16 +61,9 @@ public class DashboardController implements Initializable, Refreshable {
 					
 					ListView<TaskCellItems> src = (ListView<TaskCellItems>) event.getSource();
 					if (!src.getItems().isEmpty()) {
-						String title = src.getSelectionModel().getSelectedItem().getTaskName();
-						String description = src.getSelectionModel().getSelectedItem().getDescription();
-						String date = src.getSelectionModel().getSelectedItem().getDueDate().toString();
-						int taskId = src.getSelectionModel().getSelectedItem().getTaskId();
-						((Label) newTaskPane.getChildren().get(5)).setText(taskId+"");
-						((Label) newTaskPane.getChildren().get(1)).setText(title);
-						((Label) newTaskPane.getChildren().get(3)).setText(rb.getString("due") +": "+ date);
-						((TextArea) newTaskPane.getChildren().get(0)).setText(description);
-						((CheckBox) newTaskPane.getChildren().get(2)).setSelected(src.getSelectionModel().getSelectedItem().isDone());
-						
+						TaskCellItems cell = src.getSelectionModel().getSelectedItem();
+						((TaskInfoController)loader.getController()).setInfo(cell);
+
 						dialogStage.setScene(new Scene(newTaskPane));
 						dialogStage.show();
 					}
