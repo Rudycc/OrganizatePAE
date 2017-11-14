@@ -160,4 +160,24 @@ public class SettingsController implements Initializable {
 			e.printStackTrace();
 		}
 	}
+
+	public void receiveTheme() {
+		try {
+			Stage dialogStage = new Stage();
+			dialogStage.initOwner(editThemeBtn.getScene().getWindow());
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setTitle(this.rb.getString("shareTheme"));
+
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("ReceiveTheme.fxml"), this.rb);
+			GridPane newThemePane = loader.load();
+			newThemePane.setStyle(Main.getThemeString());
+
+			dialogStage.setScene(new Scene(newThemePane));
+
+			dialogStage.show();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

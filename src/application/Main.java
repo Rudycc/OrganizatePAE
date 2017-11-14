@@ -1,39 +1,49 @@
 package application;
-	
+
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 import database.SettingsDatabaseController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
-
+import javafx.event.EventHandler;
 
 public class Main extends Application {
-	
+
 	private static String themeString = "";
-	
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			ResourceBundle rb = ResourceBundle.getBundle("resources.UIResources", new Locale(SettingsDatabaseController.getLanguage()));
-			TabPane pane =  FXMLLoader.load(getClass().getResource("Main.fxml"), rb);
+			ResourceBundle rb = ResourceBundle.getBundle("resources.UIResources",
+					new Locale(SettingsDatabaseController.getLanguage()));
+			TabPane pane = FXMLLoader.load(getClass().getResource("Main.fxml"), rb);
 			pane.setStyle(getThemeString());
 			primaryStage.setTitle(rb.getString("title"));
 			primaryStage.setScene(new Scene(pane));
+			primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				@Override
+				public void handle(WindowEvent e) {
+					Platform.exit();
+					System.exit(0);
+				}
+			});
 			primaryStage.show();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	public static String getThemeString() {
 		if (themeString.isEmpty()) {
 			String name = SettingsDatabaseController.getCurrentThemeName();
