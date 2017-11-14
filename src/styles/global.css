@@ -58,6 +58,7 @@
     -fx-alignment: CENTER;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
+    -fx-text-fill: -fx-gray-darker;
 }
 
 .top-label {

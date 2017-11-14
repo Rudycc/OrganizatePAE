@@ -17,7 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ClassInfoController implements Initializable {
-	
+
 	@FXML
 	Button btnAccept;
 	@FXML
@@ -26,11 +26,11 @@ public class ClassInfoController implements Initializable {
 	Button btnPrevious;
 	@FXML
 	TextArea txtAreaClassInfo;
-	
+
 	private ResourceBundle rb;
-	//Pointer to the Stage that contains the Pane
+	// Pointer to the Stage that contains the Pane
 	private Stage dialogStage = null;
-	
+
 	private List<ClassCellItems> classes;
 	private int classIndex;
 
@@ -40,8 +40,8 @@ public class ClassInfoController implements Initializable {
 		this.classes = SubjectDatabaseController.getAllClasses();
 		this.classIndex = 0;
 	}
-	
-	public void btnAcceptAction(){
+
+	public void btnAcceptAction() {
 		dialogStage = (Stage) btnAccept.getScene().getWindow();
 		dialogStage.close();
 	}
@@ -63,36 +63,36 @@ public class ClassInfoController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
-	public void setClassInfo(String info){
+
+	public void setClassInfo(String info) {
 		txtAreaClassInfo.setText(info);
 	}
-	
-	public void btnNextAction(){
-		
-		if(classIndex+1 < classes.size()){			
-			if(btnPrevious.disableProperty().get() == true)
+
+	public void btnNextAction() {
+
+		if (classIndex + 1 < classes.size()) {
+			if (btnPrevious.disableProperty().get() == true)
 				btnPrevious.disableProperty().set(false);
-			
+
 			classIndex++;
 			setClassInfo(classes.get(classIndex).toString());
-			
-			if(classIndex == classes.size()-1)
+
+			if (classIndex == classes.size() - 1)
 				btnNext.disableProperty().set(true);
-		}		
+		}
 	}
-	
-	public void btnPreviousAction(){
-		if(classIndex-1 >= 0){
-			if(btnNext.disableProperty().get() == true)
+
+	public void btnPreviousAction() {
+		if (classIndex - 1 >= 0) {
+			if (btnNext.disableProperty().get() == true)
 				btnNext.disableProperty().set(false);
-			
+
 			classIndex--;
 			setClassInfo(classes.get(classIndex).toString());
-			
-			if(classIndex == 0){
+
+			if (classIndex == 0) {
 				btnPrevious.disableProperty().set(true);
 			}
-		}	
+		}
 	}
 }
