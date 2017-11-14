@@ -20,10 +20,10 @@
     <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TextArea fx:id="txtAreaDescription" prefHeight="150.0" prefWidth="200.0" text="Task Description, here you will be able to put a thoughful description for your tasks, so you won't miss anything once you commit to do them." wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-      <Label fx:id="taskTitle" text="Task Title" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <TextArea fx:id="txtAreaDescription" prefHeight="150.0" prefWidth="200.0" text="%taskDescription" wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+      <Label fx:id="taskTitle" text="%taskTitle" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
       <CheckBox fx:id="checkBoxDone" mnemonicParsing="false" text="%done" GridPane.rowIndex="2" />
-      <Label fx:id="taskDate" text="Date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label fx:id="taskDate" text="%date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Button fx:id="btnAcccept" onAction="#btnAcceptAction" mnemonicParsing="false" text="%accept" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
    	  <Label fx:id="taskId" text="id" />
    </children>
