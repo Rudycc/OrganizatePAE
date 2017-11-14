@@ -16,6 +16,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import database.SettingsDatabaseController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -38,7 +39,11 @@ public class ReceiveThemeController implements Initializable {
 				InputStream is = client.getInputStream();
 				ObjectInputStream ois = new ObjectInputStream(is);
 				Map<String, String> theme = (Map<String, String>) ois.readObject();
-				System.out.println(theme);
+				if (SettingsDatabaseController.addTheme(theme)) {
+					System.out.println("Theme added successfully!");
+				}  else {
+					System.out.println("Error adding theme");
+				}
 				ois.close();
 				is.close();
 			} catch (IOException | ClassNotFoundException e) {
