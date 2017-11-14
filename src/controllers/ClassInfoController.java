@@ -49,8 +49,10 @@ public class ClassInfoController implements Initializable, Refresher, Refreshabl
 	}
   
 	public void btnDeleteSubjectAction(){
-		if(classes.size() > 0)
+		if (classes.size() > 0) {
 			SubjectDatabaseController.deleteSubject(classes.get(classIndex).getSubjectId());
+			parent.refreshData();
+		}
 		
 		if(classes.size() > 1){
 			//"Reset" the dialog after deletion
