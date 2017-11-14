@@ -48,13 +48,15 @@ public class ManageSubjectsController implements Initializable, Refresher {
 	@FXML
 	Button btnAddSubjectTime;
 	@FXML
-	Button btnAccept;
+	Button btnAddSubject;
 	@FXML
 	Button btnCancel;
 	@FXML
 	Button btnEditDays;
 	@FXML
 	Button btnStored;
+	@FXML
+	Button btnDeleteSubject;
 	@FXML
 	Label hourMessage;
 
@@ -87,6 +89,10 @@ public class ManageSubjectsController implements Initializable, Refresher {
 
 		this.resources = resources;
 
+	}
+	
+	public void btnDeleteSubjectAction(){
+		
 	}
 
 	public void btnAddSubjectTime() {
@@ -130,7 +136,7 @@ public class ManageSubjectsController implements Initializable, Refresher {
 		}
 	}
 
-	public void btnAcceptAction() {
+	public void btnAddSubjectAction() {
 		// If this accept is not of an edition of an existing subject
 		if (!btnEditDays.isVisible()) {
 			if (SubjectDatabaseController.addSubject(txtProfessor.getText(), txtSubject.getText(),
@@ -214,6 +220,8 @@ public class ManageSubjectsController implements Initializable, Refresher {
 		
 		btnEditDays.setVisible(true);
 		btnStored.setVisible(false);
+		btnDeleteSubject.setVisible(true);
+		btnAddSubject.setText(resources.getString("acceptChanges"));
 		txtSubject.setText(currentClass.getClassName());
 		txtProfessor.setText(currentClass.getProfessorName());
 		
