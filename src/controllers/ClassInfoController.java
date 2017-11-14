@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
@@ -25,8 +26,12 @@ public class ClassInfoController implements Initializable, Refresher, Refreshabl
 	@FXML
 	Button btnPrevious;
 	@FXML
+	Button btnDeleteSubject;
+	@FXML
 	TextArea txtAreaClassInfo;
 
+	@FXML
+	Label lblDeletedMessage;
 	private ResourceBundle rb;
 	// Pointer to the Stage that contains the Pane
 	private Stage dialogStage = null;
@@ -41,6 +46,28 @@ public class ClassInfoController implements Initializable, Refresher, Refreshabl
 		this.rb = resources;
 		this.classes = SubjectDatabaseController.getAllClasses();
 		this.classIndex = 0;
+	}
+  
+	public void btnDeleteSubjectAction(){
+		if (classes.size() > 0) {
+			SubjectDatabaseController.deleteSubject(classes.get(classIndex).getSubjectId());
+			parent.refreshData();
+		}
+		
+		if(classes.size() > 1){
+			//"Reset" the dialog after deletion
+			classes.remove(classIndex);
+			classIndex = 0;
+			btnPrevious.setDisable(true);
+			btnNext.setDisable(false);
+			if(classes.size() == 1)
+				btnNext.setDisable(true);
+			setClassInfo(classes.get(classIndex).toString());
+			
+			//Show message to user
+			lblDeletedMessage.setVisible(true);
+		} else
+			btnAcceptAction();
 	}
 
 	public void btnAcceptAction() {
@@ -72,7 +99,8 @@ public class ClassInfoController implements Initializable, Refresher, Refreshabl
 	}
 
 	public void btnNextAction() {
-
+    lblDeletedMessage.setVisible(false);
+    
 		if (classIndex + 1 < classes.size()) {
 			if (btnPrevious.disableProperty().get() == true)
 				btnPrevious.disableProperty().set(false);

@@ -42,6 +42,8 @@ public class TabController implements Initializable {
 	}
 	
 	public void refreshFromSchedule() {
+		taskController.refreshFromParent();
+		examController.refreshFromParent();
 		dashboardController.refreshFromParent();
 	}
 

@@ -48,7 +48,7 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 	@FXML
 	Button btnAddSubjectTime;
 	@FXML
-	Button btnAccept;
+	Button btnAddSubject;
 	@FXML
 	Button btnCancel;
 	@FXML
@@ -85,6 +85,10 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 		durations = new ArrayList<>();
 
 		semesterIDs = SubjectDatabaseController.getAllSemesterIDs();
+		
+		// If there are no classes, disable the manage stored button
+		if(SubjectDatabaseController.getAllClasses().size() < 1)
+			btnStored.setDisable(true);
 
 		this.resources = resources;
 
@@ -114,7 +118,7 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 			days.add("SUNDAY");
 			break;
 		default:
-			days.add("N/A");
+			days.add("MONDAY");
 			break;
 		}
 
@@ -131,7 +135,7 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 		}
 	}
 
-	public void btnAcceptAction() {
+	public void btnAddSubjectAction() {
 		// If this accept is not of an edition of an existing subject
 		if (!btnEditDays.isVisible()) {
 			if (SubjectDatabaseController.addSubject(txtProfessor.getText(), txtSubject.getText(),
@@ -163,29 +167,35 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 	}
 
 	public void btnManageStored() {
-		try {
+    List<ClassCellItems> classes = SubjectDatabaseController.getAllClasses();
+    
+    if(classes.size() > 0)
+      try {
 
-			Stage dialogStage = new Stage();
-			dialogStage.initOwner(txtSubject.getScene().getWindow());
-			dialogStage.initModality(Modality.APPLICATION_MODAL);
-			dialogStage.setTitle(resources.getString("titleManageStored"));
+        Stage dialogStage = new Stage();
+        dialogStage.initOwner(txtSubject.getScene().getWindow());
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        dialogStage.setTitle(resources.getString("titleManageStored"));
 
-			FXMLLoader loader = new FXMLLoader(Main.class.getResource("ClassInfoDialog.fxml"), this.resources);
-			GridPane pane = loader.load();
-			((Refresher)loader.getController()).setParent(self);
-			
-			pane.setStyle(Main.getThemeString());
-			dialogStage.setScene(new Scene(pane));
-			dialogStage.show();
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("ClassInfoDialog.fxml"), this.resources);
+        GridPane pane = loader.load();
+        ((Refresher)loader.getController()).setParent(self);
 
-			// Sets the textArea default value
-			TextArea paneTextArea = (TextArea) pane.getChildren().get(4);
-			List<ClassCellItems> classes = SubjectDatabaseController.getAllClasses();
-			paneTextArea.setText(classes.get(0).toString());
+        pane.setStyle(Main.getThemeString());
+        dialogStage.setScene(new Scene(pane));
+        dialogStage.show();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        // Sets the textArea default value
+        TextArea paneTextArea = (TextArea) pane.getChildren().get(4);
+        paneTextArea.setText(classes.get(0).toString());
+
+        // Only enables the next Button if there is more than 1 class
+        if(classes.size() > 1)
+          ((Button) pane.getChildren().get(1)).setDisable(false);
+
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
 	}
 
 	public void btnEditDaysAction() {
@@ -219,6 +229,7 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 
 		btnEditDays.setVisible(true);
 		btnStored.setVisible(false);
+		btnAddSubject.setText(resources.getString("acceptChanges"));
 		txtSubject.setText(currentClass.getClassName());
 		txtProfessor.setText(currentClass.getProfessorName());
 
@@ -227,6 +238,10 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 
 	@Override
 	public void refreshData() {
+		// Disables the manage stored button if there are no classes
+		if (SubjectDatabaseController.getAllClasses().size() < 1)
+			btnStored.setDisable(true);
+		
 		parent.refreshData();
 	}
 }

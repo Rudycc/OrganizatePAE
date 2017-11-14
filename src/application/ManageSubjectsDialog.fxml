@@ -83,14 +83,14 @@
             <Insets bottom="10.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="btnAccept" mnemonicParsing="false" onAction="#btnAcceptAction" text="%accept" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+      <Button fx:id="btnAddSubject" mnemonicParsing="false" onAction="#btnAddSubjectAction" text="%addSubject" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
          <GridPane.margin>
             <Insets bottom="10.0" right="10.0" />
          </GridPane.margin>
       </Button>
       <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#btnCancelAction" text="%cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
          <GridPane.margin>
-            <Insets bottom="10.0" left="10.0" right="80.0" />
+            <Insets bottom="10.0" left="10.0" right="135.0" />
          </GridPane.margin>
       </Button>
       <ChoiceBox fx:id="dayChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />

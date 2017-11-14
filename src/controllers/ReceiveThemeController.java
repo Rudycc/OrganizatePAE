@@ -16,19 +16,26 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import application.Main;
 import database.SettingsDatabaseController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
-public class ReceiveThemeController implements Initializable {
+public class ReceiveThemeController implements Initializable, Refresher {
 	@FXML
 	Label address;
 	private Stage dialogStage;
+	private static ResourceBundle rb;
 
 	public static class Receive implements Runnable {
 		private final int port = 5555;
+		private static Refreshable parent;
 
 		@SuppressWarnings("unchecked")
 		@Override
@@ -40,9 +47,32 @@ public class ReceiveThemeController implements Initializable {
 				ObjectInputStream ois = new ObjectInputStream(is);
 				Map<String, String> theme = (Map<String, String>) ois.readObject();
 				if (SettingsDatabaseController.addTheme(theme)) {
-					System.out.println("Theme added successfully!");
+					parent.refreshData();
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							Alert alert = new Alert(AlertType.INFORMATION);
+							alert.setHeaderText(rb.getString("receiveDialogTitle"));
+							alert.setContentText(rb.getString("receiveDialogText"));
+							DialogPane dialogPane = alert.getDialogPane();
+							dialogPane.setStyle(Main.getThemeString());
+							dialogPane.getStylesheets().add(getClass().getResource("../styles/global.css").toExternalForm());
+							alert.show();
+						}
+					});
 				}  else {
-					System.out.println("Error adding theme");
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							Alert alert = new Alert(AlertType.INFORMATION);
+							alert.setHeaderText(rb.getString("receiveDialogTitleErr"));
+							alert.setContentText(rb.getString("receiveDialogTextErr"));
+							DialogPane dialogPane = alert.getDialogPane();
+							dialogPane.setStyle(Main.getThemeString());
+							dialogPane.getStylesheets().add(getClass().getResource("../styles/global.css").toExternalForm());
+							alert.show();
+						}
+					});
 				}
 				ois.close();
 				is.close();
@@ -67,14 +97,26 @@ public class ReceiveThemeController implements Initializable {
 				ex = Executors.newSingleThreadExecutor();
 				ex.submit(new Receive()).get(15, TimeUnit.SECONDS);
 			} catch (InterruptedException | ExecutionException | TimeoutException e) {
-				e.printStackTrace();
 				if (ex != null) ex.shutdownNow();
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setHeaderText(rb.getString("receiveDialogTitleErr"));
+						alert.setContentText(rb.getString("receiveDialogTextErr"));
+						DialogPane dialogPane = alert.getDialogPane();
+						dialogPane.setStyle(Main.getThemeString());
+						dialogPane.getStylesheets().add(getClass().getResource("../styles/global.css").toExternalForm());
+						alert.show();
+					}
+				});
 			}
 		}
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		ReceiveThemeController.rb = resources;
 		Thread thread = new Thread(new Receiver());
 		thread.start();
 		try {
@@ -87,6 +129,11 @@ public class ReceiveThemeController implements Initializable {
 	public void cancel() {
 		dialogStage = (Stage) address.getScene().getWindow();
 		dialogStage.close();
+	}
+
+	@Override
+	public void setParent(Refreshable parent) {
+		Receive.parent = parent;
 	}
 
 }
