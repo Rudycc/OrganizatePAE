@@ -27,8 +27,9 @@ public class ReceiveThemeController implements Initializable {
 	Label address;
 	private Stage dialogStage;
 
-	public static class Receive implements Runnable {
+	public static class Receive implements Runnable, Refresher {
 		private final int port = 5555;
+		private Refreshable parent;
 
 		@SuppressWarnings("unchecked")
 		@Override
@@ -40,6 +41,7 @@ public class ReceiveThemeController implements Initializable {
 				ObjectInputStream ois = new ObjectInputStream(is);
 				Map<String, String> theme = (Map<String, String>) ois.readObject();
 				if (SettingsDatabaseController.addTheme(theme)) {
+					parent.refreshData();
 					System.out.println("Theme added successfully!");
 				}  else {
 					System.out.println("Error adding theme");
@@ -56,6 +58,11 @@ public class ReceiveThemeController implements Initializable {
 					e.printStackTrace();
 				}
 			}
+		}
+
+		@Override
+		public void setParent(Refreshable parent) {
+			this.parent = parent;
 		}
 	}
 
