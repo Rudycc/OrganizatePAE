@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import application.Main;
 import cellItems.ClassCellItems;
 import javafx.collections.FXCollections;
@@ -26,7 +25,8 @@ import javafx.stage.Stage;
 import database.SubjectDatabaseController;
 
 public class ManageSubjectsController implements Initializable, Refresher {
-
+	@FXML
+	GridPane rootGridPane;
 	@FXML
 	TextField txtSubject;
 	@FXML
@@ -52,11 +52,17 @@ public class ManageSubjectsController implements Initializable, Refresher {
 	@FXML
 	Button btnCancel;
 	@FXML
+	Button btnEditDays;
+	@FXML
+	Button btnStored;
+	@FXML
 	Label hourMessage;
+
 	private List<String> days;
 	private List<String> hours;
 	private List<Float> durations;
 	private String minutes;
+	private ClassCellItems currentClass;
 	private ResourceBundle resources;
 	private Stage dialogStage;
 	private Refreshable parent;
@@ -64,10 +70,12 @@ public class ManageSubjectsController implements Initializable, Refresher {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		rootGridPane.setStyle(Main.getThemeString());
 		ObservableList<String> typeChoiceBoxData = FXCollections.observableArrayList(resources.getString("monday"),
 				resources.getString("tuesday"), resources.getString("wednesday"), resources.getString("thursday"),
 				resources.getString("friday"), resources.getString("saturday"), resources.getString("sunday"));
 		dayChoiceBox.setItems(typeChoiceBoxData);
+		dayChoiceBox.getSelectionModel().select(0);
 
 		semesterChoiceBox.setItems(SubjectDatabaseController.getAllSemesterNames());
 
@@ -113,17 +121,38 @@ public class ManageSubjectsController implements Initializable, Refresher {
 		hours.add("1000-01-01 " + hourSpinner.getValue() + ":" + minutes + ":00");
 		durations.add((float) (hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 60.0)));
 		hourMessage.setText(resources.getString("hourMessage") + "-> #" + hours.size());
+
+		// Update on DB only on edition of existing subject
+		if (btnEditDays.isVisible()) {
+			float duration = hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 10);
+			SubjectDatabaseController.insertSubjectTime(currentClass.getSubjectId(),
+					days.get(days.size() - 1), hours.get(hours.size() - 1), duration);
+		}
 	}
 
 	public void btnAcceptAction() {
-		if (SubjectDatabaseController.addSubject(txtProfessor.getText(), txtSubject.getText(),
-				semesterIDs.get(semesterChoiceBox.getSelectionModel().getSelectedIndex()),
-				"#" + colorPicker.getValue().toString().substring(2, 8), days, hours, durations)) {
-			parent.refreshData();
-			dialogStage = (Stage) btnCancel.getScene().getWindow();
-			dialogStage.close();
+		// If this accept is not of an edition of an existing subject
+		if (!btnEditDays.isVisible()) {
+			if (SubjectDatabaseController.addSubject(txtProfessor.getText(), txtSubject.getText(),
+					semesterIDs.get(semesterChoiceBox.getSelectionModel().getSelectedIndex()),
+					"#" + colorPicker.getValue().toString().substring(2, 8), days, hours, durations)) {
+				parent.refreshData();
+				dialogStage = (Stage) btnCancel.getScene().getWindow();
+				dialogStage.close();
+			} else {
+				System.out.println("fatal error");
+			}
 		} else {
-			System.out.println("fatal error");
+			if (SubjectDatabaseController.updateSubject(currentClass.getSubjectId(),
+					txtProfessor.getText(), txtSubject.getText(),
+					SubjectDatabaseController.getSemesterIDForSubject(semesterChoiceBox.getValue()),
+					"#" + colorPicker.getValue().toString().substring(2, 8))) {
+
+				dialogStage = (Stage) btnCancel.getScene().getWindow();
+				dialogStage.close();
+			} else {
+				System.out.println("fatal error");
+			}
 		}
 	}
 
@@ -155,8 +184,39 @@ public class ManageSubjectsController implements Initializable, Refresher {
 		}
 	}
 
+	public void btnEditDaysAction() {
+		try {
+
+			Stage dialogStage = new Stage();
+			dialogStage.initOwner(txtSubject.getScene().getWindow());
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setTitle(resources.getString("titleEditSubjectDays"));
+			
+			FXMLLoader loader = new FXMLLoader(Main.class.getResource("EditSubjectDaysDialog.fxml"), this.resources);
+			GridPane pane = loader.load();
+			((EditSubjectDaysController)loader.getController()).setInfo(currentClass);
+			
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.show();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public void setParent(Refreshable parent) {
 		this.parent = parent;
+	}
+	
+	public void setEditInfo(ClassCellItems currentClass){
+		this.currentClass = currentClass;
+		
+		btnEditDays.setVisible(true);
+		btnStored.setVisible(false);
+		txtSubject.setText(currentClass.getClassName());
+		txtProfessor.setText(currentClass.getProfessorName());
+		
+		semesterChoiceBox.setValue(currentClass.getSemester());
 	}
 }
