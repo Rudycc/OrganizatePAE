@@ -56,8 +56,6 @@ public class ManageSubjectsController implements Initializable, Refresher {
 	@FXML
 	Button btnStored;
 	@FXML
-	Button btnDeleteSubject;
-	@FXML
 	Label hourMessage;
 
 	private List<String> days;
@@ -89,10 +87,6 @@ public class ManageSubjectsController implements Initializable, Refresher {
 
 		this.resources = resources;
 
-	}
-	
-	public void btnDeleteSubjectAction(){
-		
 	}
 
 	public void btnAddSubjectTime() {
@@ -168,26 +162,30 @@ public class ManageSubjectsController implements Initializable, Refresher {
 	}
 
 	public void btnManageStored() {
-		try {
-
-			Stage dialogStage = new Stage();
-			dialogStage.initOwner(txtSubject.getScene().getWindow());
-			dialogStage.initModality(Modality.APPLICATION_MODAL);
-			dialogStage.setTitle(resources.getString("titleManageStored"));
-
-			GridPane pane = FXMLLoader.load(Main.class.getResource("ClassInfoDialog.fxml"), this.resources);
-			pane.setStyle(Main.getThemeString());
-			dialogStage.setScene(new Scene(pane));
-			dialogStage.show();
-
-			// Sets the textArea default value
-			TextArea paneTextArea = (TextArea) pane.getChildren().get(4);
-			List<ClassCellItems> classes = SubjectDatabaseController.getAllClasses();
-			paneTextArea.setText(classes.get(0).toString());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		List<ClassCellItems> classes = SubjectDatabaseController.getAllClasses();
+		if(classes.size() > 0)
+			try {
+				Stage dialogStage = new Stage();
+				dialogStage.initOwner(txtSubject.getScene().getWindow());
+				dialogStage.initModality(Modality.APPLICATION_MODAL);
+				dialogStage.setTitle(resources.getString("titleManageStored"));
+	
+				GridPane pane = FXMLLoader.load(Main.class.getResource("ClassInfoDialog.fxml"), this.resources);
+				pane.setStyle(Main.getThemeString());
+				dialogStage.setScene(new Scene(pane));
+				dialogStage.show();
+	
+				// Sets the textArea default value
+				TextArea paneTextArea = (TextArea) pane.getChildren().get(4);
+				paneTextArea.setText(classes.get(0).toString());
+				
+				//Only enables the next Button if there is more than 1 class
+				if(classes.size() > 1)
+					((Button) pane.getChildren().get(1)).setDisable(false);
+	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 	}
 
 	public void btnEditDaysAction() {
@@ -220,7 +218,6 @@ public class ManageSubjectsController implements Initializable, Refresher {
 		
 		btnEditDays.setVisible(true);
 		btnStored.setVisible(false);
-		btnDeleteSubject.setVisible(true);
 		btnAddSubject.setText(resources.getString("acceptChanges"));
 		txtSubject.setText(currentClass.getClassName());
 		txtProfessor.setText(currentClass.getProfessorName());

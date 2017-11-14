@@ -378,4 +378,37 @@ public class SubjectDatabaseController {
 		}	
 		return true;
 	}
+	
+	@SuppressWarnings("resource")
+	public static boolean deleteSubject(int IDSubject){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try{
+			conn = MyDBConnection.getConnection();
+			//Delete all the subject's times
+			ps = conn.prepareStatement("DELETE FROM OrganizatePAE.Subject_Time WHERE IDSubject = ?");
+			ps.setInt(1, IDSubject);
+			ps.executeUpdate();
+			//Delete all the subject's tasks
+			ps = conn.prepareStatement("DELETE FROM OrganizatePAE.Task WHERE IDSubject = ?");
+			ps.setInt(1, IDSubject);
+			ps.executeUpdate();
+			//Delete the subject
+			ps = conn.prepareStatement("DELETE FROM OrganizatePAE.Subject WHERE IDSubject = ?");
+			ps.setInt(1, IDSubject);
+			if(ps.executeUpdate() <= 0)
+				return false;		
+		}catch(SQLException e){
+			e.printStackTrace();
+			return false;			
+		}finally{
+			try{
+				ps.close();
+				conn.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
 }
