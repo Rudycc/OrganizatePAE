@@ -185,12 +185,20 @@ public class EditSubjectDaysController implements Initializable, Refresher {
 	}
 
 	public void setInfo(ClassCellItems currentClass) {
-		this.currentClass = currentClass;
+		// Querys the DB in case changes were made to the subjects
+		List<ClassCellItems> updatedClasses = SubjectDatabaseController.getAllClasses();
 		this.days = new ArrayList<>();
 		this.hours = new ArrayList<>();
 		List<Integer> editSubjectTime_Ids = new ArrayList<>();
-
-		currentClass.getTimes().forEach((t) -> {
+		
+		for (ClassCellItems c : updatedClasses) {			
+			if (c.getSubjectId() == currentClass.getSubjectId()) {
+				this.currentClass = c;
+				break;
+			}
+		}
+				
+		this.currentClass.getTimes().forEach((t) -> {
 			editSubjectTime_Ids.add(t.getIDSubject_Time());
 			days.add(t.getDay());
 			String minutes = t.getTime().toString().split(":")[1];
