@@ -119,7 +119,7 @@ public class ManageSubjectsController implements Initializable, Refresher {
 			days.add("SUNDAY");
 			break;
 		default:
-			days.add("N/A");
+			days.add("MONDAY");
 			break;
 		}
 

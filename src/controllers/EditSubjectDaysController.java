@@ -176,7 +176,7 @@ public class EditSubjectDaysController implements Initializable {
 			day = "SUNDAY";
 			break;
 		default: 
-			day = "N/A";
+			day = "MONDAY";
 			break;
 		}
 		return day;
