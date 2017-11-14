@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
-public class TabController implements Initializable, Refreshable {
+public class TabController implements Initializable {
 	 @FXML
 	 private DashboardController dashboardController ;
 	 @FXML
@@ -16,18 +16,33 @@ public class TabController implements Initializable, Refreshable {
 	 @FXML
 	 private ScheduleController scheduleController ;
 	 
-	 private Refreshable self = this;
+	 private TabController self = this;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		taskController.setParent(self);
 		examController.setParent(self);
 		scheduleController.setParent(self);
+		dashboardController.setParent(self);
 	}
 
-	@Override
-	public void refreshData() {
-		dashboardController.refreshData();
+	
+	public void refreshFromDashBoard() {
+		taskController.refreshFromParent();
+		examController.refreshFromParent();
+		scheduleController.refreshFromParent();
+	}
+	
+	public void refreshFromTask() {
+		dashboardController.refreshFromParent();
+	}
+	
+	public void refreshFromExam() {
+		dashboardController.refreshFromParent();
+	}
+	
+	public void refreshFromSchedule() {
+		dashboardController.refreshFromParent();
 	}
 
 }

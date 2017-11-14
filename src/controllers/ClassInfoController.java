@@ -16,7 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class ClassInfoController implements Initializable {
+public class ClassInfoController implements Initializable, Refresher, Refreshable {
 
 	@FXML
 	Button btnAccept;
@@ -33,6 +33,8 @@ public class ClassInfoController implements Initializable {
 
 	private List<ClassCellItems> classes;
 	private int classIndex;
+	private Refreshable self = this;
+	private Refreshable parent;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -56,6 +58,7 @@ public class ClassInfoController implements Initializable {
 			FXMLLoader loader = new FXMLLoader(Main.class.getResource("ManageSubjectsDialog.fxml"), this.rb);
 			GridPane pane =  loader.load();
 			((ManageSubjectsController)loader.getController()).setEditInfo(classes.get(classIndex));
+			((ManageSubjectsController)loader.getController()).setParent(self);
 			
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.show();
@@ -94,5 +97,17 @@ public class ClassInfoController implements Initializable {
 				btnPrevious.disableProperty().set(true);
 			}
 		}
+	}
+
+	@Override
+	public void refreshData() {
+		this.classes = SubjectDatabaseController.getAllClasses();
+		setClassInfo(classes.get(classIndex).toString());
+		parent.refreshData();
+	}
+
+	@Override
+	public void setParent(Refreshable parent) {
+		this.parent = parent;
 	}
 }
