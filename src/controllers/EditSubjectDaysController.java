@@ -177,8 +177,8 @@ public class EditSubjectDaysController implements Initializable, Refresher {
 		case 6:
 			day = "SUNDAY";
 			break;
-		default:
-			day = "N/A";
+		default: 
+			day = "MONDAY";
 			break;
 		}
 		return day;
