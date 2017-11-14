@@ -19,12 +19,12 @@ import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.Appointment;
 
-public class ScheduleController implements Initializable, Refreshable, Refresher {
+public class ScheduleController implements Initializable, Refreshable {
 	@FXML
 	private Agenda agenda;
 	private ResourceBundle rb;
 	private Refreshable self = this;
-	private Refreshable parent;
+	private TabController parent;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -134,11 +134,35 @@ public class ScheduleController implements Initializable, Refreshable, Refresher
 		agenda.appointments().clear();
 		agenda.appointments().addAll(schedule);
 		agenda.refresh();
-		parent.refreshData();
+		parent.refreshFromDashBoard();
+	}
+	
+	public void refreshFromParent() {
+		List<ClassCellItems> subjects = SubjectDatabaseController.getAllClasses();
+		List<Appointment> schedule = new ArrayList<>();
+		subjects.forEach((subject) -> {
+			subject.getTimes().forEach((time) -> {
+				LocalDate start = time.getStart();
+				while (!time.getDay().equals(start.getDayOfWeek().toString())) {
+					start = start.plusDays(1);
+				}
+				while (start.isBefore(time.getEnd())) {
+					schedule.add(new Agenda.AppointmentImplLocal().withStartLocalDateTime(start.atTime(time.getTime()))
+							.withEndLocalDateTime(start.atTime(time.getTime().plusHours((long)time.getDuration()).plusMinutes((long)((time.getDuration() - (int)time.getDuration())*60))))
+							.withSummary(subject.getClassName() + "\n" + subject.getProfessorName())
+							.withAppointmentGroup(new Agenda.AppointmentGroupImpl()
+									.withStyleClass("group" + ((subject.getSubjectId() % 23) + 1))));
+					start = start.plusDays(7);
+				}
+			});
+		});
+
+		agenda.appointments().clear();
+		agenda.appointments().addAll(schedule);
+		agenda.refresh();
 	}
 
-	@Override
-	public void setParent(Refreshable parent) {
+	public void setParent(TabController parent) {
 		this.parent = parent;
 	}
 

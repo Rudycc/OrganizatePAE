@@ -40,6 +40,7 @@ public class DashboardController implements Initializable, Refreshable {
 	ObservableList<TaskCellItems> examObservableList = FXCollections.observableArrayList();
 	private ResourceBundle rb;
 	private Refreshable self = this;
+	private TabController parent;
 
 	private EventHandler<MouseEvent> taskClick = new EventHandler<MouseEvent>() {
 		@Override
@@ -81,6 +82,7 @@ public class DashboardController implements Initializable, Refreshable {
 
 					FXMLLoader loader = new FXMLLoader(Main.class.getResource("ManageSubjectsDialog.fxml"), rb);
 					GridPane pane = loader.load();
+					((Refresher) loader.getController()).setParent(self);
 
 					ListView<ClassCellItems> src = (ListView<ClassCellItems>) event.getSource();
 					if (!src.getItems().isEmpty()) {
@@ -143,5 +145,16 @@ public class DashboardController implements Initializable, Refreshable {
 		classObservableList.setAll(SubjectDatabaseController.getTodayClasses());
 		taskObservableList.setAll(TaskDatabaseController.getTodayTasks());
 		examObservableList.setAll(ExamDatabaseController.getTodayExams());
+		parent.refreshFromDashBoard();
+	}
+	
+	public void refreshFromParent() {
+		classObservableList.setAll(SubjectDatabaseController.getTodayClasses());
+		taskObservableList.setAll(TaskDatabaseController.getTodayTasks());
+		examObservableList.setAll(ExamDatabaseController.getTodayExams());
+	}
+
+	public void setParent(TabController parent) {
+		this.parent = parent;
 	}
 }
