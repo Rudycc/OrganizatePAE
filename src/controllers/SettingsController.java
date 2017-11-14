@@ -25,7 +25,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 
-public class SettingsController implements Initializable {
+public class SettingsController implements Initializable, Refreshable {
 	@FXML
 	private Label langLbl;
 	@FXML
@@ -43,6 +43,7 @@ public class SettingsController implements Initializable {
 	@FXML
 	private Button editThemeBtn;
 	private ResourceBundle rb;
+	private Refreshable self = this;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -103,7 +104,10 @@ public class SettingsController implements Initializable {
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(this.rb.getString("addTheme"));
 
-			GridPane newThemePane = FXMLLoader.load(Main.class.getResource("AddThemeDialog.fxml"), this.rb);
+			FXMLLoader loader = new FXMLLoader(Main.class.getResource("AddThemeDialog.fxml"), this.rb);
+			GridPane newThemePane = loader.load();
+			((Refresher)loader.getController()).setParent(self);
+			
 			newThemePane.setStyle(Main.getThemeString());
 			dialogStage.setScene(new Scene(newThemePane));
 			dialogStage.show();
@@ -120,7 +124,10 @@ public class SettingsController implements Initializable {
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(this.rb.getString("editTheme"));
 
-			GridPane newThemePane = FXMLLoader.load(Main.class.getResource("EditThemeDialog.fxml"), this.rb);
+			FXMLLoader loader = new FXMLLoader(Main.class.getResource("EditThemeDialog.fxml"), this.rb);
+			GridPane newThemePane = loader.load();
+			((Refresher)loader.getController()).setParent(self);
+			
 			newThemePane.setStyle(Main.getThemeString());
 			dialogStage.setScene(new Scene(newThemePane));
 
@@ -165,6 +172,7 @@ public class SettingsController implements Initializable {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("ReceiveTheme.fxml"), this.rb);
 			GridPane newThemePane = loader.load();
 			newThemePane.setStyle(Main.getThemeString());
+			((Refresher)loader.getController()).setParent(self);
 
 			dialogStage.setScene(new Scene(newThemePane));
 
@@ -173,5 +181,12 @@ public class SettingsController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void refreshData() {
+		ObservableList<String> themes = SettingsDatabaseController.getThemeNames();
+		themeChoice.setItems(themes);
+		themeChoice.getSelectionModel().select(SettingsDatabaseController.getCurrentThemeName());
 	}
 }

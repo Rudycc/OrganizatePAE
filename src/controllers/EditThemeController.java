@@ -15,7 +15,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class EditThemeController implements Initializable {
+public class EditThemeController implements Initializable, Refresher {
 	@FXML
 	ChoiceBox<String> namesDrop;
 	@FXML
@@ -37,6 +37,7 @@ public class EditThemeController implements Initializable {
 	@FXML
 	ColorPicker grayLighter;
 	private Stage dialogStage;
+	private Refreshable parent;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -76,9 +77,15 @@ public class EditThemeController implements Initializable {
 		theme.put("gray-light", "#" + grayLight.getValue().toString().substring(2, 8));
 		theme.put("gray-lighter", "#" + grayLighter.getValue().toString().substring(2, 8));
 		Boolean success = SettingsDatabaseController.updateTheme(theme);
+		parent.refreshData();
 		if (success) {
 			dialogStage = (Stage) namesDrop.getScene().getWindow();
 			dialogStage.close();
 		}
+	}
+
+	@Override
+	public void setParent(Refreshable parent) {
+		this.parent = parent;
 	}
 }
