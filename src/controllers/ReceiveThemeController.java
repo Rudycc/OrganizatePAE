@@ -27,15 +27,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
-public class ReceiveThemeController implements Initializable {
+public class ReceiveThemeController implements Initializable, Refresher {
 	@FXML
 	Label address;
 	private Stage dialogStage;
 	private static ResourceBundle rb;
 
-	public static class Receive implements Runnable, Refresher {
+	public static class Receive implements Runnable {
 		private final int port = 5555;
-		private Refreshable parent;
+		private static Refreshable parent;
 
 		@SuppressWarnings("unchecked")
 		@Override
@@ -87,11 +87,6 @@ public class ReceiveThemeController implements Initializable {
 				}
 			}
 		}
-
-		@Override
-		public void setParent(Refreshable parent) {
-			this.parent = parent;
-		}
 	}
 
 	public static class Receiver implements Runnable {
@@ -134,6 +129,11 @@ public class ReceiveThemeController implements Initializable {
 	public void cancel() {
 		dialogStage = (Stage) address.getScene().getWindow();
 		dialogStage.close();
+	}
+
+	@Override
+	public void setParent(Refreshable parent) {
+		Receive.parent = parent;
 	}
 
 }
