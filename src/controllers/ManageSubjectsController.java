@@ -183,7 +183,7 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 
         // Sets the textArea default value
         TextArea paneTextArea = (TextArea) pane.getChildren().get(4);
-        paneTextArea.setText(classes.get(0).toString
+        paneTextArea.setText(classes.get(0).toString());
 
         // Only enables the next Button if there is more than 1 class
         if(classes.size() > 1)
