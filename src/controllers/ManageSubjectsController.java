@@ -24,7 +24,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import database.SubjectDatabaseController;
 
-public class ManageSubjectsController implements Initializable, Refresher {
+public class ManageSubjectsController implements Initializable, Refresher, Refreshable {
 	@FXML
 	GridPane rootGridPane;
 	@FXML
@@ -67,6 +67,7 @@ public class ManageSubjectsController implements Initializable, Refresher {
 	private Stage dialogStage;
 	private Refreshable parent;
 	private ObservableList<Integer> semesterIDs;
+	private Refreshable self = this;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -125,8 +126,8 @@ public class ManageSubjectsController implements Initializable, Refresher {
 		// Update on DB only on edition of existing subject
 		if (btnEditDays.isVisible()) {
 			float duration = hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 10);
-			SubjectDatabaseController.insertSubjectTime(currentClass.getSubjectId(),
-					days.get(days.size() - 1), hours.get(hours.size() - 1), duration);
+			SubjectDatabaseController.insertSubjectTime(currentClass.getSubjectId(), days.get(days.size() - 1),
+					hours.get(hours.size() - 1), duration);
 		}
 	}
 
@@ -143,11 +144,11 @@ public class ManageSubjectsController implements Initializable, Refresher {
 				System.out.println("fatal error");
 			}
 		} else {
-			if (SubjectDatabaseController.updateSubject(currentClass.getSubjectId(),
-					txtProfessor.getText(), txtSubject.getText(),
+			if (SubjectDatabaseController.updateSubject(currentClass.getSubjectId(), txtProfessor.getText(),
+					txtSubject.getText(),
 					SubjectDatabaseController.getSemesterIDForSubject(semesterChoiceBox.getValue()),
 					"#" + colorPicker.getValue().toString().substring(2, 8))) {
-
+				parent.refreshData();
 				dialogStage = (Stage) btnCancel.getScene().getWindow();
 				dialogStage.close();
 			} else {
@@ -162,30 +163,35 @@ public class ManageSubjectsController implements Initializable, Refresher {
 	}
 
 	public void btnManageStored() {
-		List<ClassCellItems> classes = SubjectDatabaseController.getAllClasses();
-		if(classes.size() > 0)
-			try {
-				Stage dialogStage = new Stage();
-				dialogStage.initOwner(txtSubject.getScene().getWindow());
-				dialogStage.initModality(Modality.APPLICATION_MODAL);
-				dialogStage.setTitle(resources.getString("titleManageStored"));
-	
-				GridPane pane = FXMLLoader.load(Main.class.getResource("ClassInfoDialog.fxml"), this.resources);
-				pane.setStyle(Main.getThemeString());
-				dialogStage.setScene(new Scene(pane));
-				dialogStage.show();
-	
-				// Sets the textArea default value
-				TextArea paneTextArea = (TextArea) pane.getChildren().get(4);
-				paneTextArea.setText(classes.get(0).toString());
-				
-				//Only enables the next Button if there is more than 1 class
-				if(classes.size() > 1)
-					((Button) pane.getChildren().get(1)).setDisable(false);
-	
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+    List<ClassCellItems> classes = SubjectDatabaseController.getAllClasses();
+    
+    if(classes.size() > 0)
+      try {
+
+        Stage dialogStage = new Stage();
+        dialogStage.initOwner(txtSubject.getScene().getWindow());
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        dialogStage.setTitle(resources.getString("titleManageStored"));
+
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("ClassInfoDialog.fxml"), this.resources);
+        GridPane pane = loader.load();
+        ((Refresher)loader.getController()).setParent(self);
+
+        pane.setStyle(Main.getThemeString());
+        dialogStage.setScene(new Scene(pane));
+        dialogStage.show();
+
+        // Sets the textArea default value
+        TextArea paneTextArea = (TextArea) pane.getChildren().get(4);
+        paneTextArea.setText(classes.get(0).toString
+
+        // Only enables the next Button if there is more than 1 class
+        if(classes.size() > 1)
+          ((Button) pane.getChildren().get(1)).setDisable(false);
+
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
 	}
 
 	public void btnEditDaysAction() {
@@ -195,11 +201,12 @@ public class ManageSubjectsController implements Initializable, Refresher {
 			dialogStage.initOwner(txtSubject.getScene().getWindow());
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.setTitle(resources.getString("titleEditSubjectDays"));
-			
+
 			FXMLLoader loader = new FXMLLoader(Main.class.getResource("EditSubjectDaysDialog.fxml"), this.resources);
 			GridPane pane = loader.load();
-			((EditSubjectDaysController)loader.getController()).setInfo(currentClass);
-			
+			((EditSubjectDaysController) loader.getController()).setInfo(currentClass);
+			((EditSubjectDaysController) loader.getController()).setParent(self);
+
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.show();
 
@@ -207,21 +214,26 @@ public class ManageSubjectsController implements Initializable, Refresher {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void setParent(Refreshable parent) {
 		this.parent = parent;
 	}
-	
-	public void setEditInfo(ClassCellItems currentClass){
+
+	public void setEditInfo(ClassCellItems currentClass) {
 		this.currentClass = currentClass;
-		
+
 		btnEditDays.setVisible(true);
 		btnStored.setVisible(false);
 		btnAddSubject.setText(resources.getString("acceptChanges"));
 		txtSubject.setText(currentClass.getClassName());
 		txtProfessor.setText(currentClass.getProfessorName());
-		
+
 		semesterChoiceBox.setValue(currentClass.getSemester());
+	}
+
+	@Override
+	public void refreshData() {
+		parent.refreshData();
 	}
 }
