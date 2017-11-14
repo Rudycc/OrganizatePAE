@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Main;
 import cellItems.ClassCellItems;
 import cellItems.TaskCellItems;
 import cells.ClassListViewCell;
@@ -51,12 +52,12 @@ public class DashboardController implements Initializable, Refreshable {
 					dialogStage.setTitle(rb.getString("titleTaskInfo"));
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskInfo.fxml"), rb);
 					GridPane newTaskPane = loader.load();
-					((Refresher)loader.getController()).setParent(self);
-					
+					((Refresher) loader.getController()).setParent(self);
+
 					ListView<TaskCellItems> src = (ListView<TaskCellItems>) event.getSource();
 					if (!src.getItems().isEmpty()) {
 						TaskCellItems cell = src.getSelectionModel().getSelectedItem();
-						((TaskInfoController)loader.getController()).setInfo(cell);
+						((TaskInfoController) loader.getController()).setInfo(cell);
 						dialogStage.setScene(new Scene(newTaskPane));
 						dialogStage.show();
 					}
@@ -67,7 +68,34 @@ public class DashboardController implements Initializable, Refreshable {
 			}
 		}
 	};
-	
+
+	private EventHandler<MouseEvent> classClick = new EventHandler<MouseEvent>() {
+		@Override
+		public void handle(MouseEvent event) {
+			if (event.getClickCount() == 2) {
+				try {
+					Stage dialogStage = new Stage();
+					dialogStage.initOwner(taskList.getScene().getWindow());
+					dialogStage.initModality(Modality.APPLICATION_MODAL);
+					dialogStage.setTitle(rb.getString("titleEditStoredSubjects"));
+
+					FXMLLoader loader = new FXMLLoader(Main.class.getResource("ManageSubjectsDialog.fxml"), rb);
+					GridPane pane = loader.load();
+
+					ListView<ClassCellItems> src = (ListView<ClassCellItems>) event.getSource();
+					if (!src.getItems().isEmpty()) {
+						ClassCellItems cell = src.getSelectionModel().getSelectedItem();
+						((ManageSubjectsController) loader.getController()).setEditInfo(cell);
+						dialogStage.setScene(new Scene(pane));
+						dialogStage.show();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	};
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.rb = resources;
@@ -76,6 +104,7 @@ public class DashboardController implements Initializable, Refreshable {
 		examObservableList.setAll(ExamDatabaseController.getTodayExams());
 
 		todayList.setItems(classObservableList);
+		todayList.setOnMouseClicked(classClick);
 		taskList.setItems(taskObservableList);
 		taskList.setOnMouseClicked(taskClick);
 		examList.setItems(examObservableList);
