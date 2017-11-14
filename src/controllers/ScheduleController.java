@@ -54,7 +54,7 @@ public class ScheduleController implements Initializable, Refreshable {
 		});
 
 		agenda.appointments().addAll(schedule);
-		
+
 		agenda.setEditAppointmentCallback(new Callback<Agenda.Appointment, Void>() {
 
 			@Override
@@ -62,20 +62,20 @@ public class ScheduleController implements Initializable, Refreshable {
 				return null;
 			}
 		});
-		
+
 		agenda.setActionCallback(new Callback<Agenda.Appointment, Void>() {
 
 			@Override
 			public Void call(Appointment param) {
 				List<ClassCellItems> subjects = SubjectDatabaseController.getAllClasses();
 				ClassCellItems current = null;
-				for(int i = 0; i < subjects.size(); i++){
-					if(Integer.parseInt(param.getLocation()) == subjects.get(i).getSubjectId()){
+				for (int i = 0; i < subjects.size(); i++) {
+					if (Integer.parseInt(param.getLocation()) == subjects.get(i).getSubjectId()) {
 						current = subjects.get(i);
 						break;
 					}
 				}
-				if(current != null){
+				if (current != null) {
 					try {
 						Stage dialogStage = new Stage();
 						dialogStage.initOwner(agenda.getScene().getWindow());
@@ -86,7 +86,7 @@ public class ScheduleController implements Initializable, Refreshable {
 						GridPane pane = loader.load();
 						((Refresher) loader.getController()).setParent(self);
 						((ManageSubjectsController) loader.getController()).setEditInfo(current);
-						
+
 						dialogStage.setScene(new Scene(pane));
 						dialogStage.show();
 					} catch (Exception e) {
