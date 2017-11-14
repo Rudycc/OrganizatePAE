@@ -85,6 +85,10 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 		durations = new ArrayList<>();
 
 		semesterIDs = SubjectDatabaseController.getAllSemesterIDs();
+		
+		// If there are no classes, disable the manage stored button
+		if(SubjectDatabaseController.getAllClasses().size() < 1)
+			btnStored.setDisable(true);
 
 		this.resources = resources;
 
@@ -234,6 +238,10 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 
 	@Override
 	public void refreshData() {
+		// Disables the manage stored button if there are no classes
+		if (SubjectDatabaseController.getAllClasses().size() < 1)
+			btnStored.setDisable(true);
+		
 		parent.refreshData();
 	}
 }
