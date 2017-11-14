@@ -137,4 +137,47 @@ public class SettingsController implements Initializable {
 		}
 	}
 
+	public void shareTheme() {
+		try {
+			Stage dialogStage = new Stage();
+			dialogStage.initOwner(editThemeBtn.getScene().getWindow());
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setTitle(this.rb.getString("shareTheme"));
+
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("ShareTheme.fxml"), this.rb);
+			GridPane newThemePane = loader.load();
+			newThemePane.setStyle(Main.getThemeString());
+
+			ShareThemeController ctrl = (ShareThemeController) loader.getController();
+
+			ctrl.themeName = this.themeChoice.getSelectionModel().getSelectedItem();
+
+			dialogStage.setScene(new Scene(newThemePane));
+
+			dialogStage.show();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void receiveTheme() {
+		try {
+			Stage dialogStage = new Stage();
+			dialogStage.initOwner(editThemeBtn.getScene().getWindow());
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setTitle(this.rb.getString("shareTheme"));
+
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("ReceiveTheme.fxml"), this.rb);
+			GridPane newThemePane = loader.load();
+			newThemePane.setStyle(Main.getThemeString());
+
+			dialogStage.setScene(new Scene(newThemePane));
+
+			dialogStage.show();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

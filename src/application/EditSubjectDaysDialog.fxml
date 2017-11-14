@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane fx:id="rootGridPane" prefHeight="213.0" prefWidth="453.0" stylesheets="@../styles/global.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditSubjectDaysController">
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="46.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" />
+      <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="11.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+   </rowConstraints>
+   <columnConstraints>
+      <ColumnConstraints maxWidth="183.0" minWidth="10.0" prefWidth="166.0" />
+      <ColumnConstraints maxWidth="398.0" minWidth="10.0" prefWidth="260.0" />
+   </columnConstraints>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   <children>
+      <ChoiceBox fx:id="existingDaysChoiceBox" prefWidth="180.0" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </ChoiceBox>
+      <Label text="%editSubjectDaysEdit" GridPane.columnSpan="2" />
+      <Button mnemonicParsing="false" onAction="#btnEditAction" text="%edit" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="15.0" />
+         </GridPane.margin>
+      </Button>
+      <Button fx:id="btnDelete" disable="true" mnemonicParsing="false" onAction="#btnDeleteAction" text="%delete" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="6">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </Button>
+      <ChoiceBox fx:id="dayChoiceBox" disable="true" prefWidth="150.0" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin></ChoiceBox>
+      <Label text="%newSubjectTime" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </Label>
+      <Label text="%newSubjectDuration" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </Label>
+      <Spinner fx:id="hourSpinner" amountToStepBy="1" disable="true" initialValue="6" max="24" min="0" prefWidth="60.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="100.0" />
+         </GridPane.margin>
+      </Spinner>
+      <Spinner fx:id="minuteSpinner" amountToStepBy="10" disable="true" initialValue="0" max="50" min="0" prefWidth="60.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets right="18.0" />
+         </GridPane.margin>
+      </Spinner>
+      <Label text=":" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="80.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Spinner fx:id="hourSpinnerDuration" amountToStepBy="1" disable="true" editable="true" initialValue="2" max="50" min="0" prefWidth="60.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets left="100.0" />
+         </GridPane.margin>
+      </Spinner>
+      <Spinner fx:id="minuteSpinnerDuration" amountToStepBy="10" disable="true" editable="true" initialValue="0" max="50" min="0" prefWidth="60.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets right="18.0" />
+         </GridPane.margin>
+      </Spinner>
+      <Label text=":" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+         <font>
+            <Font size="22.0" />
+         </font>
+         <GridPane.margin>
+            <Insets left="80.0" />
+         </GridPane.margin>
+      </Label>
+      <Button fx:id="btnUpdateSubjectTime" disable="true" mnemonicParsing="false" onAction="#btnUpdateSubjectTimeAction" prefWidth="150.0" text="%editSubjectDayBtn" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+      <Label text="%editSubjectDays" GridPane.rowIndex="2" />
+      <Label fx:id="hourMessage" text="%hourMessage" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+   </children>
+</GridPane>
