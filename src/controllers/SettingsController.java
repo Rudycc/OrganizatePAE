@@ -76,12 +76,6 @@ public class SettingsController implements Initializable, Refreshable {
 				.setLanguage(langChoice.getSelectionModel().getSelectedItem().equals("English") ? "EN" : "ES");
 		Boolean changedTheme = SettingsDatabaseController.setTheme(themeChoice.getSelectionModel().getSelectedItem());
 		if (changedLang && changedTheme) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setHeaderText(this.rb.getString("settDialogTitle"));
-			alert.setContentText(this.rb.getString("settDialogText"));
-			DialogPane dialogPane = alert.getDialogPane();
-			dialogPane.getStylesheets().add(getClass().getResource("../styles/global.css").toExternalForm());
-			alert.show();
 			restart();
 		}
 	}
