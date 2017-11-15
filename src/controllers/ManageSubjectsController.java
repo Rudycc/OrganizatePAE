@@ -151,7 +151,7 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 		} else {
 			if (SubjectDatabaseController.updateSubject(currentClass.getSubjectId(), txtProfessor.getText(),
 					txtSubject.getText(),
-					SubjectDatabaseController.getSemesterIDForSubject(semesterChoiceBox.getValue()),
+					SubjectDatabaseController.getAllSemesterIDs().get(semesterChoiceBox.getSelectionModel().getSelectedIndex()),
 					"#" + colorPicker.getValue().toString().substring(2, 8))) {
 				parent.refreshData();
 				dialogStage = (Stage) btnCancel.getScene().getWindow();
