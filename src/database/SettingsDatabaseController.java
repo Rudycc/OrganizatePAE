@@ -27,9 +27,12 @@ public class SettingsDatabaseController {
 			e.printStackTrace();
 		} finally {
 			try {
-				rs.close();
-				st.close();
-				conn.close();
+				if (rs != null)
+					rs.close();
+				if (st != null)
+					st.close();
+				if (conn != null)
+					conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -176,7 +179,7 @@ public class SettingsDatabaseController {
 		}
 		return null;
 	}
-	
+
 	public static Map<String, String> getTheme(String name) {
 		Connection conn = null;
 		PreparedStatement st = null;
@@ -281,7 +284,7 @@ public class SettingsDatabaseController {
 		}
 		return new Boolean(false);
 	}
-	
+
 	public static Boolean setTheme(String newTheme) {
 		Connection conn = null;
 		PreparedStatement st = null;

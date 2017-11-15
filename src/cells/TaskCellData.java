@@ -21,12 +21,12 @@ public class TaskCellData {
 	
 	
 	public TaskCellData(){
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../application/TaskCell.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TaskCell.fxml"));
 		fxmlLoader.setController(this);
 		try{
 			fxmlLoader.load();
 		}catch(IOException e){
-			throw new RuntimeException(e);
+			e.printStackTrace();
 		}
 	}
 	
