@@ -15,7 +15,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.Appointment;
 
@@ -54,47 +53,36 @@ public class ScheduleController implements Initializable, Refreshable {
 
 		agenda.appointments().addAll(schedule);
 
-		agenda.setEditAppointmentCallback(new Callback<Agenda.Appointment, Void>() {
+		agenda.setEditAppointmentCallback(p -> null);
 
-			@Override
-			public Void call(Appointment param) {
-				return null;
-			}
-		});
-
-		agenda.setActionCallback(new Callback<Agenda.Appointment, Void>() {
-
-			@Override
-			public Void call(Appointment param) {
-				List<ClassCellItems> subjects = SubjectDatabaseController.getAllClasses();
-				ClassCellItems current = null;
-				for (int i = 0; i < subjects.size(); i++) {
-					if (Integer.parseInt(param.getLocation()) == subjects.get(i).getSubjectId()) {
-						current = subjects.get(i);
-						break;
-					}
+		agenda.setActionCallback(param -> {
+			ClassCellItems current = null;
+			for (int i = 0; i < subjects.size(); i++) {
+				if (Integer.parseInt(param.getLocation()) == subjects.get(i).getSubjectId()) {
+					current = subjects.get(i);
+					break;
 				}
-				if (current != null) {
-					try {
-						Stage dialogStage = new Stage();
-						dialogStage.initOwner(agenda.getScene().getWindow());
-						dialogStage.initModality(Modality.APPLICATION_MODAL);
-						dialogStage.setTitle(rb.getString("titleEditStoredSubjects"));
-
-						FXMLLoader loader = new FXMLLoader(Main.class.getResource("ManageSubjectsDialog.fxml"), rb);
-						GridPane pane = loader.load();
-						((Refresher) loader.getController()).setParent(self);
-						((ManageSubjectsController) loader.getController()).setEditInfo(current);
-
-						dialogStage.setScene(new Scene(pane));
-						dialogStage.show();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				agenda.refresh();
-				return null;
 			}
+			if (current != null) {
+				try {
+					Stage dialogStage = new Stage();
+					dialogStage.initOwner(agenda.getScene().getWindow());
+					dialogStage.initModality(Modality.APPLICATION_MODAL);
+					dialogStage.setTitle(rb.getString("titleEditStoredSubjects"));
+
+					FXMLLoader loader = new FXMLLoader(Main.class.getResource("ManageSubjectsDialog.fxml"), rb);
+					GridPane pane = loader.load();
+					((Refresher) loader.getController()).setParent(self);
+					((ManageSubjectsController) loader.getController()).setEditInfo(current);
+
+					dialogStage.setScene(new Scene(pane));
+					dialogStage.show();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			agenda.refresh();
+			return null;
 		});
 
 	}
