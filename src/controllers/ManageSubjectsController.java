@@ -130,7 +130,7 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 
 		// Update on DB only on edition of existing subject
 		if (btnEditDays.isVisible()) {
-			float duration = hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 10);
+			float duration = (float) ((float) hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 60.0));
 			SubjectDatabaseController.insertSubjectTime(currentClass.getSubjectId(), days.get(days.size() - 1),
 					hours.get(hours.size() - 1), duration);
 		}

@@ -103,7 +103,7 @@ public class EditSubjectDaysController implements Initializable, Refresher {
 
 	public void btnUpdateSubjectTimeAction() {
 		String day = getChoiceBoxDay(dayChoiceBox.getSelectionModel().getSelectedIndex());
-		float duration = hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 10);
+		float duration = (float) (hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 60.0));
 		int existingDaysSelectedIndex = existingDaysChoiceBox.getSelectionModel().getSelectedIndex();
 
 		// Update local variables
