@@ -47,10 +47,10 @@ public class ReceiveThemeController implements Initializable, Refresher {
 				ObjectInputStream ois = new ObjectInputStream(is);
 				Map<String, String> theme = (Map<String, String>) ois.readObject();
 				if (SettingsDatabaseController.addTheme(theme)) {
-					parent.refreshData();
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
+							parent.refreshData();
 							Alert alert = new Alert(AlertType.INFORMATION);
 							alert.setHeaderText(rb.getString("receiveDialogTitle"));
 							alert.setContentText(rb.getString("receiveDialogText"));
@@ -95,7 +95,7 @@ public class ReceiveThemeController implements Initializable, Refresher {
 			ExecutorService ex = null;
 			try {
 				ex = Executors.newSingleThreadExecutor();
-				ex.submit(new Receive()).get(15, TimeUnit.SECONDS);
+				ex.submit(new Receive()).get(30, TimeUnit.SECONDS);
 			} catch (InterruptedException | ExecutionException | TimeoutException e) {
 				if (ex != null) ex.shutdownNow();
 				Platform.runLater(new Runnable() {
