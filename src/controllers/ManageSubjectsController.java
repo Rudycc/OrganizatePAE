@@ -86,6 +86,10 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 		durations = new ArrayList<>();
 
 		semesterIDs = SubjectDatabaseController.getAllSemesterIDs();
+		
+		// If there are no classes, disable the manage stored button
+		if(SubjectDatabaseController.getAllClasses().size() < 1)
+			btnStored.setDisable(true);
 
 		this.resources = resources;
 
@@ -126,7 +130,7 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 
 		// Update on DB only on edition of existing subject
 		if (btnEditDays.isVisible()) {
-			float duration = hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 10);
+			float duration = (float) ((float) hourSpinnerDuration.getValue() + (minuteSpinnerDuration.getValue() / 60.0));
 			SubjectDatabaseController.insertSubjectTime(currentClass.getSubjectId(), days.get(days.size() - 1),
 					hours.get(hours.size() - 1), duration);
 		}
@@ -147,7 +151,7 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 		} else {
 			if (SubjectDatabaseController.updateSubject(currentClass.getSubjectId(), txtProfessor.getText(),
 					txtSubject.getText(),
-					SubjectDatabaseController.getSemesterIDForSubject(semesterChoiceBox.getValue()),
+					SubjectDatabaseController.getAllSemesterIDs().get(semesterChoiceBox.getSelectionModel().getSelectedIndex()),
 					"#" + colorPicker.getValue().toString().substring(2, 8))) {
 				parent.refreshData();
 				dialogStage = (Stage) btnCancel.getScene().getWindow();
@@ -236,6 +240,10 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 
 	@Override
 	public void refreshData() {
+		// Disables the manage stored button if there are no classes
+		if (SubjectDatabaseController.getAllClasses().size() < 1)
+			btnStored.setDisable(true);
+		
 		parent.refreshData();
 	}
 }
