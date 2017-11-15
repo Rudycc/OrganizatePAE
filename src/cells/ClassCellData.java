@@ -23,7 +23,7 @@ public class ClassCellData {
 
 
 	public ClassCellData(){
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../application/ClassCell.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ClassCell.fxml"));
 		fxmlLoader.setController(this);
 		try{
 			fxmlLoader.load();
