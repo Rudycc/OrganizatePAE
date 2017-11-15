@@ -20,6 +20,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import database.SubjectDatabaseController;
@@ -228,6 +229,7 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 		btnAddSubject.setText(resources.getString("acceptChanges"));
 		txtSubject.setText(currentClass.getClassName());
 		txtProfessor.setText(currentClass.getProfessorName());
+		colorPicker.setValue(Color.web(currentClass.getColor()));
 
 		semesterChoiceBox.setValue(currentClass.getSemester());
 	}
