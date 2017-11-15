@@ -20,6 +20,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import database.SubjectDatabaseController;
@@ -163,35 +164,35 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 	}
 
 	public void btnManageStored() {
-    List<ClassCellItems> classes = SubjectDatabaseController.getAllClasses();
-    
-    if(classes.size() > 0)
-      try {
+		List<ClassCellItems> classes = SubjectDatabaseController.getAllClasses();
 
-        Stage dialogStage = new Stage();
-        dialogStage.initOwner(txtSubject.getScene().getWindow());
-        dialogStage.initModality(Modality.APPLICATION_MODAL);
-        dialogStage.setTitle(resources.getString("titleManageStored"));
+		if (classes.size() > 0)
+			try {
 
-        FXMLLoader loader = new FXMLLoader(Main.class.getResource("ClassInfoDialog.fxml"), this.resources);
-        GridPane pane = loader.load();
-        ((Refresher)loader.getController()).setParent(self);
+				Stage dialogStage = new Stage();
+				dialogStage.initOwner(txtSubject.getScene().getWindow());
+				dialogStage.initModality(Modality.APPLICATION_MODAL);
+				dialogStage.setTitle(resources.getString("titleManageStored"));
 
-        pane.setStyle(Main.getThemeString());
-        dialogStage.setScene(new Scene(pane));
-        dialogStage.show();
+				FXMLLoader loader = new FXMLLoader(Main.class.getResource("ClassInfoDialog.fxml"), this.resources);
+				GridPane pane = loader.load();
+				((Refresher) loader.getController()).setParent(self);
 
-        // Sets the textArea default value
-        TextArea paneTextArea = (TextArea) pane.getChildren().get(4);
-        paneTextArea.setText(classes.get(0).toString());
+				pane.setStyle(Main.getThemeString());
+				dialogStage.setScene(new Scene(pane));
+				dialogStage.show();
 
-        // Only enables the next Button if there is more than 1 class
-        if(classes.size() > 1)
-          ((Button) pane.getChildren().get(1)).setDisable(false);
+				// Sets the textArea default value
+				TextArea paneTextArea = (TextArea) pane.getChildren().get(4);
+				paneTextArea.setText(classes.get(0).toString());
 
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+				// Only enables the next Button if there is more than 1 class
+				if (classes.size() > 1)
+					((Button) pane.getChildren().get(1)).setDisable(false);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 	}
 
 	public void btnEditDaysAction() {
@@ -228,6 +229,7 @@ public class ManageSubjectsController implements Initializable, Refresher, Refre
 		btnAddSubject.setText(resources.getString("acceptChanges"));
 		txtSubject.setText(currentClass.getClassName());
 		txtProfessor.setText(currentClass.getProfessorName());
+		colorPicker.setValue(Color.web(currentClass.getColor()));
 
 		semesterChoiceBox.setValue(currentClass.getSemester());
 	}
