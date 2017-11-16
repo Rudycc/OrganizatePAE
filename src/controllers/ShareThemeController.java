@@ -53,7 +53,7 @@ public class ShareThemeController implements Initializable {
 						alert.setContentText(rb.getString("shareDialogText"));
 						DialogPane dialogPane = alert.getDialogPane();
 						dialogPane.setStyle(Main.getThemeString());
-						dialogPane.getStylesheets().add(getClass().getResource("../styles/global.css").toExternalForm());
+						dialogPane.getStylesheets().add(getClass().getResource("/styles/global.css").toExternalForm());
 						alert.show();
 					}
 				});
@@ -66,7 +66,7 @@ public class ShareThemeController implements Initializable {
 						alert.setContentText(rb.getString("shareDialogTextErr"));
 						DialogPane dialogPane = alert.getDialogPane();
 						dialogPane.setStyle(Main.getThemeString());
-						dialogPane.getStylesheets().add(getClass().getResource("../styles/global.css").toExternalForm());
+						dialogPane.getStylesheets().add(getClass().getResource("/styles/global.css").toExternalForm());
 						alert.show();
 					}
 				});
