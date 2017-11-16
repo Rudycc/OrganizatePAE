@@ -56,7 +56,7 @@ public class ReceiveThemeController implements Initializable, Refresher {
 							alert.setContentText(rb.getString("receiveDialogText"));
 							DialogPane dialogPane = alert.getDialogPane();
 							dialogPane.setStyle(Main.getThemeString());
-							dialogPane.getStylesheets().add(getClass().getResource("../styles/global.css").toExternalForm());
+							dialogPane.getStylesheets().add(getClass().getResource("/styles/global.css").toExternalForm());
 							alert.show();
 						}
 					});
@@ -69,7 +69,7 @@ public class ReceiveThemeController implements Initializable, Refresher {
 							alert.setContentText(rb.getString("receiveDialogTextErr"));
 							DialogPane dialogPane = alert.getDialogPane();
 							dialogPane.setStyle(Main.getThemeString());
-							dialogPane.getStylesheets().add(getClass().getResource("../styles/global.css").toExternalForm());
+							dialogPane.getStylesheets().add(getClass().getResource("/styles/global.css").toExternalForm());
 							alert.show();
 						}
 					});
@@ -106,7 +106,7 @@ public class ReceiveThemeController implements Initializable, Refresher {
 						alert.setContentText(rb.getString("receiveDialogTextErr"));
 						DialogPane dialogPane = alert.getDialogPane();
 						dialogPane.setStyle(Main.getThemeString());
-						dialogPane.getStylesheets().add(getClass().getResource("../styles/global.css").toExternalForm());
+						dialogPane.getStylesheets().add(getClass().getResource("/styles/global.css").toExternalForm());
 						alert.show();
 					}
 				});

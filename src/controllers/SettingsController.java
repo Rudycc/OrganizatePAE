@@ -67,7 +67,7 @@ public class SettingsController implements Initializable, Refreshable {
 		alert.setContentText(this.rb.getString("aboutDialogText"));
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.setStyle(Main.getThemeString());
-		dialogPane.getStylesheets().add(getClass().getResource("../styles/global.css").toExternalForm());
+		dialogPane.getStylesheets().add(getClass().getResource("/styles/global.css").toExternalForm());
 		alert.show();
 	}
 
