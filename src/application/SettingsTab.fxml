@@ -29,6 +29,10 @@
       <Button fx:id="acceptBtn" mnemonicParsing="false" onAction="#acceptAction" text="%accept" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
       <ChoiceBox fx:id="themeChoice" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="27.0" prefWidth="179.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
       <ChoiceBox fx:id="langChoice" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="27.0" prefWidth="178.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+      <Button fx:id="addThemeBtn" mnemonicParsing="false" onAction="#addThemeAction" text="%addTheme" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+      <Button fx:id="editThemeBtn" mnemonicParsing="false" onAction="#editThemeAction" text="%editTheme" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+      <Button mnemonicParsing="false" onAction="#shareTheme" text="%shareTheme" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+      <Button mnemonicParsing="false" onAction="#receiveTheme" text="%receiveTheme" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
    </children>
    <padding>
       <Insets bottom="9.0" left="9.0" right="9.0" top="9.0" />

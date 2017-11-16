@@ -10,7 +10,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ManageTermController implements Initializable {
+public class ManageTermController implements Initializable, Refresher {
 	@FXML
 	DatePicker startDatePicker;
 	@FXML
@@ -18,6 +18,7 @@ public class ManageTermController implements Initializable {
 	@FXML
 	TextField txtFldDescription;
 	private ResourceBundle rb;
+	private Refreshable parent;
 	//Pointer to the Stage that contains the Pane
 	Stage dialogStage = null;
 	
@@ -36,12 +37,18 @@ public class ManageTermController implements Initializable {
 		try{
 			TermDatabaseController.insertNewTerm(startDatePicker.getValue().toString(), 
 					endDatePicker.getValue().toString(), txtFldDescription.getText());
+			parent.refreshData();
 			dialogStage = (Stage) startDatePicker.getScene().getWindow();
 			dialogStage.close();
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}		
+	}
+
+	@Override
+	public void setParent(Refreshable parent) {
+		this.parent = parent;
 	}
 
 }

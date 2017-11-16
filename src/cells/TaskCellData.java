@@ -21,17 +21,20 @@ public class TaskCellData {
 	
 	
 	public TaskCellData(){
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../application/TaskCell.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TaskCell.fxml"));
 		fxmlLoader.setController(this);
 		try{
 			fxmlLoader.load();
 		}catch(IOException e){
-			throw new RuntimeException(e);
+			e.printStackTrace();
 		}
 	}
 	
 	public void setInfo(TaskCellItems cell){
 		lblTask.setText(cell.getTaskName());
+		if(cell.isDone()){
+			lblTask.getStyleClass().add("strikethrough");
+		}
 		lblDueDate.setText("Due: " + cell.getDueDate());
 		pane.setStyle("-fx-background-color:"+ cell.getColor());
 	}
